@@ -1,0 +1,14 @@
+{
+  "files_processed": 6,
+  "rows_total_events": 37164054,
+  "rows_match_full_combo": 0,
+  "rows_match_event_only": 105976,
+  "rows_match_is_dont_go": 19962,
+  "rows_critical_events_final": 107002,
+  "tag_overlap_count": 34,
+  "critical_events_time_min": "2025-01-01 03:37:35.267000+00:00",
+  "critical_events_time_max": "2025-07-01 02:59:08.113000+00:00",
+  "rows_labeled_dataset": 377907,
+  "target_4h_positives": 70811,
+  "target_4h_positive_rate_pct": 18.737679
+}

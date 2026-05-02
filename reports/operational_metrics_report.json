@@ -1,0 +1,199 @@
+{
+  "model_path": "/Users/luccaromagnolli/Desktop/Projeto Vale/models/hist_gbdt_tuned.joblib",
+  "model_name": "hist_gbdt_tuned",
+  "threshold": 0.1802228521655894,
+  "feature_count": 48,
+  "threshold_metrics": [
+    {
+      "split": "train",
+      "rows": 264534,
+      "prevalence": 0.20813959642238805,
+      "threshold": 0.1802228521655894,
+      "predicted_positive": 183400,
+      "predicted_positive_rate": 0.6932946237534684,
+      "true_positive": 54811,
+      "false_positive": 128589,
+      "false_negative": 249,
+      "precision": 0.2988604143947655,
+      "recall": 0.995477660733745,
+      "lift_vs_random": 1.435865253568923
+    },
+    {
+      "split": "val",
+      "rows": 56686,
+      "prevalence": 0.12809159228028086,
+      "threshold": 0.1802228521655894,
+      "predicted_positive": 27776,
+      "predicted_positive_rate": 0.4899975302543838,
+      "true_positive": 5865,
+      "false_positive": 21911,
+      "false_negative": 1396,
+      "precision": 0.2111535138248848,
+      "recall": 0.8077399807189093,
+      "lift_vs_random": 1.6484572489570883
+    },
+    {
+      "split": "test",
+      "rows": 56687,
+      "prevalence": 0.14976978848766032,
+      "threshold": 0.1802228521655894,
+      "predicted_positive": 25527,
+      "predicted_positive_rate": 0.4503148870111313,
+      "true_positive": 6910,
+      "false_positive": 18617,
+      "false_negative": 1580,
+      "precision": 0.2706937752183962,
+      "recall": 0.8138987043580683,
+      "lift_vs_random": 1.8073990619323
+    }
+  ],
+  "test_budget_metrics": [
+    {
+      "split": "test",
+      "budget_pct": 0.01,
+      "selected_rows": 567,
+      "alerts_per_day": 19.551724137931036,
+      "precision_at_budget": 0.3932980599647266,
+      "recall_at_budget": 0.026266195524146056,
+      "lift_vs_random": 2.6260173292368028,
+      "positives_captured": 223,
+      "total_positives": 8490
+    },
+    {
+      "split": "test",
+      "budget_pct": 0.02,
+      "selected_rows": 1134,
+      "alerts_per_day": 39.10344827586207,
+      "precision_at_budget": 0.36948853615520283,
+      "recall_at_budget": 0.04935217903415783,
+      "lift_vs_random": 2.4670431859870416,
+      "positives_captured": 419,
+      "total_positives": 8490
+    },
+    {
+      "split": "test",
+      "budget_pct": 0.05,
+      "selected_rows": 2835,
+      "alerts_per_day": 97.75862068965517,
+      "precision_at_budget": 0.32839506172839505,
+      "recall_at_budget": 0.10965842167255595,
+      "lift_vs_random": 2.1926655906004155,
+      "positives_captured": 931,
+      "total_positives": 8490
+    },
+    {
+      "split": "test",
+      "budget_pct": 0.1,
+      "selected_rows": 5669,
+      "alerts_per_day": 195.48275862068965,
+      "precision_at_budget": 0.27853236902451933,
+      "recall_at_budget": 0.18598351001177857,
+      "lift_vs_random": 1.8597366787859748,
+      "positives_captured": 1579,
+      "total_positives": 8490
+    },
+    {
+      "split": "test",
+      "budget_pct": 0.2,
+      "selected_rows": 11338,
+      "alerts_per_day": 390.9655172413793,
+      "precision_at_budget": 0.23196330922561298,
+      "recall_at_budget": 0.30977620730270905,
+      "lift_vs_random": 1.5487990706798966,
+      "positives_captured": 2630,
+      "total_positives": 8490
+    },
+    {
+      "split": "test",
+      "budget_pct": 0.3,
+      "selected_rows": 17007,
+      "alerts_per_day": 586.448275862069,
+      "precision_at_budget": 0.24877991415299583,
+      "recall_at_budget": 0.4983510011778563,
+      "lift_vs_random": 1.6610820958293138,
+      "positives_captured": 4231,
+      "total_positives": 8490
+    }
+  ],
+  "test_daily_topk_metrics": [
+    {
+      "split": "test",
+      "top_k_tags_per_day": 3,
+      "days": 30,
+      "selected_alerts": 90,
+      "alerts_per_day": 3.0,
+      "tag_day_prevalence": 0.3251968503937008,
+      "precision_at_k": 0.6666666666666666,
+      "recall_at_k": 0.14527845036319612,
+      "lift_vs_random": 2.050040355125101,
+      "positives_captured": 60,
+      "total_positives": 413
+    },
+    {
+      "split": "test",
+      "top_k_tags_per_day": 5,
+      "days": 30,
+      "selected_alerts": 150,
+      "alerts_per_day": 5.0,
+      "tag_day_prevalence": 0.3251968503937008,
+      "precision_at_k": 0.6333333333333333,
+      "recall_at_k": 0.23002421307506055,
+      "lift_vs_random": 1.9475383373688457,
+      "positives_captured": 95,
+      "total_positives": 413
+    },
+    {
+      "split": "test",
+      "top_k_tags_per_day": 10,
+      "days": 30,
+      "selected_alerts": 300,
+      "alerts_per_day": 10.0,
+      "tag_day_prevalence": 0.3251968503937008,
+      "precision_at_k": 0.6766666666666666,
+      "recall_at_k": 0.4915254237288136,
+      "lift_vs_random": 2.0807909604519774,
+      "positives_captured": 203,
+      "total_positives": 413
+    },
+    {
+      "split": "test",
+      "top_k_tags_per_day": 15,
+      "days": 30,
+      "selected_alerts": 450,
+      "alerts_per_day": 15.0,
+      "tag_day_prevalence": 0.3251968503937008,
+      "precision_at_k": 0.6688888888888889,
+      "recall_at_k": 0.7288135593220338,
+      "lift_vs_random": 2.056873822975518,
+      "positives_captured": 301,
+      "total_positives": 413
+    },
+    {
+      "split": "test",
+      "top_k_tags_per_day": 20,
+      "days": 30,
+      "selected_alerts": 600,
+      "alerts_per_day": 20.0,
+      "tag_day_prevalence": 0.3251968503937008,
+      "precision_at_k": 0.6166666666666667,
+      "recall_at_k": 0.8958837772397095,
+      "lift_vs_random": 1.8962873284907185,
+      "positives_captured": 370,
+      "total_positives": 413
+    }
+  ],
+  "deduplicated_alerts": {
+    "split": "test",
+    "cooldown_hours": 4,
+    "raw_predicted_positive": 25527,
+    "deduplicated_alerts": 2537,
+    "deduplicated_alerts_per_day": 87.48275862068965,
+    "deduplicated_precision": 0.25896728419392984,
+    "row_positive_capture_after_dedup": 0.07738515901060071
+  },
+  "outputs": {
+    "budget_metrics_csv": "/Users/luccaromagnolli/Desktop/Projeto Vale/reports/operational_budget_metrics.csv",
+    "daily_topk_metrics_csv": "/Users/luccaromagnolli/Desktop/Projeto Vale/reports/operational_daily_topk_metrics.csv",
+    "deduplicated_alerts_csv": "/Users/luccaromagnolli/Desktop/Projeto Vale/reports/operational_deduplicated_alerts.csv"
+  }
+}

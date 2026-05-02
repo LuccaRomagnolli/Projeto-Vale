@@ -1,0 +1,34 @@
+{
+  "total_records": 377907,
+  "required_columns": [
+    "Tag",
+    "Frota",
+    "Tipo",
+    "Inicio",
+    "Fim"
+  ],
+  "missing_by_column": {
+    "Tag": 0,
+    "Frota": 0,
+    "Tipo": 0,
+    "Inicio": 0,
+    "Fim": 0
+  },
+  "missing_by_column_pct": {
+    "Tag": 0.0,
+    "Frota": 0.0,
+    "Tipo": 0.0,
+    "Inicio": 0.0,
+    "Fim": 0.0
+  },
+  "duplicate_full_rows": 0,
+  "duplicate_full_rows_pct": 0.0,
+  "duplicate_tag_inicio_fim": 101,
+  "duplicate_tag_inicio_fim_pct": 0.0267,
+  "invalid_inicio": 0,
+  "invalid_fim": 0,
+  "duration_negative_count": 0,
+  "duration_gt_max_cycle_hours_count": 0,
+  "duration_missing_count": 0,
+  "max_cycle_hours_threshold": 24
+}

@@ -1,0 +1,49 @@
+feature,importance
+dias_desde_ultimo_alerta,2849
+Tag_freq,2270
+duracao_std_ciclo_24h,730
+hora_do_dia,562
+dia_da_semana,525
+duracao_media_ciclo_24h,512
+n_ciclos_24h,458
+Classe_target_enc,419
+duracao_std_ciclo_8h,377
+freq_classe_atividade_24h,311
+duracao_media_ciclo_8h,274
+delta_n_ciclos_4h_24h_norm,210
+duracao_std_ciclo_4h,201
+n_classes_distintas_24h,162
+freq_classe_atividade_8h,161
+delta_duracao_ciclo_4h_24h,158
+Frota_793-D 4S,156
+n_classes_distintas_8h,149
+n_ciclos_8h,144
+Frota_793-D 5S,128
+ratio_duracao_ciclo_4h_24h,121
+mes,121
+duracao_media_ciclo_4h,119
+delta_freq_classe_4h_24h,114
+Frota_793-D 2S,108
+dia_semana,101
+hora,82
+Frota_LeTourneau L 1850,79
+delta_classes_distintas_4h_24h,79
+n_ciclos_4h,66
+freq_classe_atividade_4h,65
+Frota_793-D 3S,62
+n_classes_distintas_4h,47
+duracao_ciclo_min,42
+is_fim_de_semana,23
+Tipo_Caminhao,13
+Tipo_Escavadeira,2
+ratio_alertas_4h_24h,0
+delta_alertas_por_hora_4h_24h,0
+Operador_freq,0
+nivel_maximo_evento_recente,0
+n_precondicoes_satisfeitas_4h,0
+alertas_por_hora_24h,0
+n_alertas_24h,0
+alertas_por_hora_8h,0
+alertas_por_hora_4h,0
+n_alertas_4h,0
+n_alertas_8h,0

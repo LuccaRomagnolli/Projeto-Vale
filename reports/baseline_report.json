@@ -1,0 +1,43 @@
+{
+  "model_name": "baseline_heuristico_24h",
+  "score_definition": "n_alertas_24h / 24, clipped to [0, 1]",
+  "split_metadata": {
+    "rows_total": 377907,
+    "rows_train": 264534,
+    "rows_val": 56686,
+    "rows_test": 56687,
+    "train_start": "2025-01-01 03:03:43+00:00",
+    "train_end": "2025-05-06 06:00:00+00:00",
+    "val_start": "2025-05-06 06:00:00+00:00",
+    "val_end": "2025-06-02 15:00:00+00:00",
+    "test_start": "2025-06-02 15:00:00+00:00",
+    "test_end": "2025-07-01 03:00:00+00:00"
+  },
+  "metrics": {
+    "threshold": 0.0,
+    "train": {
+      "threshold": 0.0,
+      "recall": 1.0,
+      "precision": 0.20813959642238805,
+      "f1": 0.3445621632446166,
+      "auc_pr": 0.20813959642238805,
+      "auc_roc": 0.5
+    },
+    "val": {
+      "threshold": 0.0,
+      "recall": 1.0,
+      "precision": 0.12809159228028086,
+      "f1": 0.22709431247752046,
+      "auc_pr": 0.12809159228028086,
+      "auc_roc": 0.5
+    },
+    "test": {
+      "threshold": 0.0,
+      "recall": 1.0,
+      "precision": 0.14976978848766032,
+      "f1": 0.2605213495558249,
+      "auc_pr": 0.14976978848766032,
+      "auc_roc": 0.5
+    }
+  }
+}

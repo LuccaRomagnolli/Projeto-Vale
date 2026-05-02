@@ -1,31 +1,31 @@
-# Plano de Notebooks
+# Guia de Notebooks (Workflow Completo)
 
-Sugestão de sequência (um notebook por etapa do estudo guiado):
+Sequência completa para avaliação por liderança técnica:
 
 1. `01_business_understanding.ipynb`
-- Contextualização da operação de mina (CM 1.1)
-- Definição da pergunta analítica e métrica de sucesso (CM 1.2)
+- Problema, objetivo, KPI oficial e critérios de aceite.
 
 2. `02_data_understanding_eda.ipynb`
-- Carga e inspeção inicial (CM 2.1)
-- Análise da variável alvo (CM 2.2)
-- Análise de features e padrões temporais (CM 2.3)
+- Qualidade de dados, cobertura temporal e distribuição do target.
 
 3. `03_data_preparation.ipynb`
-- Limpeza, outliers e controle de alterações (CM 3.1)
-- Engenharia de features (CM 3.2)
-- Definição do target/janela de predição (CM 3.3)
+- Preparação, risco de leakage e famílias de features.
 
-4. `04_modeling.ipynb`
-- Estratégia de validação temporal (CM 4.1)
-- Baseline (CM 4.2)
-- Duas abordagens principais (CM 4.3)
+4. `04_modeling_benchmark.ipynb`
+- Validação temporal, comparação de modelos e decisão de campeão.
 
-5. `05_evaluation.ipynb`
-- Métricas e comparação entre modelos (CM 5.1)
-- Matriz de confusão e análise de erros (CM 5.2)
-- Interpretabilidade (CM 5.3)
+5. `05_operational_evaluation_application.ipynb`
+- Aplicação prática com TopK Tag-dia e orçamento operacional.
 
-6. `06_results_conclusion.ipynb`
-- Resultados, impacto de negócio e comparação com baseline (CM 6.1)
-- Conclusões, limitações e trabalhos futuros (CM 6.2 e 6.3)
+6. `06_segment_analysis_and_risk.ipynb`
+- Segmentação, baixa prevalência, riscos e hotspots de Tag.
+
+7. `07_model_governance_and_promotion.ipynb`
+- Gate de estabilidade, política de promoção e rastreabilidade.
+
+8. `08_executive_readout_for_head_of_tech.ipynb`
+- Resumo final para defesa com Head de Tecnologia.
+
+## Notebooks legados
+- `00_extracao_head_dados.ipynb`: exploração inicial de extração.
+- `01_eda.ipynb`: notebook exploratório anterior.
