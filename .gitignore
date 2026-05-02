@@ -10,6 +10,7 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 .coverage
+.coverage.*
 
 # Notebook checkpoints
 .ipynb_checkpoints/

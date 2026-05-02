@@ -71,5 +71,5 @@ smoke: test infer evaluate evaluate-segments
 run-all: label eda features train benchmark tune-hist-gbdt gate-stability evaluate evaluate-segments
 
 clean:
-	rm -rf .pytest_cache .ruff_cache .coverage
+	rm -rf .pytest_cache .ruff_cache .coverage .coverage.*
 	find . -type d -name "__pycache__" -prune -exec rm -rf {} +

@@ -1,31 +1,55 @@
-# Mining Fleet Alert Anticipation
+<p align="center">
+  <img src="vale-logo-removebg-preview.png" alt="Vale" width="120"/>
+</p>
 
-Projeto para antecipacao de alertas criticos ("Don't Go") em equipamentos de mineracao, com foco em priorizacao operacional por `Tag`.
+<h1 align="center">Mining Fleet Alert Anticipation</h1>
+
+<p align="center">
+  Antecipação de alertas críticos <strong>"Don't Go"</strong> em equipamentos de mineração,<br>
+  com foco em priorização operacional por <code>Tag</code>.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.11%20–%203.13-1D9E75?style=flat-square&logo=python&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Modelo-HistGBDT-EF9F27?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Janela-4h-085041?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Split-70/15/15-888780?style=flat-square"/>
+</p>
+
+---
 
 ## Objetivo
 
-Responder diariamente: quais equipamentos devem entrar primeiro na fila de manutencao preventiva nas proximas 4 horas.
+Responder diariamente: **quais equipamentos devem entrar primeiro na fila de manutenção preventiva nas próximas 4 horas.**
 
 O projeto avalia o modelo em duas perspectivas:
 
-1. Classificacao ciclo-a-ciclo (recall, precision, AUC-PR, AUC-ROC).
-2. Priorizacao operacional por `TopK Tag-dia` (precision@k, recall@k, lift@k).
+1. **Classificação ciclo-a-ciclo** — recall, precision, AUC-PR, AUC-ROC.
+2. **Priorização operacional por `TopK Tag-dia`** — precision@k, recall@k, lift@k.
 
-## Estado Atual (dados de referencia)
+---
 
-- Janela de target: `target_4h`.
-- Split temporal: `70/15/15`.
-- Modelo campeao de benchmark: `hist_gbdt_regularized`.
-- Artefato operacional atual: `models/hist_gbdt_tuned.joblib`.
-- Threshold calibrado em validacao: `0.1802228521655894`.
+## Estado Atual
 
-Metricas operacionais no teste (`Top15 Tag-dia`):
+| Parâmetro | Valor |
+|---|---|
+| Janela de target | `target_4h` |
+| Split temporal | `70 / 15 / 15` |
+| Modelo campeão | `hist_gbdt_regularized` |
+| Artefato operacional | `models/hist_gbdt_tuned.joblib` |
+| Threshold calibrado (validação) | `0.1802228521655894` |
 
-- `precision@15`: `0.6689`
-- `recall@15`: `0.7288`
-- `lift@15`: `2.0569`
+### Métricas Operacionais — `Top15 Tag-dia` (Teste)
 
-## Estrutura Real do Repositorio
+| Métrica | Valor |
+|---|---|
+| `precision@15` | **0.6689** |
+| `recall@15` | **0.7288** |
+| `lift@15` | **2.0569** |
+
+---
+
+## Estrutura do Repositório
 
 ```text
 .
@@ -55,51 +79,40 @@ Metricas operacionais no teste (`Top15 Tag-dia`):
 └── requirements.txt
 ```
 
+---
+
 ## Pipeline
 
-1. Ingestao e contrato de dados: `src/data_loader.py`
-2. Rotulacao robusta: `src/alert_labeler.py`
-3. EDA: `src/eda/run_eda.py`
-4. Feature engineering: `src/features/build_features.py`
-5. Split temporal e baseline: `src/models/train_baseline.py`
-6. Treino principal supervisionado: `src/models/train_model.py`
-7. Benchmark de candidatos: `src/models/benchmark_models.py`
-8. Tuning e backtesting HistGBDT: `src/models/tune_hist_gbdt.py`
-9. Gate de estabilidade: `src/models/stability_gate.py`
-10. Avaliacao operacional e segmentada:
-    - `src/evaluation/evaluate_model.py`
-    - `src/evaluation/segment_analysis.py`
-11. Inferencia operacional: `src/inference.py`
+| # | Etapa | Arquivo |
+|---|---|---|
+| 1 | Ingestão e contrato de dados | `src/data_loader.py` |
+| 2 | Rotulação robusta | `src/alert_labeler.py` |
+| 3 | EDA | `src/eda/run_eda.py` |
+| 4 | Feature engineering | `src/features/build_features.py` |
+| 5 | Split temporal e baseline | `src/models/train_baseline.py` |
+| 6 | Treino principal supervisionado | `src/models/train_model.py` |
+| 7 | Benchmark de candidatos | `src/models/benchmark_models.py` |
+| 8 | Tuning e backtesting HistGBDT | `src/models/tune_hist_gbdt.py` |
+| 9 | Gate de estabilidade | `src/models/stability_gate.py` |
+| 10 | Avaliação operacional | `src/evaluation/evaluate_model.py` |
+| 11 | Análise segmentada | `src/evaluation/segment_analysis.py` |
+| 12 | Inferência operacional | `src/inference.py` |
+
+---
 
 ## Setup
 
-Requisitos:
+**Requisitos:** Python `>=3.11, <3.14`
 
-- Python `>=3.11,<3.14`
-- Dependencias de `requirements.txt`
-
-## Metodologia de Execucao Recomendada (Mac, mais eficiente)
-
-Fluxo validado na pratica para evitar retrabalho de ambiente:
-
-1. Tentar execucao direta no ambiente ja funcional e validar com `make smoke`.
-2. Se faltar dependencia, criar ambiente `conda` isolado com Python 3.12.
-3. Evitar bootstrap em Python 3.13 para instalacao completa do `requirements.txt`, por causa de incompatibilidade de build do `pyarrow==15.0.2` com `pkg_resources`.
-
-### Caminho rapido (quando ja existe ambiente com dependencias)
+### Caminho rápido (ambiente já configurado)
 
 ```bash
 make smoke
 ```
 
-Esse comando roda:
+Executa em sequência: `make test` → `make infer` → `make evaluate` → `make evaluate-segments`.
 
-- `make test`
-- `make infer`
-- `make evaluate`
-- `make evaluate-segments`
-
-### Caminho isolado recomendado (do zero)
+### Ambiente isolado recomendado (do zero)
 
 ```bash
 eval "$(/opt/miniconda3/bin/conda shell.zsh hook)"
@@ -113,14 +126,9 @@ echo "setuptools<82" > constraints.txt
 python -m pip install -r requirements.txt -c constraints.txt --prefer-binary
 ```
 
-Observacao:
+> **Atenção:** Se aparecer `CondaError: KeyboardInterrupt`, a criação foi interrompida — rode novamente sem cancelar. Não use `source .venv/bin/activate` em conjunto com `conda`.
 
-- se aparecer `CondaError: KeyboardInterrupt`, a criacao do ambiente foi interrompida; rode novamente `conda create -n vale312 python=3.12 -y` sem cancelar.
-- nao use `source .venv/bin/activate` quando estiver usando `conda`.
-
-### Opcional: venv tradicional
-
-Instalacao com `venv` (quando voce ja possui Python compativel no sistema):
+### Alternativa: venv tradicional
 
 ```bash
 python -m venv .venv
@@ -128,67 +136,79 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+---
+
 ## Comandos Principais
 
 ```bash
-make label
-make eda
-make features
-make train
-make benchmark
-make tune-hist-gbdt
-make gate-stability
-make evaluate
-make evaluate-segments
-make infer
-make test
-make lint
+make label              # rotulação
+make eda                # análise exploratória
+make features           # feature engineering
+make train              # treino do modelo
+make benchmark          # benchmark de candidatos
+make tune-hist-gbdt     # tuning HistGBDT
+make gate-stability     # gate de estabilidade
+make evaluate           # avaliação operacional
+make evaluate-segments  # análise segmentada
+make infer              # inferência
+make test               # testes
+make lint               # linting
 ```
 
-Pipeline completo:
+**Pipeline completo:**
 
 ```bash
 make run-all
 ```
 
-## Contrato de Inferencia
+---
 
-`src/inference.py` implementa contrato minimo para uso operacional:
+## Contrato de Inferência
 
-- valida artefato (`model`, `feature_columns`, `threshold`);
-- alinha schema de entrada com `feature_columns`;
-- preenche features ausentes com `0.0`;
-- gera `score`, `prediction` e persiste saida em `reports/inference_scores.parquet`.
+`src/inference.py` implementa o contrato mínimo para uso operacional:
 
-Entrada esperada: `csv` ou `parquet` com features.
+- Valida o artefato: `model`, `feature_columns`, `threshold`
+- Alinha schema de entrada com `feature_columns`
+- Preenche features ausentes com `0.0`
+- Gera `score`, `prediction` e persiste saída em `reports/inference_scores.parquet`
 
-## Politica de Promocao
+**Entrada esperada:** `csv` ou `parquet` com features.
 
-Ver documento oficial:
+---
 
-- `docs/politica_promocao_modelo.md`
+## Política de Promoção
 
-Resumo:
+> Documento oficial: `docs/politica_promocao_modelo.md`
 
-1. Campeao por validacao temporal (`val_auc_pr`, desempates definidos).
-2. Metas `Top15 Tag-dia` atendidas no teste.
-3. Gate de estabilidade aprovado.
-4. Segmentos raros tratados como inconclusivos, com trilha dedicada.
+1. **Campeão por validação temporal** — `val_auc_pr`, com desempates definidos.
+2. **Metas `Top15 Tag-dia` atendidas** no conjunto de teste.
+3. **Gate de estabilidade aprovado** — sem drift ou degradação.
+4. **Segmentos raros** tratados como inconclusivos, com trilha dedicada.
+
+---
 
 ## Notebooks
 
-Ordem recomendada:
+| # | Notebook |
+|---|---|
+| 01 | `01_business_understanding.ipynb` |
+| 02 | `02_data_understanding_eda.ipynb` |
+| 03 | `03_data_preparation.ipynb` |
+| 04 | `04_modeling_benchmark.ipynb` |
+| 05 | `05_operational_evaluation_application.ipynb` |
+| 06 | `06_segment_analysis_and_risk.ipynb` |
+| 07 | `07_model_governance_and_promotion.ipynb` |
+| 08 | `08_executive_readout_for_head_of_tech.ipynb` |
 
-1. `01_business_understanding.ipynb`
-2. `02_data_understanding_eda.ipynb`
-3. `03_data_preparation.ipynb`
-4. `04_modeling_benchmark.ipynb`
-5. `05_operational_evaluation_application.ipynb`
-6. `06_segment_analysis_and_risk.ipynb`
-7. `07_model_governance_and_promotion.ipynb`
-8. `08_executive_readout_for_head_of_tech.ipynb`
+---
 
-## Observacoes
+## Observações
 
-- Alguns relatorios versionados podem conter caminhos absolutos historicos de execucao local.
-- O threshold de operacao deve vir do artefato promovido, nao de valor fixo em variavel de ambiente.
+- Alguns relatórios versionados podem conter caminhos absolutos históricos de execução local.
+- O threshold de operação deve vir do artefato promovido, **não** de valor fixo em variável de ambiente.
+
+---
+
+<p align="center">
+  <sub>Vale · Mining Operations · Fleet Alert Anticipation</sub>
+</p>
