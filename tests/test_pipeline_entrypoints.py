@@ -1,3 +1,4 @@
+from src import inference
 from src.data import make_dataset
 from src.evaluation import evaluate_model, segment_analysis
 from src.features import build_features
@@ -207,5 +208,23 @@ def test_segment_analysis_main_runs(capsys, monkeypatch) -> None:
         },
     )
     segment_analysis.main()
+    captured = capsys.readouterr()
+    assert "[OK]" in captured.out
+
+
+def test_inference_main_runs(capsys, monkeypatch) -> None:
+    monkeypatch.setattr(
+        inference,
+        "run_inference",
+        lambda **_: {
+            "input_path": "/tmp/features_test.parquet",
+            "model_path": "/tmp/model.joblib",
+            "output_path": "/tmp/inference_scores.parquet",
+            "rows": 10,
+            "threshold": 0.3,
+            "missing_feature_columns": ["feature_x"],
+        },
+    )
+    inference.main()
     captured = capsys.readouterr()
     assert "[OK]" in captured.out

@@ -13,6 +13,7 @@ import pandas as pd
 from src.models.train_model import load_splits, predict_scores, prepare_model_matrix
 from src.models.validation import TARGET_COL
 from src.utils.config import MODELS_DIR, REPORTS_DIR, SPLIT_DIR
+from src.utils.metadata import to_repo_relative_path
 
 TUNED_MODEL_PATH = MODELS_DIR / "hist_gbdt_tuned.joblib"
 OPERATIONAL_REPORT_JSON = REPORTS_DIR / "operational_metrics_report.json"
@@ -193,18 +194,23 @@ def deduplicate_alerts(
         (scored["split"] == split_name) & (scored["prediction"] == 1)
     ].sort_values(["Tag", "Fim", "score"], ascending=[True, True, False])
 
-    kept_rows = []
-    cooldown = pd.Timedelta(hours=cooldown_hours)
+    cooldown_ns = pd.Timedelta(hours=cooldown_hours).value
+    keep_indexes: list[int] = []
     for _, group in split_df.groupby("Tag", sort=False):
-        last_kept_time = pd.Timestamp.min.tz_localize("UTC")
-        for _, row in group.iterrows():
-            if row["Fim"] >= last_kept_time + cooldown:
-                kept_rows.append(row)
-                last_kept_time = row["Fim"]
+        timestamps = group["Fim"].astype("int64").to_numpy()
+        group_indexes = group.index.to_numpy()
+        if len(timestamps) == 0:
+            continue
 
-    if not kept_rows:
+        last_kept_ns: int | None = None
+        for position, current_ns in enumerate(timestamps):
+            if last_kept_ns is None or (current_ns - last_kept_ns) >= cooldown_ns:
+                keep_indexes.append(int(group_indexes[position]))
+                last_kept_ns = int(current_ns)
+
+    if not keep_indexes:
         return split_df.head(0).copy()
-    return pd.DataFrame(kept_rows).reset_index(drop=True)
+    return split_df.loc[keep_indexes].sort_values(["Tag", "Fim"]).reset_index(drop=True)
 
 
 def summarize_deduplicated_alerts(
@@ -249,7 +255,7 @@ def run_operational_evaluation(
     dedup_alerts.to_csv(DEDUP_ALERTS_CSV, index=False)
 
     report = {
-        "model_path": str(model_path),
+        "model_path": to_repo_relative_path(model_path),
         "model_name": artifact.get("model_name", "unknown"),
         "threshold": float(artifact["threshold"]),
         "feature_count": len(artifact["feature_columns"]),
@@ -260,9 +266,9 @@ def run_operational_evaluation(
         "test_daily_topk_metrics": daily_topk_metrics.to_dict(orient="records"),
         "deduplicated_alerts": dedup_summary,
         "outputs": {
-            "budget_metrics_csv": str(BUDGET_METRICS_CSV),
-            "daily_topk_metrics_csv": str(DAILY_TOPK_METRICS_CSV),
-            "deduplicated_alerts_csv": str(DEDUP_ALERTS_CSV),
+            "budget_metrics_csv": to_repo_relative_path(BUDGET_METRICS_CSV),
+            "daily_topk_metrics_csv": to_repo_relative_path(DAILY_TOPK_METRICS_CSV),
+            "deduplicated_alerts_csv": to_repo_relative_path(DEDUP_ALERTS_CSV),
         },
     }
     OPERATIONAL_REPORT_JSON.write_text(

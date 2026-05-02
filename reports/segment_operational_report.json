@@ -1,5 +1,5 @@
 {
-  "model_path": "/Users/luccaromagnolli/Desktop/Projeto Vale/models/hist_gbdt_tuned.joblib",
+  "model_path": "models/hist_gbdt_tuned.joblib",
   "split": "test",
   "rows": 56687,
   "segment_columns": [
@@ -9,9 +9,9 @@
     "Classe"
   ],
   "outputs": {
-    "threshold_metrics_csv": "/Users/luccaromagnolli/Desktop/Projeto Vale/reports/segment_threshold_metrics.csv",
-    "topk_metrics_csv": "/Users/luccaromagnolli/Desktop/Projeto Vale/reports/segment_topk_tag_day_metrics.csv",
-    "tag_hotspots_csv": "/Users/luccaromagnolli/Desktop/Projeto Vale/reports/segment_tag_hotspots.csv"
+    "threshold_metrics_csv": "reports/segment_threshold_metrics.csv",
+    "topk_metrics_csv": "reports/segment_topk_tag_day_metrics.csv",
+    "tag_hotspots_csv": "reports/segment_tag_hotspots.csv"
   },
   "weakest_top15_segments": [
     {
@@ -27,7 +27,9 @@
       "recall_at_k": 0.0,
       "lift_vs_random": 0.0,
       "positives_captured": 0,
-      "total_positives": 0
+      "total_positives": 0,
+      "status": "inconclusivo_baixa_prevalencia",
+      "recommendation": "tratar segmento em trilha separada"
     },
     {
       "segment_col": "turno",
@@ -42,7 +44,9 @@
       "recall_at_k": 0.7289719626168224,
       "lift_vs_random": 2.052461059190031,
       "positives_captured": 234,
-      "total_positives": 321
+      "total_positives": 321,
+      "status": "ok",
+      "recommendation": "usar TopK como canal principal"
     },
     {
       "segment_col": "Tipo",
@@ -57,7 +61,9 @@
       "recall_at_k": 0.732360097323601,
       "lift_vs_random": 1.6258394160583942,
       "positives_captured": 301,
-      "total_positives": 411
+      "total_positives": 411,
+      "status": "ok",
+      "recommendation": "usar TopK como canal principal"
     },
     {
       "segment_col": "Classe",
@@ -72,7 +78,9 @@
       "recall_at_k": 0.7474747474747475,
       "lift_vs_random": 1.3172166105499439,
       "positives_captured": 296,
-      "total_positives": 396
+      "total_positives": 396,
+      "status": "ok",
+      "recommendation": "usar TopK como canal principal"
     },
     {
       "segment_col": "turno",
@@ -87,7 +95,9 @@
       "recall_at_k": 0.763265306122449,
       "lift_vs_random": 2.1529345531315975,
       "positives_captured": 187,
-      "total_positives": 245
+      "total_positives": 245,
+      "status": "ok",
+      "recommendation": "usar TopK como canal principal"
     },
     {
       "segment_col": "Classe",
@@ -102,7 +112,9 @@
       "recall_at_k": 0.767379679144385,
       "lift_vs_random": 1.3369459298871063,
       "positives_captured": 287,
-      "total_positives": 374
+      "total_positives": 374,
+      "status": "ok",
+      "recommendation": "usar TopK como canal principal"
     },
     {
       "segment_col": "turno",
@@ -117,7 +129,9 @@
       "recall_at_k": 0.7974683544303798,
       "lift_vs_random": 2.25,
       "positives_captured": 189,
-      "total_positives": 237
+      "total_positives": 237,
+      "status": "ok",
+      "recommendation": "usar TopK como canal principal"
     },
     {
       "segment_col": "Classe",
@@ -132,7 +146,9 @@
       "recall_at_k": 0.9363057324840764,
       "lift_vs_random": 1.1866886137550992,
       "positives_captured": 147,
-      "total_positives": 157
+      "total_positives": 157,
+      "status": "ok",
+      "recommendation": "usar TopK como canal principal"
     },
     {
       "segment_col": "Frota",
@@ -147,7 +163,9 @@
       "recall_at_k": 1.0,
       "lift_vs_random": 1.0,
       "positives_captured": 2,
-      "total_positives": 2
+      "total_positives": 2,
+      "status": "inconclusivo_baixa_prevalencia",
+      "recommendation": "tratar segmento em trilha separada"
     },
     {
       "segment_col": "Tipo",
@@ -162,7 +180,9 @@
       "recall_at_k": 1.0,
       "lift_vs_random": 1.0,
       "positives_captured": 2,
-      "total_positives": 2
+      "total_positives": 2,
+      "status": "inconclusivo_baixa_prevalencia",
+      "recommendation": "tratar segmento em trilha separada"
     }
   ],
   "strongest_top15_segments": [
@@ -179,7 +199,9 @@
       "recall_at_k": 0.7974683544303798,
       "lift_vs_random": 2.25,
       "positives_captured": 189,
-      "total_positives": 237
+      "total_positives": 237,
+      "status": "ok",
+      "recommendation": "usar TopK como canal principal"
     },
     {
       "segment_col": "turno",
@@ -194,7 +216,9 @@
       "recall_at_k": 0.763265306122449,
       "lift_vs_random": 2.1529345531315975,
       "positives_captured": 187,
-      "total_positives": 245
+      "total_positives": 245,
+      "status": "ok",
+      "recommendation": "usar TopK como canal principal"
     },
     {
       "segment_col": "turno",
@@ -209,7 +233,9 @@
       "recall_at_k": 0.7289719626168224,
       "lift_vs_random": 2.052461059190031,
       "positives_captured": 234,
-      "total_positives": 321
+      "total_positives": 321,
+      "status": "ok",
+      "recommendation": "usar TopK como canal principal"
     },
     {
       "segment_col": "Tipo",
@@ -224,7 +250,9 @@
       "recall_at_k": 0.732360097323601,
       "lift_vs_random": 1.6258394160583942,
       "positives_captured": 301,
-      "total_positives": 411
+      "total_positives": 411,
+      "status": "ok",
+      "recommendation": "usar TopK como canal principal"
     },
     {
       "segment_col": "Classe",
@@ -239,7 +267,9 @@
       "recall_at_k": 0.767379679144385,
       "lift_vs_random": 1.3369459298871063,
       "positives_captured": 287,
-      "total_positives": 374
+      "total_positives": 374,
+      "status": "ok",
+      "recommendation": "usar TopK como canal principal"
     },
     {
       "segment_col": "Classe",
@@ -254,7 +284,9 @@
       "recall_at_k": 0.7474747474747475,
       "lift_vs_random": 1.3172166105499439,
       "positives_captured": 296,
-      "total_positives": 396
+      "total_positives": 396,
+      "status": "ok",
+      "recommendation": "usar TopK como canal principal"
     },
     {
       "segment_col": "Classe",
@@ -269,7 +301,9 @@
       "recall_at_k": 0.9363057324840764,
       "lift_vs_random": 1.1866886137550992,
       "positives_captured": 147,
-      "total_positives": 157
+      "total_positives": 157,
+      "status": "ok",
+      "recommendation": "usar TopK como canal principal"
     },
     {
       "segment_col": "Frota",
@@ -284,7 +318,9 @@
       "recall_at_k": 1.0,
       "lift_vs_random": 1.0,
       "positives_captured": 233,
-      "total_positives": 233
+      "total_positives": 233,
+      "status": "ok",
+      "recommendation": "usar TopK como canal principal"
     },
     {
       "segment_col": "Frota",
@@ -299,7 +335,9 @@
       "recall_at_k": 1.0,
       "lift_vs_random": 1.0,
       "positives_captured": 58,
-      "total_positives": 58
+      "total_positives": 58,
+      "status": "ok",
+      "recommendation": "usar TopK como canal principal"
     },
     {
       "segment_col": "Frota",
@@ -314,7 +352,62 @@
       "recall_at_k": 1.0,
       "lift_vs_random": 1.0,
       "positives_captured": 102,
-      "total_positives": 102
+      "total_positives": 102,
+      "status": "ok",
+      "recommendation": "usar TopK como canal principal"
+    }
+  ],
+  "inconclusive_segments": [
+    {
+      "segment_col": "Classe",
+      "segment_value": "Hibernando",
+      "top_k_tags_per_day": 15,
+      "tag_days": 400,
+      "days": 30,
+      "selected_alerts": 400,
+      "alerts_per_day": 13.333333333333334,
+      "tag_day_prevalence": 0.0,
+      "precision_at_k": 0.0,
+      "recall_at_k": 0.0,
+      "lift_vs_random": 0.0,
+      "positives_captured": 0,
+      "total_positives": 0,
+      "status": "inconclusivo_baixa_prevalencia",
+      "recommendation": "tratar segmento em trilha separada"
+    },
+    {
+      "segment_col": "Frota",
+      "segment_value": "LeTourneau L 1850",
+      "top_k_tags_per_day": 15,
+      "tag_days": 271,
+      "days": 30,
+      "selected_alerts": 271,
+      "alerts_per_day": 9.033333333333333,
+      "tag_day_prevalence": 0.007380073800738007,
+      "precision_at_k": 0.007380073800738007,
+      "recall_at_k": 1.0,
+      "lift_vs_random": 1.0,
+      "positives_captured": 2,
+      "total_positives": 2,
+      "status": "inconclusivo_baixa_prevalencia",
+      "recommendation": "tratar segmento em trilha separada"
+    },
+    {
+      "segment_col": "Tipo",
+      "segment_value": "Escavadeira",
+      "top_k_tags_per_day": 15,
+      "tag_days": 271,
+      "days": 30,
+      "selected_alerts": 271,
+      "alerts_per_day": 9.033333333333333,
+      "tag_day_prevalence": 0.007380073800738007,
+      "precision_at_k": 0.007380073800738007,
+      "recall_at_k": 1.0,
+      "lift_vs_random": 1.0,
+      "positives_captured": 2,
+      "total_positives": 2,
+      "status": "inconclusivo_baixa_prevalencia",
+      "recommendation": "tratar segmento em trilha separada"
     }
   ],
   "top_tag_hotspots": [

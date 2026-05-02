@@ -130,7 +130,8 @@ def _extract_critical_from_prepared_events(
     rules_full = set(map(tuple, rules[full_keys].drop_duplicates().to_numpy()))
     rules_event = set(rules["EVENTO_NORM"].drop_duplicates().to_list())
 
-    full_match = events[full_keys].apply(tuple, axis=1).isin(rules_full) & event_has_full_context
+    event_keys = pd.MultiIndex.from_frame(events[full_keys])
+    full_match = event_keys.isin(rules_full) & event_has_full_context.to_numpy()
     event_only_match = events["EVENTO_NORM"].isin(rules_event) & ~event_has_full_context
     dont_go_fallback = events["IS_DONT_GO"].eq(1)
 

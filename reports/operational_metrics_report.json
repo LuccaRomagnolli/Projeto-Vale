@@ -1,5 +1,5 @@
 {
-  "model_path": "/Users/luccaromagnolli/Desktop/Projeto Vale/models/hist_gbdt_tuned.joblib",
+  "model_path": "models/hist_gbdt_tuned.joblib",
   "model_name": "hist_gbdt_tuned",
   "threshold": 0.1802228521655894,
   "feature_count": 48,
@@ -192,8 +192,8 @@
     "row_positive_capture_after_dedup": 0.07738515901060071
   },
   "outputs": {
-    "budget_metrics_csv": "/Users/luccaromagnolli/Desktop/Projeto Vale/reports/operational_budget_metrics.csv",
-    "daily_topk_metrics_csv": "/Users/luccaromagnolli/Desktop/Projeto Vale/reports/operational_daily_topk_metrics.csv",
-    "deduplicated_alerts_csv": "/Users/luccaromagnolli/Desktop/Projeto Vale/reports/operational_deduplicated_alerts.csv"
+    "budget_metrics_csv": "reports/operational_budget_metrics.csv",
+    "daily_topk_metrics_csv": "reports/operational_daily_topk_metrics.csv",
+    "deduplicated_alerts_csv": "reports/operational_deduplicated_alerts.csv"
   }
 }

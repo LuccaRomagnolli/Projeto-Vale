@@ -1,429 +1,194 @@
-<div align="center">
-  <img src="data:image/jpeg;base64,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" alt="Vale Logo" width="120"/>
-  <h1>⛏️ Mining Fleet Alert Anticipation</h1>
-  <p><strong>Antecipação de alertas críticos em frotas de mineração com Machine Learning</strong></p>
+# Mining Fleet Alert Anticipation
 
-  ![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)
-  ![LightGBM](https://img.shields.io/badge/LightGBM-4.6.0-brightgreen?style=for-the-badge)
-  ![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-orange?style=for-the-badge)
-  ![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
-</div>
+Projeto para antecipacao de alertas criticos ("Don't Go") em equipamentos de mineracao, com foco em priorizacao operacional por `Tag`.
 
----
+## Objetivo
 
-## 📋 Visão Geral
+Responder diariamente: quais equipamentos devem entrar primeiro na fila de manutencao preventiva nas proximas 4 horas.
 
-Este projeto endereça um problema de **alta criticidade operacional em mineração**: antecipar o **alerta Don't Go** em equipamentos de frota pesada antes que ele se materialize.
+O projeto avalia o modelo em duas perspectivas:
 
-Um **alerta Don't Go** indica que o equipamento não deve operar por apresentar condição de risco iminente. A antecipação com **janela de 4 horas** permite que times de despacho e manutenção preventiva ajam antes da falha crítica — reduzindo risco de segurança, indisponibilidade e impacto produtivo.
+1. Classificacao ciclo-a-ciclo (recall, precision, AUC-PR, AUC-ROC).
+2. Priorizacao operacional por `TopK Tag-dia` (precision@k, recall@k, lift@k).
 
-A abordagem integra **regras de negócio + modelagem estatística + aprendizado de máquina**, entregando um score de risco por equipamento (`Tag`) atualizado a cada novo ciclo de operação.
+## Estado Atual (dados de referencia)
 
-### Contexto Operacional
+- Janela de target: `target_4h`.
+- Split temporal: `70/15/15`.
+- Modelo campeao de benchmark: `hist_gbdt_regularized`.
+- Artefato operacional atual: `models/hist_gbdt_tuned.joblib`.
+- Threshold calibrado em validacao: `0.1802228521655894`.
 
-```
-Ciclos de operação registrados continuamente
-        ↓
-Dados transformados em features de risco
-        ↓
-Score de risco por Tag (próximas 4h)
-        ↓
-Dispatcher aciona manutenção preventiva
-```
+Metricas operacionais no teste (`Top15 Tag-dia`):
 
----
+- `precision@15`: `0.6689`
+- `recall@15`: `0.7288`
+- `lift@15`: `2.0569`
 
-## 📐 Arquitetura da Solução
-
-```mermaid
-flowchart LR
-    A[Apontamentos raw] --> B[Alert Labeler\nvia Alarmes xlsx]
-    B --> C[EDA e Qualidade\nde Dados]
-    C --> D[Feature Engineering]
-    D --> E[Split Temporal\nTreino / Val / Teste]
-    E --> F[Baseline Heurístico]
-    E --> G[LightGBM + Optuna]
-    E --> H[Isolation Forest\nopcional]
-    F --> I[Avaliação]
-    G --> I
-    H --> I
-    I --> J[SHAP\nInterpretabilidade]
-    J --> K[Score de Risco\npor Tag]
-    K --> L[Saída Operacional\npara Dispatcher]
-```
-
----
-
-## 🎯 Pergunta Analítica e Critério de Sucesso
-
-### Pergunta Principal
-
-> **Quais equipamentos têm maior risco de gerar um alerta 'Don't Go' nas próximas 4 horas, considerando o padrão atual de operação?**
-
-### Critério Mínimo de Aceite (Piloto)
-
-| Métrica | Meta |
-|---|---|
-| `Recall@Top15 Tag-dia` | ≥ 0.70 |
-| `Precision@Top15 Tag-dia` | ≥ 0.60 |
-| `Lift@Top15 Tag-dia` | ≥ 1.50 vs. seleção aleatória |
-
-A solução é avaliada como **ranking operacional de equipamentos**, não apenas como classificador ciclo-a-ciclo.
-
----
-
-## 📊 Resultados Consolidados
-
-### Performance no Teste Temporal
-
-| Top K Tags/dia | Precision@K | Recall@K | Lift@K | Alertas/dia |
-|---:|---:|---:|---:|---:|
-| 3 | 0.6667 | 0.1453 | 2.0500 | 3 |
-| 5 | 0.6333 | 0.2300 | 1.9475 | 5 |
-| 10 | 0.6767 | 0.4915 | 2.0808 | 10 |
-| **15** | **0.6689** | **0.7288** | **2.0569** | **15** |
-| 20 | 0.6167 | 0.8959 | 1.8963 | 20 |
-
-> ✅ **Critério de aceite atendido** em Top 15: Recall = 0.73 ≥ 0.70 · Precision = 0.67 ≥ 0.60 · Lift = 2.06 ≥ 1.50
-
-### Threshold Calibrado
-
-| Parâmetro | Valor |
-|---|---|
-| `threshold_risco` | `0.1802` |
-| `recall_val` | `0.8077` |
-| `precision_val` | `0.2112` |
-
----
-
-## 🗂️ Estrutura do Projeto
+## Estrutura Real do Repositorio
 
 ```text
-mining-fleet-alert-anticipation/
-├── README.md                              # Documento central do projeto
-├── requirements.txt                       # Dependências fixadas
-├── pyproject.toml                         # Configuração de tooling
-├── Makefile                               # Orquestração do pipeline
-│
+.
 ├── data/
-│   ├── raw/                               # Dados brutos — nunca modificar
-│   │   ├── apontamentos/
-│   │   │   ├── Apontamentos.csv
-│   │   │   └── Apontamentos.parquet
-│   │   └── alarmes_origem/
-│   │       └── Alarmes - SUL_SUDESTE.xlsx
-│   ├── processed/                         # Dados limpos, features e target
+│   ├── raw/
+│   ├── processed/
 │   │   ├── labeled/
-│   │   ├── features/
-│   │   └── scoring/
+│   │   └── features/
 │   └── external/
-│       └── Dicionario_Dados.xlsx
-│
-├── business/
-│   └── Alarmes - SUL_SUDESTE.xlsx         # Regras de negócio (fonte oficial)
-│
-├── notebooks/
-│   ├── 00_extracao_head_dados.ipynb
-│   ├── 01_eda.ipynb
-│   ├── 02_feature_engineering.ipynb
-│   ├── 03_modeling.ipynb
-│   └── 04_evaluation.ipynb
-│
-├── src/
-│   ├── data_loader.py
-│   ├── feature_builder.py
-│   ├── alert_labeler.py
-│   ├── model_trainer.py
-│   ├── evaluator.py
-│   ├── inference.py
-│   └── utils.py
-│
+├── docs/
 ├── models/
-│   ├── baseline_heuristico.pkl
-│   ├── lightgbm_classifier.joblib
-│   ├── isolation_forest.pkl
-│   └── thresholds.json
-│
+├── notebooks/
 ├── reports/
-│   ├── metrics_report.md
-│   ├── model_card_lightgbm.md
-│   ├── drift_report.md
-│   └── figures/
-│
-└── tests/
-    ├── test_data_loader.py
-    ├── test_alert_labeler.py
-    ├── test_feature_builder.py
-    ├── test_model_trainer.py
-    └── test_evaluator.py
+├── src/
+│   ├── alert_labeler.py
+│   ├── data_loader.py
+│   ├── inference.py
+│   ├── data/
+│   ├── eda/
+│   ├── evaluation/
+│   ├── features/
+│   ├── models/
+│   └── utils/
+├── tests/
+├── Makefile
+├── pyproject.toml
+└── requirements.txt
 ```
 
----
+## Pipeline
 
-## 🏷️ Lógica de Rotulação — Alert Labeler
+1. Ingestao e contrato de dados: `src/data_loader.py`
+2. Rotulacao robusta: `src/alert_labeler.py`
+3. EDA: `src/eda/run_eda.py`
+4. Feature engineering: `src/features/build_features.py`
+5. Split temporal e baseline: `src/models/train_baseline.py`
+6. Treino principal supervisionado: `src/models/train_model.py`
+7. Benchmark de candidatos: `src/models/benchmark_models.py`
+8. Tuning e backtesting HistGBDT: `src/models/tune_hist_gbdt.py`
+9. Gate de estabilidade: `src/models/stability_gate.py`
+10. Avaliacao operacional e segmentada:
+    - `src/evaluation/evaluate_model.py`
+    - `src/evaluation/segment_analysis.py`
+11. Inferencia operacional: `src/inference.py`
 
-### Fonte das Regras
+## Setup
 
-O catálogo `Alarmes - SUL_SUDESTE.xlsx` é a fonte oficial de regras de disparo, definidas por combinações de `TIPO + EVENTO + SITUACAO + NIVEL`.
+Requisitos:
 
-### Target Binário — Janela de 4 horas
+- Python `>=3.11,<3.14`
+- Dependencias de `requirements.txt`
 
-```
-target_4h = 1  →  existe ao menos um alerta crítico para a mesma Tag
-                  no intervalo (t0, t0 + 4h]
+## Metodologia de Execucao Recomendada (Mac, mais eficiente)
 
-target_4h = 0  →  nenhum alerta crítico na janela
-```
+Fluxo validado na pratica para evitar retrabalho de ambiente:
 
-Onde `NIVEL = "Muito Alto"` representa os eventos de **máxima criticidade operacional** (alerta Don't Go).
+1. Tentar execucao direta no ambiente ja funcional e validar com `make smoke`.
+2. Se faltar dependencia, criar ambiente `conda` isolado com Python 3.12.
+3. Evitar bootstrap em Python 3.13 para instalacao completa do `requirements.txt`, por causa de incompatibilidade de build do `pyarrow==15.0.2` com `pkg_resources`.
 
-### Alternativa: Modelagem TTE (Time To Event)
-
-Para horizontes variáveis, é possível modelar `tte_horas` — tempo até o próximo alerta crítico — usando abordagem de **sobrevivência com censura à direita**.
-
----
-
-## 🔧 Feature Engineering
-
-### Features Temporais
-
-| Feature | Tipo | Descrição |
-|---|---|---|
-| `hora_do_dia` | numérica | Hora (0–23) do início do ciclo |
-| `dia_da_semana` | numérica | Dia da semana (0–6) |
-| `turno` | categórica | `manhã` / `tarde` / `noite` |
-| `duracao_ciclo_min` | numérica | Duração do ciclo em minutos |
-| `is_fim_de_semana` | binária | 1 se sábado/domingo |
-
-### Features Rolling por Tag (janelas de 4h, 8h, 24h)
-
-| Feature | Descrição |
-|---|---|
-| `n_alertas_0.020833333333333332h` | Alertas críticos recentes |
-| `n_ciclos_0.020833333333333332h` | Quantidade de ciclos recentes |
-| `duracao_media_ciclo_0.020833333333333332h` | Média de duração de ciclo |
-| `freq_classe_atividade_0.020833333333333332h` | Frequência relativa da classe |
-| `dias_desde_ultimo_alerta` | Distância temporal desde último alerta crítico |
-
-### Encoding de Variáveis Categóricas
-
-| Variável | Estratégia | Justificativa |
-|---|---|---|
-| `Tag` | frequency encoding | Alta cardinalidade |
-| `Frota` | one-hot encoding | Cardinalidade moderada |
-| `Tipo` | one-hot encoding | Relação semântica estável |
-| `Classe` | target encoding | Captura associação com risco |
-| `Operador` | frequency encoding | Alta cardinalidade, anonimizado |
-
-> ⚠️ **Target encoding** ajustado exclusivamente nos dados de treino, com smoothing para categorias raras.
-
----
-
-## 📈 Estratégia de Validação Temporal
-
-K-fold aleatório gera **leakage temporal** e superestima a performance real. O projeto adota validação cronológica estrita:
-
-```text
-Tempo ──────────────────────────────────────────────────────────>
-[──────────── TREINO (70%) ────────────][ VAL (15%) ][ TESTE (15%) ]
-t0                                       t_val         t_test
-```
-
-**Variante com janelas expansivas:**
-```text
-Fold 1: [Treino Jan–Fev] → [Val Mar]
-Fold 2: [Treino Jan–Mar] → [Val Abr]
-Fold 3: [Treino Jan–Abr] → [Val Mai]
-```
-
-**Regra de integridade:** rolling windows sempre calculadas até `t0` (exclusivo do futuro).
-
----
-
-## 🤖 Modelos Implementados
-
-| Modelo | Tipo | Artefato |
-|---|---|---|
-| Baseline Heurístico | Regra determinística (frequência histórica 24h) | `baseline_heuristico.pkl` |
-| **LightGBM** | Supervisionado — classificação binária | `lightgbm_classifier.joblib` |
-| Isolation Forest | Detecção de anomalias (complementar) | `isolation_forest.pkl` |
-
-### LightGBM — Modelo Principal
-
-Otimização de hiperparâmetros via **Optuna** com validação temporal. Parâmetros buscados:
-
-`num_leaves` · `learning_rate` · `n_estimators` · `min_child_samples` · `subsample` · `colsample_bytree` · `reg_alpha` · `reg_lambda` · `scale_pos_weight`
-
----
-
-## 🚦 Interpretação Operacional por Faixa de Risco
-
-| Score | Classificação | Ação Recomendada |
-|---|---|---|
-| `≥ 0.80` | 🔴 Risco Muito Alto | Inspeção imediata — possível retirada de operação |
-| `0.50 – 0.79` | 🟠 Risco Alto | Intervenção preventiva no curto prazo |
-| `0.20 – 0.49` | 🟡 Risco Moderado | Monitoramento reforçado |
-| `< 0.20` | 🟢 Risco Baixo | Operação normal |
-
-### Exemplo de Saída de Scoring
-
-| Tag | Frota | Score_Risco | Alerta_Previsto | Antecipação (h) | Ação |
-|---|---|---:|---|---:|---|
-| CAM-042 | SUL-01 | 0.87 | ✅ Sim | 3.2 | Parada imediata para inspeção |
-| CAR-011 | SUL-02 | 0.54 | ✅ Sim | 6.1 | Manutenção preventiva agendada |
-| CAM-007 | SUDE-03 | 0.12 | ❌ Não | — | Continuar operação |
-
----
-
-## ⚡ Setup e Reprodução
-
-### Pré-requisitos
-
-- Python 3.11+
-- `pip` atualizado
-- Acesso aos arquivos de dados originais
-
-### Instalação
+### Caminho rapido (quando ja existe ambiente com dependencias)
 
 ```bash
-# 1. Clonar o repositório
-git clone <repo-url>
-cd mining-fleet-alert-anticipation
+make smoke
+```
 
-# 2. Criar ambiente virtual
+Esse comando roda:
+
+- `make test`
+- `make infer`
+- `make evaluate`
+- `make evaluate-segments`
+
+### Caminho isolado recomendado (do zero)
+
+```bash
+eval "$(/opt/miniconda3/bin/conda shell.zsh hook)"
+conda activate base
+
+conda create -n vale312 python=3.12 -y
+conda activate vale312
+
+python -m pip install -U pip wheel "setuptools<82"
+echo "setuptools<82" > constraints.txt
+python -m pip install -r requirements.txt -c constraints.txt --prefer-binary
+```
+
+Observacao:
+
+- se aparecer `CondaError: KeyboardInterrupt`, a criacao do ambiente foi interrompida; rode novamente `conda create -n vale312 python=3.12 -y` sem cancelar.
+- nao use `source .venv/bin/activate` quando estiver usando `conda`.
+
+### Opcional: venv tradicional
+
+Instalacao com `venv` (quando voce ja possui Python compativel no sistema):
+
+```bash
 python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
-
-# 3. Instalar dependências
+source .venv/bin/activate
 pip install -r requirements.txt
+```
 
-# 4. Configurar variáveis de ambiente
-cp .env.example .env
-# Editar .env com os caminhos dos dados
+## Comandos Principais
 
-# 5. Executar pipeline completo
+```bash
+make label
+make eda
+make features
+make train
+make benchmark
+make tune-hist-gbdt
+make gate-stability
+make evaluate
+make evaluate-segments
+make infer
+make test
+make lint
+```
+
+Pipeline completo:
+
+```bash
 make run-all
 ```
 
-### Execução por Etapa
+## Contrato de Inferencia
 
-```bash
-make label       # Rotulação via regras de negócio
-make eda         # Análise exploratória
-make features    # Feature engineering
-make train       # Treino dos modelos
-make evaluate    # Métricas operacionais TopK
-```
+`src/inference.py` implementa contrato minimo para uso operacional:
 
-### Testes
+- valida artefato (`model`, `feature_columns`, `threshold`);
+- alinha schema de entrada com `feature_columns`;
+- preenche features ausentes com `0.0`;
+- gera `score`, `prediction` e persiste saida em `reports/inference_scores.parquet`.
 
-```bash
-pytest tests/ -v --cov=src
-```
+Entrada esperada: `csv` ou `parquet` com features.
 
----
+## Politica de Promocao
 
-## 🛠️ Makefile — Targets de Referência
+Ver documento oficial:
 
-| Target | Descrição | Saída |
-|---|---|---|
-| `make label` | Rotulação via regras de negócio | `data/processed/labeled/` |
-| `make eda` | EDA e figuras | `reports/figures/` |
-| `make features` | Feature engineering | `data/processed/features/` |
-| `make train` | Treino e persistência de modelos | `models/` |
-| `make benchmark` | Comparação de modelos com split temporal | `reports/model_benchmark_report.*` |
-| `make tune-hist-gbdt` | Otimização + curva de threshold | `reports/hist_gbdt_*` |
-| `make evaluate` | Métricas operacionais TopK | `reports/operational_*` |
-| `make evaluate-segments` | Métricas por Frota, Tipo, turno | `reports/segment_*` |
-| `make gate-stability` | Validação de estabilidade temporal | validação de variância |
-| `make run-all` | Pipeline completo | todos os artefatos |
-| `make test` | Testes unitários | relatório de testes |
-| `make clean` | Remove artefatos (mantém `raw/`) | limpeza controlada |
+- `docs/politica_promocao_modelo.md`
 
----
+Resumo:
 
-## 📦 Dependências Principais
+1. Campeao por validacao temporal (`val_auc_pr`, desempates definidos).
+2. Metas `Top15 Tag-dia` atendidas no teste.
+3. Gate de estabilidade aprovado.
+4. Segmentos raros tratados como inconclusivos, com trilha dedicada.
 
-```txt
-# Data
-pandas==2.2.2
-numpy==1.26.4
-pyarrow==15.0.2
+## Notebooks
 
-# Machine Learning
-scikit-learn==1.4.2
-lightgbm==4.6.0
-optuna==3.6.1
-imbalanced-learn==0.12.2
+Ordem recomendada:
 
-# Interpretabilidade
-shap==0.45.1
+1. `01_business_understanding.ipynb`
+2. `02_data_understanding_eda.ipynb`
+3. `03_data_preparation.ipynb`
+4. `04_modeling_benchmark.ipynb`
+5. `05_operational_evaluation_application.ipynb`
+6. `06_segment_analysis_and_risk.ipynb`
+7. `07_model_governance_and_promotion.ipynb`
+8. `08_executive_readout_for_head_of_tech.ipynb`
 
-# Visualização
-matplotlib==3.8.4
-seaborn==0.13.2
-plotly==5.20.0
+## Observacoes
 
-# Qualidade de código
-pytest==8.2.0
-pytest-cov==5.0.0
-black==24.4.2
-ruff==0.4.4
-```
-
----
-
-## 🗺️ Roadmap Técnico
-
-| Fase | Entregáveis | Status |
-|---|---|---|
-| **Fase 1** — Base Supervisionada | Rotulação + Baseline + LightGBM + threshold operacional | `[em andamento]` |
-| **Fase 2** — Robustez | Monitoramento de drift + testes ampliados + calibração por Frota/Tipo | `[planejado]` |
-| **Fase 3** — Avançado | TTE com sobrevivência · Ensemble anomalia+supervisionado · Streaming near real-time | `[planejado]` |
-
----
-
-## 🏛️ Governança e Boas Práticas
-
-- **Rastreabilidade**: hash de commit + período de dados + versão de dependências por execução
-- **Reprodutibilidade**: `random_state` fixado · dados raw intocados · parâmetros versionados
-- **Segurança**: operador anonimizado · restrição de identificadores sensíveis
-- **Monitoramento pós-produção**: taxa diária de alertas · recall proxy · drift de features · variação de score por Frota/Tipo
-
----
-
-## 📎 Fontes de Dados
-
-| Arquivo | Descrição |
-|---|---|
-| `Apontamentos.csv` / `.parquet` | Tabela principal por ciclo — Tag, Frota, Tipo, Modelo, Classe, Operador, Início, Fim |
-| `Alarmes - SUL_SUDESTE.xlsx` | Catálogo oficial de regras de disparo por `TIPO + EVENTO + SITUACAO + NIVEL` |
-| `Dicionario_Dados.xlsx` | Dicionário de variáveis e semântica de colunas |
-
----
-
-## 📚 Referências
-
-- [SHAP Documentation](https://shap.readthedocs.io)
-- [scikit-learn Documentation](https://scikit-learn.org)
-- [LightGBM Documentation](https://lightgbm.readthedocs.io)
-- [Lifelines — Survival Analysis](https://lifelines.readthedocs.io)
-- [Optuna](https://optuna.readthedocs.io)
-
----
-
-## 📝 Glossário
-
-| Termo | Definição |
-|---|---|
-| **Alerta Don't Go** | Condição crítica em que o equipamento não deve operar |
-| **Tag do equipamento** | Identificador único do equipamento na base |
-| **Janela de predição de 4h** | Horizonte futuro usado para classificação de risco |
-| **TTE** | Time To Event — tempo estimado até o próximo alerta crítico |
-| **Leakage** | Uso indevido de informação futura no treinamento ou validação |
-
----
-
-<div align="center">
-  <sub>Projeto desenvolvido no contexto operacional de mineração · Vale S.A.</sub>
-</div>
+- Alguns relatorios versionados podem conter caminhos absolutos historicos de execucao local.
+- O threshold de operacao deve vir do artefato promovido, nao de valor fixo em variavel de ambiente.

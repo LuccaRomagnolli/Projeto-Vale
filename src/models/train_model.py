@@ -18,7 +18,7 @@ from src.models.validation import (
     compute_binary_metrics,
 )
 from src.utils.config import MODELS_DIR, REPORTS_DIR, SPLIT_DIR
-from src.utils.metadata import build_execution_metadata
+from src.utils.metadata import build_execution_metadata, to_repo_relative_path
 
 MODEL_ARTIFACT_PATH = MODELS_DIR / "model_principal.joblib"
 MODEL_REPORT_PATH = REPORTS_DIR / "model_principal_report.json"
@@ -236,9 +236,9 @@ def save_model_outputs(
         "feature_count": len(feature_columns),
         "feature_columns": feature_columns,
         "metrics": metrics,
-        "artifact_path": str(MODEL_ARTIFACT_PATH),
-        "scores_path": str(MODEL_SCORES_PATH),
-        "feature_importance_path": str(FEATURE_IMPORTANCE_PATH),
+        "artifact_path": to_repo_relative_path(MODEL_ARTIFACT_PATH),
+        "scores_path": to_repo_relative_path(MODEL_SCORES_PATH),
+        "feature_importance_path": to_repo_relative_path(FEATURE_IMPORTANCE_PATH),
         "metadata": metadata,
     }
     MODEL_REPORT_PATH.write_text(json.dumps(report, indent=2, ensure_ascii=False, allow_nan=True))

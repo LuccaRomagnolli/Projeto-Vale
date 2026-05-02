@@ -1,5 +1,25 @@
 # Guia de Notebooks (Workflow Completo)
 
+## Ambiente recomendado antes dos notebooks
+
+Para evitar erro de build em dependencias pesadas, use o mesmo padrao do projeto:
+
+```bash
+eval "$(/opt/miniconda3/bin/conda shell.zsh hook)"
+conda activate base
+conda create -n vale312 python=3.12 -y
+conda activate vale312
+python -m pip install -U pip wheel "setuptools<82"
+echo "setuptools<82" > constraints.txt
+python -m pip install -r requirements.txt -c constraints.txt --prefer-binary
+```
+
+Validacao rapida:
+
+```bash
+make smoke
+```
+
 Sequência completa para avaliação por liderança técnica:
 
 1. `01_business_understanding.ipynb`

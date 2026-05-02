@@ -26,7 +26,7 @@ from src.models.validation import (
     compute_binary_metrics,
 )
 from src.utils.config import FEATURES_DATASET_PATH, MODELS_DIR, REPORTS_DIR, SPLIT_DIR
-from src.utils.metadata import build_execution_metadata
+from src.utils.metadata import build_execution_metadata, to_repo_relative_path
 
 TUNED_MODEL_PATH = MODELS_DIR / "hist_gbdt_tuned.joblib"
 TUNING_REPORT_JSON = REPORTS_DIR / "hist_gbdt_tuning_report.json"
@@ -304,10 +304,10 @@ def save_tuning_outputs(
             "std_test_recall": float(backtest["test_recall"].std(ddof=0)),
             "std_test_precision": float(backtest["test_precision"].std(ddof=0)),
         },
-        "artifact_path": str(TUNED_MODEL_PATH),
-        "csv_path": str(TUNING_REPORT_CSV),
-        "threshold_curve_path": str(THRESHOLD_CURVE_CSV),
-        "backtest_path": str(BACKTEST_REPORT_CSV),
+        "artifact_path": to_repo_relative_path(TUNED_MODEL_PATH),
+        "csv_path": to_repo_relative_path(TUNING_REPORT_CSV),
+        "threshold_curve_path": to_repo_relative_path(THRESHOLD_CURVE_CSV),
+        "backtest_path": to_repo_relative_path(BACKTEST_REPORT_CSV),
     }
     report["metadata"] = build_execution_metadata(
         component="tune_hist_gbdt",

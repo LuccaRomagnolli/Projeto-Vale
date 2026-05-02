@@ -29,7 +29,7 @@ from src.models.train_model import (
 )
 from src.models.validation import TARGET_COL, choose_threshold_for_recall, compute_binary_metrics
 from src.utils.config import MODELS_DIR, REPORTS_DIR, SPLIT_DIR
-from src.utils.metadata import build_execution_metadata
+from src.utils.metadata import build_execution_metadata, to_repo_relative_path
 
 BENCHMARK_REPORT_JSON = REPORTS_DIR / "model_benchmark_report.json"
 BENCHMARK_REPORT_CSV = REPORTS_DIR / "model_benchmark_report.csv"
@@ -245,9 +245,9 @@ def save_benchmark_outputs(
         "leakage_columns": sorted(LEAKAGE_COLUMNS),
         "winner": winner_row,
         "models": summary.to_dict(orient="records"),
-        "scores_path": str(BENCHMARK_SCORES_PATH),
-        "csv_path": str(BENCHMARK_REPORT_CSV),
-        "winner_artifact_path": str(BENCHMARK_WINNER_PATH),
+        "scores_path": to_repo_relative_path(BENCHMARK_SCORES_PATH),
+        "csv_path": to_repo_relative_path(BENCHMARK_REPORT_CSV),
+        "winner_artifact_path": to_repo_relative_path(BENCHMARK_WINNER_PATH),
         "metadata": metadata,
     }
     BENCHMARK_REPORT_JSON.write_text(

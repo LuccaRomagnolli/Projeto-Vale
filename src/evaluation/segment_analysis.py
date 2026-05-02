@@ -13,6 +13,7 @@ from src.evaluation.evaluate_model import _safe_divide, score_split
 from src.models.train_model import load_splits
 from src.models.validation import TARGET_COL
 from src.utils.config import MODELS_DIR, REPORTS_DIR, SPLIT_DIR
+from src.utils.metadata import to_repo_relative_path
 
 TUNED_MODEL_PATH = MODELS_DIR / "hist_gbdt_tuned.joblib"
 SEGMENT_REPORT_JSON = REPORTS_DIR / "segment_operational_report.json"
@@ -260,14 +261,14 @@ def run_segment_analysis(
     )
 
     report = {
-        "model_path": str(model_path),
+        "model_path": to_repo_relative_path(model_path),
         "split": "test",
         "rows": int(len(scored)),
         "segment_columns": ["Frota", "Tipo", "turno", "Classe"],
         "outputs": {
-            "threshold_metrics_csv": str(SEGMENT_THRESHOLD_CSV),
-            "topk_metrics_csv": str(SEGMENT_TOPK_CSV),
-            "tag_hotspots_csv": str(TAG_HOTSPOTS_CSV),
+            "threshold_metrics_csv": to_repo_relative_path(SEGMENT_THRESHOLD_CSV),
+            "topk_metrics_csv": to_repo_relative_path(SEGMENT_TOPK_CSV),
+            "tag_hotspots_csv": to_repo_relative_path(TAG_HOTSPOTS_CSV),
         },
         "weakest_top15_segments": weakest_top15,
         "strongest_top15_segments": strongest_top15,

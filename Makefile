@@ -1,6 +1,6 @@
 PYTHON ?= python3
 
-.PHONY: help install format lint test label eda features train benchmark tune-hist-gbdt gate-stability evaluate evaluate-segments run-all clean
+.PHONY: help install format lint test label eda features train benchmark tune-hist-gbdt gate-stability evaluate evaluate-segments infer smoke run-all clean
 
 help:
 	@echo "Targets:"
@@ -17,6 +17,8 @@ help:
 	@echo "  make gate-stability - validate temporal stability before promotion"
 	@echo "  make evaluate  - run model evaluation"
 	@echo "  make evaluate-segments - run segmented operational evaluation"
+	@echo "  make infer     - run inference on test split with promoted artifact"
+	@echo "  make smoke     - run quick validation (test + infer + evaluate + evaluate-segments)"
 	@echo "  make run-all   - run full pipeline"
 	@echo "  make clean     - remove generated local artifacts"
 
@@ -60,6 +62,11 @@ evaluate:
 
 evaluate-segments:
 	$(PYTHON) -m src.evaluation.segment_analysis
+
+infer:
+	$(PYTHON) -m src.inference
+
+smoke: test infer evaluate evaluate-segments
 
 run-all: label eda features train benchmark tune-hist-gbdt gate-stability evaluate evaluate-segments
 
