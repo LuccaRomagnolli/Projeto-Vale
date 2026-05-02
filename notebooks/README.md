@@ -1,5 +1,14 @@
 # Guia de Notebooks (Workflow Completo)
 
+## Trilha executiva (entrada principal)
+
+1. `09_manager_full_walkthrough.ipynb`
+- Narrativa ponta a ponta para gestor.
+- Leitura completa sem terminal.
+- Gráficos e outputs já renderizados.
+
+## Trilha técnica (suporte e auditoria)
+
 ## Ambiente recomendado antes dos notebooks
 
 Para evitar erro de build em dependencias pesadas, use o mesmo padrao do projeto:
@@ -14,13 +23,13 @@ echo "setuptools<82" > constraints.txt
 python -m pip install -r requirements.txt -c constraints.txt --prefer-binary
 ```
 
-Validacao rapida:
+Validação rápida:
 
 ```bash
 make smoke
 ```
 
-Sequência completa para avaliação por liderança técnica:
+Sequência técnica recomendada:
 
 1. `01_business_understanding.ipynb`
 - Problema, objetivo, KPI oficial e critérios de aceite.

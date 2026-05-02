@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="vale-logo-removebg-preview.png" alt="Vale" width="120"/>
+  <img src="pictures/vale-logo-removebg-preview.png" alt="Vale" width="120"/>
 </p>
 
 <h1 align="center">Mining Fleet Alert Anticipation</h1>
@@ -189,6 +189,12 @@ make run-all
 
 ## Notebooks
 
+Entrada principal para avaliação de gestor:
+
+- `09_manager_full_walkthrough.ipynb`
+
+Trilha técnica de suporte/auditoria:
+
 | # | Notebook |
 |---|---|
 | 01 | `01_business_understanding.ipynb` |
@@ -199,6 +205,7 @@ make run-all
 | 06 | `06_segment_analysis_and_risk.ipynb` |
 | 07 | `07_model_governance_and_promotion.ipynb` |
 | 08 | `08_executive_readout_for_head_of_tech.ipynb` |
+| 09 | `09_manager_full_walkthrough.ipynb` |
 
 ---
 
