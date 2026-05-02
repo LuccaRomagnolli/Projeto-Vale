@@ -20,6 +20,12 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
+from src.evaluation.operational_scorecard import (
+    PRIMARY_TOP_K,
+    attach_operational_metrics,
+    build_scored_frame,
+    compute_split_topk_metrics,
+)
 from src.models.train_model import (
     LEAKAGE_COLUMNS,
     load_splits,
@@ -156,6 +162,15 @@ def _evaluate_candidate(
         "val": compute_binary_metrics(val[TARGET_COL], scores["val"], threshold),
         "test": compute_binary_metrics(test[TARGET_COL], scores["test"], threshold),
     }
+    scored = pd.concat(
+        [
+            build_scored_frame(train, scores["train"], threshold, "train"),
+            build_scored_frame(val, scores["val"], threshold, "val"),
+            build_scored_frame(test, scores["test"], threshold, "test"),
+        ],
+        ignore_index=True,
+    )
+    metrics = attach_operational_metrics(metrics, scored)
     return metrics, scores
 
 
@@ -178,11 +193,20 @@ def _flatten_metrics(
 
 
 def select_winner(summary: pd.DataFrame) -> str:
-    """Seleciona campeao por AUC-PR de validacao e precision como desempate."""
-    ordered = summary.sort_values(
-        ["val_auc_pr", "val_precision", "val_f1"],
-        ascending=[False, False, False],
-    )
+    """Seleciona campeao pelo scorecard operacional de validacao."""
+    operational_cols = [
+        f"val_top{PRIMARY_TOP_K}_recall_at_k",
+        f"val_top{PRIMARY_TOP_K}_precision_at_k",
+        f"val_top{PRIMARY_TOP_K}_lift_vs_random",
+        "val_auc_pr",
+    ]
+    if set(operational_cols).issubset(summary.columns):
+        ordered = summary.sort_values(operational_cols, ascending=[False] * len(operational_cols))
+    else:
+        ordered = summary.sort_values(
+            ["val_auc_pr", "val_precision", "val_f1"],
+            ascending=[False, False, False],
+        )
     return str(ordered.iloc[0]["model_name"])
 
 
@@ -204,28 +228,47 @@ def save_benchmark_outputs(
     winner_row = summary.loc[summary["model_name"] == winner_name].iloc[0].to_dict()
 
     scores_frames = []
-    base_cols = ["Id", "Tag", "Fim", TARGET_COL]
     for model_name, split_scores in all_scores.items():
         threshold = float(summary.loc[summary["model_name"] == model_name, "threshold"].iloc[0])
         for split_name, split_df in {"train": train, "val": val, "test": test}.items():
-            frame = split_df[base_cols].copy()
-            frame["split"] = split_name
-            frame["model_name"] = model_name
-            frame["score"] = split_scores[split_name]
-            frame["prediction"] = (frame["score"] >= threshold).astype(int)
+            frame = build_scored_frame(
+                split_df,
+                split_scores[split_name],
+                threshold,
+                split_name,
+            )
+            frame.insert(4, "model_name", model_name)
             scores_frames.append(frame)
 
-    pd.concat(scores_frames, ignore_index=True).to_parquet(BENCHMARK_SCORES_PATH, index=False)
+    scored_output = pd.concat(scores_frames, ignore_index=True)
+    scored_output.to_parquet(BENCHMARK_SCORES_PATH, index=False)
 
-    summary = summary.sort_values(
-        ["val_auc_pr", "val_precision", "val_f1"], ascending=[False, False, False]
-    ).reset_index(drop=True)
+    topk_frames = []
+    for model_name, group in scored_output.groupby("model_name", sort=False):
+        topk = compute_split_topk_metrics(group)
+        topk.insert(0, "model_name", model_name)
+        topk_frames.append(topk)
+    operational_topk = pd.concat(topk_frames, ignore_index=True) if topk_frames else pd.DataFrame()
+
+    operational_cols = [
+        f"val_top{PRIMARY_TOP_K}_recall_at_k",
+        f"val_top{PRIMARY_TOP_K}_precision_at_k",
+        f"val_top{PRIMARY_TOP_K}_lift_vs_random",
+        "val_auc_pr",
+    ]
+    summary = summary.sort_values(operational_cols, ascending=[False] * len(operational_cols))
+    summary = summary.reset_index(drop=True)
     summary.to_csv(BENCHMARK_REPORT_CSV, index=False)
 
     config_payload = {
-        "selection_rule": "maior val_auc_pr; desempate por val_precision e val_f1",
+        "selection_rule": (
+            f"maior val_top{PRIMARY_TOP_K}_recall_at_k; desempate por "
+            f"val_top{PRIMARY_TOP_K}_precision_at_k, "
+            f"val_top{PRIMARY_TOP_K}_lift_vs_random e val_auc_pr"
+        ),
         "min_recall_calibration": min_recall,
         "candidate_models": sorted(list(trained_models.keys())),
+        "primary_operational_top_k": PRIMARY_TOP_K,
     }
     metadata = build_execution_metadata(
         component="benchmark_models",
@@ -238,13 +281,15 @@ def save_benchmark_outputs(
 
     report = {
         "benchmark_name": "benchmark_modelos_supervisionados",
-        "selection_rule": "maior val_auc_pr; desempate por val_precision e val_f1",
+        "selection_rule": config_payload["selection_rule"],
         "min_recall_calibration": min_recall,
+        "primary_operational_top_k": PRIMARY_TOP_K,
         "feature_count": len(feature_columns),
         "feature_columns": feature_columns,
         "leakage_columns": sorted(LEAKAGE_COLUMNS),
         "winner": winner_row,
         "models": summary.to_dict(orient="records"),
+        "operational_topk": operational_topk.to_dict(orient="records"),
         "scores_path": to_repo_relative_path(BENCHMARK_SCORES_PATH),
         "csv_path": to_repo_relative_path(BENCHMARK_REPORT_CSV),
         "winner_artifact_path": to_repo_relative_path(BENCHMARK_WINNER_PATH),
@@ -261,6 +306,7 @@ def save_benchmark_outputs(
             "feature_columns": feature_columns,
             "threshold": float(winner_row["threshold"]),
             "selection_rule": report["selection_rule"],
+            "primary_operational_top_k": PRIMARY_TOP_K,
         },
         BENCHMARK_WINNER_PATH,
     )
@@ -330,9 +376,28 @@ def main() -> None:
     print(f"[OK] Modelos treinados: {result['models_trained']}")
     print(f"[OK] Features usadas: {result['feature_count']}")
     print(f"[OK] Campeao validacao: {result['winner_name']}")
-    print(f"[OK] AUC-PR validacao: {winner['val_auc_pr']:.6f}")
+    val_precision_key = f"val_top{PRIMARY_TOP_K}_precision_at_k"
+    val_recall_key = f"val_top{PRIMARY_TOP_K}_recall_at_k"
+    val_lift_key = f"val_top{PRIMARY_TOP_K}_lift_vs_random"
+    if {val_precision_key, val_recall_key, val_lift_key}.issubset(winner):
+        print(
+            f"[OK] Top{PRIMARY_TOP_K} Tag-dia validacao: "
+            f"precision={winner[val_precision_key]:.6f}, "
+            f"recall={winner[val_recall_key]:.6f}, "
+            f"lift={winner[val_lift_key]:.6f}"
+        )
+    print(f"[OK] AUC-PR validacao tecnica: {winner['val_auc_pr']:.6f}")
     print(f"[OK] Recall teste: {winner['test_recall']:.6f}")
-    print(f"[OK] AUC-PR teste: {winner['test_auc_pr']:.6f}")
+    test_precision_key = f"test_top{PRIMARY_TOP_K}_precision_at_k"
+    test_recall_key = f"test_top{PRIMARY_TOP_K}_recall_at_k"
+    test_lift_key = f"test_top{PRIMARY_TOP_K}_lift_vs_random"
+    if {test_precision_key, test_recall_key, test_lift_key}.issubset(winner):
+        print(
+            f"[OK] Top{PRIMARY_TOP_K} Tag-dia teste: "
+            f"precision={winner[test_precision_key]:.6f}, "
+            f"recall={winner[test_recall_key]:.6f}, "
+            f"lift={winner[test_lift_key]:.6f}"
+        )
     print(f"[OK] Relatorio JSON: {result['json_path']}")
     print(f"[OK] Relatorio CSV: {result['csv_path']}")
     print(f"[OK] Artefato campeao: {result['winner_artifact_path']}")

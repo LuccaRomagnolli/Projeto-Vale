@@ -12,6 +12,11 @@ import pandas as pd
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.inspection import permutation_importance
 
+from src.evaluation.operational_scorecard import (
+    PRIMARY_TOP_K,
+    attach_operational_metrics,
+    build_scored_frame,
+)
 from src.models.validation import (
     TARGET_COL,
     choose_threshold_for_recall,
@@ -139,6 +144,15 @@ def evaluate_model(
         "val": compute_binary_metrics(val[TARGET_COL], scores["val"], threshold),
         "test": compute_binary_metrics(test[TARGET_COL], scores["test"], threshold),
     }
+    scored = pd.concat(
+        [
+            build_scored_frame(train, scores["train"], threshold, "train"),
+            build_scored_frame(val, scores["val"], threshold, "val"),
+            build_scored_frame(test, scores["test"], threshold, "test"),
+        ],
+        ignore_index=True,
+    )
+    metrics = attach_operational_metrics(metrics, scored)
     return metrics, scores
 
 
@@ -204,10 +218,14 @@ def save_model_outputs(
 
     frames = []
     for split_name, split_df in {"train": train, "val": val, "test": test}.items():
-        output = split_df[["Id", "Tag", "Fim", TARGET_COL]].copy()
-        output["split"] = split_name
-        output["model_score"] = scores[split_name]
-        output["model_pred"] = (output["model_score"] >= metrics["threshold"]).astype(int)
+        output = build_scored_frame(
+            split_df,
+            scores[split_name],
+            metrics["threshold"],
+            split_name,
+        )
+        output["model_score"] = output["score"]
+        output["model_pred"] = output["prediction"]
         frames.append(output)
     pd.concat(frames, ignore_index=True).to_parquet(MODEL_SCORES_PATH, index=False)
 
@@ -218,6 +236,7 @@ def save_model_outputs(
         "leakage_columns": sorted(LEAKAGE_COLUMNS),
         "min_recall_calibration": 0.80,
         "model_library": model_library,
+        "scorecard_operacional": f"Top{PRIMARY_TOP_K} Tag-dia por split temporal",
     }
     period_start = str(train["Fim"].min())
     period_end = str(test["Fim"].max())
@@ -235,6 +254,14 @@ def save_model_outputs(
         "model_library": model_library,
         "feature_count": len(feature_columns),
         "feature_columns": feature_columns,
+        "scorecard_operacional": {
+            "primary_top_k_tags_per_day": PRIMARY_TOP_K,
+            "selection_metric": (
+                f"val_top{PRIMARY_TOP_K}_recall_at_k, "
+                f"val_top{PRIMARY_TOP_K}_precision_at_k e "
+                f"val_top{PRIMARY_TOP_K}_lift_vs_random"
+            ),
+        },
         "metrics": metrics,
         "artifact_path": to_repo_relative_path(MODEL_ARTIFACT_PATH),
         "scores_path": to_repo_relative_path(MODEL_SCORES_PATH),
@@ -290,6 +317,17 @@ def main() -> None:
     print(f"[OK] Threshold validacao: {result['metrics']['threshold']:.6f}")
     print(f"[OK] Recall teste: {result['metrics']['test']['recall']:.6f}")
     print(f"[OK] AUC-PR teste: {result['metrics']['test']['auc_pr']:.6f}")
+    test_metrics = result["metrics"]["test"]
+    precision_key = f"top{PRIMARY_TOP_K}_precision_at_k"
+    recall_key = f"top{PRIMARY_TOP_K}_recall_at_k"
+    lift_key = f"top{PRIMARY_TOP_K}_lift_vs_random"
+    if {precision_key, recall_key, lift_key}.issubset(test_metrics):
+        print(
+            f"[OK] Top{PRIMARY_TOP_K} Tag-dia teste: "
+            f"precision={test_metrics[precision_key]:.6f}, "
+            f"recall={test_metrics[recall_key]:.6f}, "
+            f"lift={test_metrics[lift_key]:.6f}"
+        )
 
 
 if __name__ == "__main__":

@@ -58,17 +58,32 @@ Modelos avaliados:
 ambiente. O ambiente atual foi corrigido com `lightgbm==4.6.0`, portanto o
 benchmark final rodou com 6 candidatos.
 
+## Controle de alteracao metodologica
+
+Registro formal:
+
+- `docs/controle_alteracoes.md`
+
+Resumo:
+
+| Antes | Depois | Motivo |
+|---|---|---|
+| Campeao escolhido por `val_auc_pr` | Campeao escolhido por `val_top15_recall_at_k`, com desempate por `val_top15_precision_at_k`, `val_top15_lift_vs_random` e `val_auc_pr` | A operacao usa o modelo como ranking diario de equipamentos, nao como classificador isolado de ciclos. |
+
 ## Regra de escolha do campeao
 
 O campeao foi escolhido por:
 
-1. Maior `val_auc_pr`.
-2. Desempate por `val_precision`.
-3. Segundo desempate por `val_f1`.
+1. Maior `val_top15_recall_at_k`.
+2. Desempate por `val_top15_precision_at_k`.
+3. Segundo desempate por `val_top15_lift_vs_random`.
+4. AUC-PR de validacao (`val_auc_pr`) apenas como diagnostico tecnico final.
 
-Essa regra e adequada para o problema porque `AUC-PR` mede qualidade do ranking
-em dados desbalanceados e nao depende de um unico threshold. O teste fica
-reservado para estimar desempenho final, sem orientar a escolha.
+Essa regra e adequada para o problema porque reproduz a forma de uso real:
+priorizar equipamentos por `Tag-dia` dentro de uma capacidade diaria. AUC-PR,
+recall e precision ciclo-a-ciclo continuam no relatorio, mas nao sao mais o
+criterio principal de promocao. O teste fica reservado para estimar desempenho
+final, sem orientar a escolha.
 
 Decisao de promocao para producao: alem de vencer a validacao, o modelo precisa
 passar no gate de estabilidade temporal (`make gate-stability`) e cumprir metas
@@ -76,19 +91,19 @@ TopK por segmento critico.
 
 ## Resultado do benchmark
 
-| Modelo | Val AUC-PR | Val Recall | Val Precision | Test AUC-PR | Test Recall | Test Precision | Fit s |
+| Modelo | Val P@15 | Val R@15 | Val Lift@15 | Test P@15 | Test R@15 | Test Lift@15 | Val AUC-PR tecnica |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| `hist_gbdt_regularized` | 0.2710 | 0.8015 | 0.2139 | 0.2736 | 0.8163 | 0.2750 | 3.293 |
-| `hist_gbdt_balanced` | 0.2596 | 0.8054 | 0.2195 | 0.2759 | 0.7927 | 0.2751 | 6.292 |
-| `lightgbm_balanced` | 0.2514 | 0.8095 | 0.2254 | 0.2640 | 0.7817 | 0.2803 | 3.698 |
-| `random_forest_balanced` | 0.2381 | 0.8026 | 0.2098 | 0.2545 | 0.7787 | 0.2572 | 6.711 |
-| `extra_trees_balanced` | 0.2231 | 0.8723 | 0.2069 | 0.2370 | 0.8711 | 0.2534 | 2.857 |
-| `logistic_regression_balanced` | 0.2230 | 0.8084 | 0.1991 | 0.2394 | 0.5854 | 0.2471 | 1.494 |
+| `hist_gbdt_balanced` | 0.6619 | 0.7493 | 2.1231 | 0.6822 | 0.7433 | 2.0979 | 0.2523 |
+| `hist_gbdt_regularized` | 0.6548 | 0.7412 | 2.1002 | 0.6689 | 0.7288 | 2.0569 | 0.2890 |
+| `lightgbm_balanced` | 0.6524 | 0.7385 | 2.0925 | 0.6756 | 0.7361 | 2.0774 | 0.2498 |
+| `logistic_regression_balanced` | 0.6238 | 0.7062 | 2.0009 | 0.6733 | 0.7337 | 2.0705 | 0.2344 |
+| `extra_trees_balanced` | 0.6238 | 0.7062 | 2.0009 | 0.6578 | 0.7167 | 2.0227 | 0.2232 |
+| `random_forest_balanced` | 0.6214 | 0.7035 | 1.9933 | 0.6689 | 0.7288 | 2.0569 | 0.2390 |
 
 Campeao por validacao:
 
 ```text
-hist_gbdt_regularized
+hist_gbdt_balanced
 ```
 
 Artefatos gerados:
@@ -100,16 +115,20 @@ Artefatos gerados:
 | Scores por modelo | `reports/model_benchmark_scores.parquet` |
 | Artefato campeao | `models/model_benchmark_winner.joblib` |
 
+Observacao metodologica: os scores salvos pelo benchmark agora carregam tambem
+`Frota`, `Tipo`, `turno` e `Classe`, permitindo a mesma leitura setorizada usada
+na avaliacao operacional.
+
 ## Leitura dos resultados
 
-O `hist_gbdt_regularized` foi o melhor por validacao e atingiu `recall` de teste
-acima de 0.81. Isso e uma melhoria operacional pequena em relacao ao LightGBM
-principal, que tambem ficou acima da meta inicial de 80% de recall.
+O `hist_gbdt_balanced` foi o melhor por validacao operacional, com
+`Recall@Top15 Tag-dia=0.7493`, `Precision@Top15 Tag-dia=0.6619` e lift acima de
+2.1. No teste, manteve `Recall@Top15 Tag-dia=0.7433`, acima da meta operacional
+de 0.70.
 
-O `hist_gbdt_balanced` ainda teve `test_auc_pr` ligeiramente maior que o campeao,
-mas isso nao deve ser usado para troca de vencedor porque a escolha pelo teste
-contaminaria a avaliacao final. Se quisermos decidir entre os dois, o caminho
-correto e criar novas janelas temporais de backtesting.
+O `hist_gbdt_regularized` continua forte em AUC-PR tecnica, mas perdeu no
+scorecard operacional de validacao. Por isso, nao deve ser promovido apenas por
+ter melhor AUC-PR ciclo-a-ciclo.
 
 O `lightgbm_balanced` nao venceu o benchmark nesta configuracao inicial, mas
 entregou a maior precision de teste entre os candidatos principais e deve ser
@@ -222,9 +241,9 @@ Checks recomendados:
 
 ## Recomendacao pratica de curto prazo
 
-Para a proxima versao, eu promoveria o `hist_gbdt_regularized` como candidato
-operacional porque ele foi escolhido corretamente pela validacao e atingiu maior
-recall em teste.
+Para a proxima versao, eu promoveria o `hist_gbdt_balanced` como candidato
+operacional porque ele foi escolhido pela validacao `Top15 Tag-dia` e manteve
+recall operacional acima de 0.70 no teste temporal.
 
 Antes de colocar como modelo oficial, eu faria:
 

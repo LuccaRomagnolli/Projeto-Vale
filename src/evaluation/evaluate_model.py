@@ -10,6 +10,15 @@ import joblib
 import numpy as np
 import pandas as pd
 
+from src.evaluation.operational_scorecard import (
+    build_tag_day_panel as build_operational_tag_day_panel,
+)
+from src.evaluation.operational_scorecard import (
+    compute_daily_topk_metrics as compute_operational_daily_topk_metrics,
+)
+from src.evaluation.operational_scorecard import (
+    safe_divide,
+)
 from src.models.train_model import load_splits, predict_scores, prepare_model_matrix
 from src.models.validation import TARGET_COL
 from src.utils.config import MODELS_DIR, REPORTS_DIR, SPLIT_DIR
@@ -64,7 +73,7 @@ def build_scored_dataset(
 
 
 def _safe_divide(numerator: float, denominator: float) -> float:
-    return float(numerator / denominator) if denominator else 0.0
+    return safe_divide(numerator, denominator)
 
 
 def summarize_threshold_metrics(scored: pd.DataFrame) -> list[dict[str, Any]]:
@@ -135,17 +144,7 @@ def compute_budget_metrics(
 
 def build_tag_day_panel(scored: pd.DataFrame, split_name: str = "test") -> pd.DataFrame:
     """Agrega ciclos em uma visao operacional Tag-dia."""
-    split_df = scored.loc[scored["split"] == split_name].copy()
-    split_df["data"] = split_df["Fim"].dt.date
-    return (
-        split_df.groupby(["data", "Tag"], as_index=False)
-        .agg(
-            score=("score", "max"),
-            target_4h=(TARGET_COL, "max"),
-            ciclos=("Id", "count"),
-        )
-        .sort_values(["data", "score"], ascending=[True, False])
-    )
+    return build_operational_tag_day_panel(scored, split_name)
 
 
 def compute_daily_topk_metrics(
@@ -154,34 +153,7 @@ def compute_daily_topk_metrics(
     split_name: str = "test",
 ) -> pd.DataFrame:
     """Avalia o cenario mais proximo do painel: top K Tags por dia."""
-    panel = build_tag_day_panel(scored, split_name)
-    prevalence = float(panel["target_4h"].mean()) if len(panel) else 0.0
-    total_positives = int(panel["target_4h"].sum())
-    n_days = max(panel["data"].nunique(), 1)
-
-    rows = []
-    for top_k in top_k_values:
-        selected = panel.groupby("data", group_keys=False).head(top_k)
-        selected_count = int(len(selected))
-        true_positive = int(selected["target_4h"].sum())
-        precision = _safe_divide(true_positive, selected_count)
-        recall = _safe_divide(true_positive, total_positives)
-        rows.append(
-            {
-                "split": split_name,
-                "top_k_tags_per_day": top_k,
-                "days": int(n_days),
-                "selected_alerts": selected_count,
-                "alerts_per_day": selected_count / n_days,
-                "tag_day_prevalence": prevalence,
-                "precision_at_k": precision,
-                "recall_at_k": recall,
-                "lift_vs_random": _safe_divide(precision, prevalence),
-                "positives_captured": true_positive,
-                "total_positives": total_positives,
-            }
-        )
-    return pd.DataFrame(rows)
+    return compute_operational_daily_topk_metrics(scored, top_k_values, split_name)
 
 
 def deduplicate_alerts(

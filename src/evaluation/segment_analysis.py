@@ -10,6 +10,15 @@ import joblib
 import pandas as pd
 
 from src.evaluation.evaluate_model import _safe_divide, score_split
+from src.evaluation.operational_scorecard import (
+    build_segment_tag_day_panel as build_operational_segment_tag_day_panel,
+)
+from src.evaluation.operational_scorecard import (
+    decode_one_hot_prefix as decode_operational_one_hot_prefix,
+)
+from src.evaluation.operational_scorecard import (
+    topk_metrics_by_segment as operational_topk_metrics_by_segment,
+)
 from src.models.train_model import load_splits
 from src.models.validation import TARGET_COL
 from src.utils.config import MODELS_DIR, REPORTS_DIR, SPLIT_DIR
@@ -24,14 +33,7 @@ TAG_HOTSPOTS_CSV = REPORTS_DIR / "segment_tag_hotspots.csv"
 
 def decode_one_hot_prefix(df: pd.DataFrame, prefix: str) -> pd.Series:
     """Reconstrói categoria a partir de colunas one-hot de um prefixo."""
-    columns = [column for column in df.columns if column.startswith(f"{prefix}_")]
-    if not columns:
-        return pd.Series(["desconhecido"] * len(df), index=df.index)
-
-    matrix = df[columns].fillna(False).astype(bool)
-    decoded = matrix.idxmax(axis=1).str.replace(f"{prefix}_", "", regex=False)
-    decoded.loc[~matrix.any(axis=1)] = "desconhecido"
-    return decoded
+    return decode_operational_one_hot_prefix(df, prefix)
 
 
 def load_artifact(model_path: Path = TUNED_MODEL_PATH) -> dict[str, Any]:
@@ -116,17 +118,7 @@ def threshold_metrics_by_segment(
 
 def build_segment_tag_day_panel(scored: pd.DataFrame, segment_col: str) -> pd.DataFrame:
     """Agrega score e target no nivel segmento-dia-Tag."""
-    frame = scored.copy()
-    frame["data"] = frame["Fim"].dt.date
-    return (
-        frame.groupby([segment_col, "data", "Tag"], as_index=False)
-        .agg(
-            score=("score", "max"),
-            target_4h=(TARGET_COL, "max"),
-            ciclos=("Id", "count"),
-        )
-        .sort_values([segment_col, "data", "score"], ascending=[True, True, False])
-    )
+    return build_operational_segment_tag_day_panel(scored, segment_col)
 
 
 def topk_metrics_by_segment(
@@ -137,50 +129,12 @@ def topk_metrics_by_segment(
     min_positives: int = 10,
 ) -> pd.DataFrame:
     """Calcula Precision/Recall/Lift@TopK Tag-dia dentro de cada segmento."""
-    rows = []
-    for segment_col in segment_cols:
-        panel = build_segment_tag_day_panel(scored, segment_col)
-        for segment_value, group in panel.groupby(segment_col, dropna=False):
-            prevalence = float(group["target_4h"].mean()) if len(group) else 0.0
-            positives = int(group["target_4h"].sum())
-            n_days = max(group["data"].nunique(), 1)
-            status = "ok"
-            recommendation = "usar TopK como canal principal"
-            if len(group) < min_tag_days:
-                status = "inconclusivo_baixa_amostra"
-                recommendation = "coletar mais dias de observacao"
-            elif positives < min_positives:
-                status = "inconclusivo_baixa_prevalencia"
-                recommendation = "tratar segmento em trilha separada"
-            for top_k in top_k_values:
-                selected = group.groupby("data", group_keys=False).head(top_k)
-                selected_count = int(len(selected))
-                true_positive = int(selected["target_4h"].sum())
-                precision = _safe_divide(true_positive, selected_count)
-                recall = _safe_divide(true_positive, positives)
-
-                rows.append(
-                    {
-                        "segment_col": segment_col,
-                        "segment_value": str(segment_value),
-                        "top_k_tags_per_day": top_k,
-                        "tag_days": int(len(group)),
-                        "days": int(n_days),
-                        "selected_alerts": selected_count,
-                        "alerts_per_day": selected_count / n_days,
-                        "tag_day_prevalence": prevalence,
-                        "precision_at_k": precision,
-                        "recall_at_k": recall,
-                        "lift_vs_random": _safe_divide(precision, prevalence),
-                        "positives_captured": true_positive,
-                        "total_positives": positives,
-                        "status": status,
-                        "recommendation": recommendation,
-                    }
-                )
-    return pd.DataFrame(rows).sort_values(
-        ["segment_col", "top_k_tags_per_day", "lift_vs_random"],
-        ascending=[True, True, False],
+    return operational_topk_metrics_by_segment(
+        scored,
+        segment_cols=segment_cols,
+        top_k_values=top_k_values,
+        min_tag_days=min_tag_days,
+        min_positives=min_positives,
     )
 
 

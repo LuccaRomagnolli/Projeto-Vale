@@ -7,10 +7,13 @@ from src.models.tune_hist_gbdt import (
 )
 
 
-def test_select_best_candidate_uses_validation_auc_pr() -> None:
+def test_select_best_candidate_uses_operational_validation_scorecard() -> None:
     summary = pd.DataFrame(
         {
             "candidate": ["a", "b"],
+            "val_top15_recall_at_k": [0.9, 0.7],
+            "val_top15_precision_at_k": [0.3, 0.6],
+            "val_top15_lift_vs_random": [1.8, 2.2],
             "val_auc_pr": [0.3, 0.4],
             "val_recall": [0.9, 0.7],
             "val_precision": [0.2, 0.1],
@@ -19,7 +22,7 @@ def test_select_best_candidate_uses_validation_auc_pr() -> None:
 
     best = select_best_candidate(summary)
 
-    assert best["candidate"] == "b"
+    assert best["candidate"] == "a"
 
 
 def test_build_threshold_curve_reports_false_negatives() -> None:

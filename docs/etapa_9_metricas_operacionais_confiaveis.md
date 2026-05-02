@@ -48,7 +48,7 @@ make evaluate
 |---|---|
 | Modelo | `hist_gbdt_tuned` |
 | Features | 48 |
-| Threshold calibrado | 0.180223 |
+| Threshold calibrado | 0.141388 |
 | Split analisado | Teste temporal |
 
 ## Metricas no threshold
@@ -59,14 +59,14 @@ No teste, o threshold calibrado gera:
 |---|---:|
 | Linhas no teste | 56687 |
 | Prevalencia no teste | 0.1498 |
-| Predicoes positivas | 25527 |
-| Taxa alertada | 0.4503 |
-| True positives | 6910 |
-| False positives | 18617 |
-| False negatives | 1580 |
-| Precision | 0.2707 |
-| Recall | 0.8139 |
-| Lift vs aleatorio | 1.8074 |
+| Predicoes positivas | 24925 |
+| Taxa alertada | 0.4397 |
+| True positives | 6797 |
+| False positives | 18128 |
+| False negatives | 1693 |
+| Precision | 0.2727 |
+| Recall | 0.8006 |
+| Lift vs aleatorio | 1.8208 |
 
 Leitura:
 
@@ -81,12 +81,12 @@ maior score, qual qualidade teremos?"
 
 | Budget | Alertas/dia | Precision | Recall | Lift | Positivos capturados |
 |---:|---:|---:|---:|---:|---:|
-| 1% | 19.6 | 0.3933 | 0.0263 | 2.6260 | 223 |
-| 2% | 39.1 | 0.3695 | 0.0494 | 2.4670 | 419 |
-| 5% | 97.8 | 0.3284 | 0.1097 | 2.1927 | 931 |
-| 10% | 195.5 | 0.2785 | 0.1860 | 1.8597 | 1579 |
-| 20% | 391.0 | 0.2320 | 0.3098 | 1.5488 | 2630 |
-| 30% | 586.4 | 0.2488 | 0.4984 | 1.6611 | 4231 |
+| 1% | 19.6 | 0.3386 | 0.0226 | 2.2610 | 192 |
+| 2% | 39.1 | 0.3369 | 0.0450 | 2.2492 | 382 |
+| 5% | 97.8 | 0.2917 | 0.0974 | 1.9477 | 827 |
+| 10% | 195.5 | 0.2611 | 0.1743 | 1.7431 | 1480 |
+| 20% | 391.0 | 0.2363 | 0.3155 | 1.5777 | 2679 |
+| 30% | 586.4 | 0.2396 | 0.4800 | 1.5998 | 4075 |
 
 Leitura:
 
@@ -102,11 +102,11 @@ indica se aquela Tag teve ao menos um risco real.
 
 | Top K Tags/dia | Alertas/dia | Precision | Recall | Lift | Positivos capturados |
 |---:|---:|---:|---:|---:|---:|
-| 3 | 3 | 0.6667 | 0.1453 | 2.0500 | 60 |
+| 3 | 3 | 0.6111 | 0.1332 | 1.8792 | 55 |
 | 5 | 5 | 0.6333 | 0.2300 | 1.9475 | 95 |
 | 10 | 10 | 0.6767 | 0.4915 | 2.0808 | 203 |
-| 15 | 15 | 0.6689 | 0.7288 | 2.0569 | 301 |
-| 20 | 20 | 0.6167 | 0.8959 | 1.8963 | 370 |
+| 15 | 15 | 0.6800 | 0.7409 | 2.0910 | 306 |
+| 20 | 20 | 0.6150 | 0.8935 | 1.8912 | 369 |
 
 Essa e a metrica que eu recomendo levar para a empresa.
 
@@ -124,11 +124,11 @@ cooldown de 4 horas.
 
 | Metrica | Valor |
 |---|---:|
-| Predicoes positivas brutas | 25527 |
-| Alertas deduplicados | 2537 |
-| Alertas deduplicados/dia | 87.5 |
-| Precision deduplicada | 0.2590 |
-| Captura de positivos ciclo-a-ciclo apos dedup | 0.0774 |
+| Predicoes positivas brutas | 24925 |
+| Alertas deduplicados | 2541 |
+| Alertas deduplicados/dia | 87.6 |
+| Precision deduplicada | 0.2621 |
+| Captura de positivos ciclo-a-ciclo apos dedup | 0.0784 |
 
 Leitura:
 
@@ -184,9 +184,9 @@ Resultado atual:
 
 | Criterio | Meta | Atual | Status |
 |---|---:|---:|---|
-| Recall@Top15 Tag-dia | >= 0.70 | 0.7288 | OK |
-| Precision@Top15 Tag-dia | >= 0.60 | 0.6689 | OK |
-| Lift@Top15 Tag-dia | >= 1.50 | 2.0569 | OK |
+| Recall@Top15 Tag-dia | >= 0.70 | 0.7409 | OK |
+| Precision@Top15 Tag-dia | >= 0.60 | 0.6800 | OK |
+| Lift@Top15 Tag-dia | >= 1.50 | 2.0910 | OK |
 
 ## Proxima melhoria
 

@@ -52,6 +52,10 @@
     "Tipo_Caminhao",
     "Tipo_Escavadeira"
   ],
+  "scorecard_operacional": {
+    "primary_top_k_tags_per_day": 15,
+    "selection_metric": "val_top15_recall_at_k, val_top15_precision_at_k e val_top15_lift_vs_random"
+  },
   "metrics": {
     "threshold": 0.10810492961676205,
     "train": {
@@ -60,7 +64,11 @@
       "precision": 0.2934977949136363,
       "f1": 0.45376183625263317,
       "auc_pr": 0.7647577690790994,
-      "auc_roc": 0.9282754310963124
+      "auc_roc": 0.9282754310963124,
+      "top15_precision_at_k": 0.8687830687830688,
+      "top15_recall_at_k": 0.8033268101761253,
+      "top15_lift_vs_random": 2.323272139906191,
+      "top15_alerts_per_day": 15.0
     },
     "val": {
       "threshold": 0.10810492961676205,
@@ -68,7 +76,11 @@
       "precision": 0.21397331765224742,
       "f1": 0.33780098636495504,
       "auc_pr": 0.2391517589291854,
-      "auc_roc": 0.7359842792025661
+      "auc_roc": 0.7359842792025661,
+      "top15_precision_at_k": 0.6547619047619048,
+      "top15_recall_at_k": 0.7412398921832885,
+      "top15_lift_vs_random": 2.100179694519317,
+      "top15_alerts_per_day": 15.0
     },
     "test": {
       "threshold": 0.10810492961676205,
@@ -76,10 +88,239 @@
       "precision": 0.2659511031604055,
       "f1": 0.39768167632634865,
       "auc_pr": 0.2809712433153143,
-      "auc_roc": 0.7455316901801702
-    }
+      "auc_roc": 0.7455316901801702,
+      "top15_precision_at_k": 0.6888888888888889,
+      "top15_recall_at_k": 0.7506053268765133,
+      "top15_lift_vs_random": 2.118375033629271,
+      "top15_alerts_per_day": 15.0
+    },
+    "operational_primary_top_k": 15,
+    "operational_topk": [
+      {
+        "split": "train",
+        "top_k_tags_per_day": 3,
+        "days": 126,
+        "selected_alerts": 378,
+        "alerts_per_day": 3.0,
+        "tag_day_prevalence": 0.3739480424442005,
+        "precision_at_k": 0.9894179894179894,
+        "recall_at_k": 0.18297455968688844,
+        "lift_vs_random": 2.6458702202342126,
+        "positives_captured": 374,
+        "total_positives": 2044
+      },
+      {
+        "split": "train",
+        "top_k_tags_per_day": 5,
+        "days": 126,
+        "selected_alerts": 630,
+        "alerts_per_day": 5.0,
+        "tag_day_prevalence": 0.3739480424442005,
+        "precision_at_k": 0.9698412698412698,
+        "recall_at_k": 0.29892367906066536,
+        "lift_vs_random": 2.5935187773739634,
+        "positives_captured": 611,
+        "total_positives": 2044
+      },
+      {
+        "split": "train",
+        "top_k_tags_per_day": 10,
+        "days": 126,
+        "selected_alerts": 1260,
+        "alerts_per_day": 10.0,
+        "tag_day_prevalence": 0.3739480424442005,
+        "precision_at_k": 0.930952380952381,
+        "recall_at_k": 0.5738747553816047,
+        "lift_vs_random": 2.489523343584009,
+        "positives_captured": 1173,
+        "total_positives": 2044
+      },
+      {
+        "split": "train",
+        "top_k_tags_per_day": 15,
+        "days": 126,
+        "selected_alerts": 1890,
+        "alerts_per_day": 15.0,
+        "tag_day_prevalence": 0.3739480424442005,
+        "precision_at_k": 0.8687830687830688,
+        "recall_at_k": 0.8033268101761253,
+        "lift_vs_random": 2.323272139906191,
+        "positives_captured": 1642,
+        "total_positives": 2044
+      },
+      {
+        "split": "train",
+        "top_k_tags_per_day": 20,
+        "days": 126,
+        "selected_alerts": 2520,
+        "alerts_per_day": 20.0,
+        "tag_day_prevalence": 0.3739480424442005,
+        "precision_at_k": 0.7638888888888888,
+        "recall_at_k": 0.9417808219178082,
+        "lift_vs_random": 2.0427674494455315,
+        "positives_captured": 1925,
+        "total_positives": 2044
+      },
+      {
+        "split": "val",
+        "top_k_tags_per_day": 3,
+        "days": 28,
+        "selected_alerts": 84,
+        "alerts_per_day": 3.0,
+        "tag_day_prevalence": 0.31176470588235294,
+        "precision_at_k": 0.6547619047619048,
+        "recall_at_k": 0.14824797843665768,
+        "lift_vs_random": 2.100179694519317,
+        "positives_captured": 55,
+        "total_positives": 371
+      },
+      {
+        "split": "val",
+        "top_k_tags_per_day": 5,
+        "days": 28,
+        "selected_alerts": 140,
+        "alerts_per_day": 5.0,
+        "tag_day_prevalence": 0.31176470588235294,
+        "precision_at_k": 0.6928571428571428,
+        "recall_at_k": 0.261455525606469,
+        "lift_vs_random": 2.2223719676549862,
+        "positives_captured": 97,
+        "total_positives": 371
+      },
+      {
+        "split": "val",
+        "top_k_tags_per_day": 10,
+        "days": 28,
+        "selected_alerts": 280,
+        "alerts_per_day": 10.0,
+        "tag_day_prevalence": 0.31176470588235294,
+        "precision_at_k": 0.7,
+        "recall_at_k": 0.5283018867924528,
+        "lift_vs_random": 2.2452830188679243,
+        "positives_captured": 196,
+        "total_positives": 371
+      },
+      {
+        "split": "val",
+        "top_k_tags_per_day": 15,
+        "days": 28,
+        "selected_alerts": 420,
+        "alerts_per_day": 15.0,
+        "tag_day_prevalence": 0.31176470588235294,
+        "precision_at_k": 0.6547619047619048,
+        "recall_at_k": 0.7412398921832885,
+        "lift_vs_random": 2.100179694519317,
+        "positives_captured": 275,
+        "total_positives": 371
+      },
+      {
+        "split": "val",
+        "top_k_tags_per_day": 20,
+        "days": 28,
+        "selected_alerts": 560,
+        "alerts_per_day": 20.0,
+        "tag_day_prevalence": 0.31176470588235294,
+        "precision_at_k": 0.5964285714285714,
+        "recall_at_k": 0.9002695417789758,
+        "lift_vs_random": 1.9130727762803235,
+        "positives_captured": 334,
+        "total_positives": 371
+      },
+      {
+        "split": "test",
+        "top_k_tags_per_day": 3,
+        "days": 30,
+        "selected_alerts": 90,
+        "alerts_per_day": 3.0,
+        "tag_day_prevalence": 0.3251968503937008,
+        "precision_at_k": 0.7222222222222222,
+        "recall_at_k": 0.15738498789346247,
+        "lift_vs_random": 2.220877051385526,
+        "positives_captured": 65,
+        "total_positives": 413
+      },
+      {
+        "split": "test",
+        "top_k_tags_per_day": 5,
+        "days": 30,
+        "selected_alerts": 150,
+        "alerts_per_day": 5.0,
+        "tag_day_prevalence": 0.3251968503937008,
+        "precision_at_k": 0.6933333333333334,
+        "recall_at_k": 0.25181598062953997,
+        "lift_vs_random": 2.132041969330105,
+        "positives_captured": 104,
+        "total_positives": 413
+      },
+      {
+        "split": "test",
+        "top_k_tags_per_day": 10,
+        "days": 30,
+        "selected_alerts": 300,
+        "alerts_per_day": 10.0,
+        "tag_day_prevalence": 0.3251968503937008,
+        "precision_at_k": 0.6833333333333333,
+        "recall_at_k": 0.4963680387409201,
+        "lift_vs_random": 2.1012913640032287,
+        "positives_captured": 205,
+        "total_positives": 413
+      },
+      {
+        "split": "test",
+        "top_k_tags_per_day": 15,
+        "days": 30,
+        "selected_alerts": 450,
+        "alerts_per_day": 15.0,
+        "tag_day_prevalence": 0.3251968503937008,
+        "precision_at_k": 0.6888888888888889,
+        "recall_at_k": 0.7506053268765133,
+        "lift_vs_random": 2.118375033629271,
+        "positives_captured": 310,
+        "total_positives": 413
+      },
+      {
+        "split": "test",
+        "top_k_tags_per_day": 20,
+        "days": 30,
+        "selected_alerts": 600,
+        "alerts_per_day": 20.0,
+        "tag_day_prevalence": 0.3251968503937008,
+        "precision_at_k": 0.6266666666666667,
+        "recall_at_k": 0.910411622276029,
+        "lift_vs_random": 1.927037933817595,
+        "positives_captured": 376,
+        "total_positives": 413
+      }
+    ]
   },
-  "artifact_path": "/Users/luccaromagnolli/Desktop/Projeto Vale/models/model_principal.joblib",
-  "scores_path": "/Users/luccaromagnolli/Desktop/Projeto Vale/reports/model_principal_scores.parquet",
-  "feature_importance_path": "/Users/luccaromagnolli/Desktop/Projeto Vale/reports/model_feature_importance.csv"
+  "artifact_path": "models/model_principal.joblib",
+  "scores_path": "reports/model_principal_scores.parquet",
+  "feature_importance_path": "reports/model_feature_importance.csv",
+  "metadata": {
+    "component": "train_model",
+    "executed_at_utc": "2026-05-02T23:32:52.346824+00:00",
+    "data_version": "data_v1",
+    "features_version": "features_v1",
+    "model_version": "model_v1",
+    "feature_count": 48,
+    "seed": 42,
+    "period_start": "2025-01-01 03:03:43+00:00",
+    "period_end": "2025-07-01 03:00:00+00:00",
+    "config_hash": "5c0b37d1e8bd3e9729ecb08547db9a8eb67d60d9e942aa997e1ab76fe2103e77",
+    "config_payload": {
+      "leakage_columns": [
+        "Classe",
+        "Fim",
+        "Id",
+        "Inicio",
+        "Tag",
+        "next_critical_event_time",
+        "target_4h",
+        "tte_horas"
+      ],
+      "min_recall_calibration": 0.8,
+      "model_library": "lightgbm.LGBMClassifier",
+      "scorecard_operacional": "Top15 Tag-dia por split temporal"
+    }
+  }
 }

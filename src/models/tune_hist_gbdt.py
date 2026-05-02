@@ -12,6 +12,11 @@ import numpy as np
 import pandas as pd
 from sklearn.ensemble import HistGradientBoostingClassifier
 
+from src.evaluation.operational_scorecard import (
+    PRIMARY_TOP_K,
+    attach_operational_metrics,
+    build_scored_frame,
+)
 from src.models.train_model import (
     LEAKAGE_COLUMNS,
     load_splits,
@@ -138,15 +143,33 @@ def evaluate_fitted_model(
         "val": compute_binary_metrics(val[TARGET_COL], scores["val"], threshold),
         "test": compute_binary_metrics(test[TARGET_COL], scores["test"], threshold),
     }
+    scored = pd.concat(
+        [
+            build_scored_frame(train, scores["train"], threshold, "train"),
+            build_scored_frame(val, scores["val"], threshold, "val"),
+            build_scored_frame(test, scores["test"], threshold, "test"),
+        ],
+        ignore_index=True,
+    )
+    metrics = attach_operational_metrics(metrics, scored)
     return metrics, scores
 
 
 def select_best_candidate(summary: pd.DataFrame) -> pd.Series:
-    """Escolhe candidato por validacao, sem olhar teste como criterio."""
-    ordered = summary.sort_values(
-        ["val_auc_pr", "val_recall", "val_precision"],
-        ascending=[False, False, False],
-    )
+    """Escolhe candidato por scorecard operacional de validacao."""
+    operational_cols = [
+        f"val_top{PRIMARY_TOP_K}_recall_at_k",
+        f"val_top{PRIMARY_TOP_K}_precision_at_k",
+        f"val_top{PRIMARY_TOP_K}_lift_vs_random",
+        "val_auc_pr",
+    ]
+    if set(operational_cols).issubset(summary.columns):
+        ordered = summary.sort_values(operational_cols, ascending=[False] * len(operational_cols))
+    else:
+        ordered = summary.sort_values(
+            ["val_auc_pr", "val_recall", "val_precision"],
+            ascending=[False, False, False],
+        )
     return ordered.iloc[0]
 
 
@@ -257,9 +280,15 @@ def save_tuning_outputs(
     MODELS_DIR.mkdir(parents=True, exist_ok=True)
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 
+    operational_cols = [
+        f"val_top{PRIMARY_TOP_K}_recall_at_k",
+        f"val_top{PRIMARY_TOP_K}_precision_at_k",
+        f"val_top{PRIMARY_TOP_K}_lift_vs_random",
+        "val_auc_pr",
+    ]
     sorted_summary = summary.sort_values(
-        ["val_auc_pr", "val_recall", "val_precision"],
-        ascending=[False, False, False],
+        operational_cols,
+        ascending=[False] * len(operational_cols),
     ).reset_index(drop=True)
     sorted_summary.to_csv(TUNING_REPORT_CSV, index=False)
     threshold_curve.to_csv(THRESHOLD_CURVE_CSV, index=False)
@@ -282,15 +311,25 @@ def save_tuning_outputs(
                     "class_weight",
                 ]
             },
-            "selection_rule": "maior val_auc_pr; desempate por val_recall e val_precision",
+            "selection_rule": (
+                f"maior val_top{PRIMARY_TOP_K}_recall_at_k; desempate por "
+                f"val_top{PRIMARY_TOP_K}_precision_at_k, "
+                f"val_top{PRIMARY_TOP_K}_lift_vs_random e val_auc_pr"
+            ),
+            "primary_operational_top_k": PRIMARY_TOP_K,
         },
         TUNED_MODEL_PATH,
     )
 
     report = {
         "model_name": "hist_gbdt_tuned",
-        "selection_rule": "maior val_auc_pr; desempate por val_recall e val_precision",
+        "selection_rule": (
+            f"maior val_top{PRIMARY_TOP_K}_recall_at_k; desempate por "
+            f"val_top{PRIMARY_TOP_K}_precision_at_k, "
+            f"val_top{PRIMARY_TOP_K}_lift_vs_random e val_auc_pr"
+        ),
         "min_recall_calibration": min_recall,
+        "primary_operational_top_k": PRIMARY_TOP_K,
         "feature_count": len(feature_columns),
         "feature_columns": feature_columns,
         "leakage_columns": sorted(LEAKAGE_COLUMNS),
@@ -317,6 +356,7 @@ def save_tuning_outputs(
             "selection_rule": report["selection_rule"],
             "min_recall_calibration": min_recall,
             "grid_candidates": int(len(summary)),
+            "primary_operational_top_k": PRIMARY_TOP_K,
         },
         period_start=str(backtest["train_start"].min()),
         period_end=str(backtest["test_end"].max()),
@@ -407,9 +447,28 @@ def main() -> None:
     print(f"[OK] Candidatos testados: {result['candidates_tested']}")
     print(f"[OK] Features usadas: {result['feature_count']}")
     print(f"[OK] Melhor candidato: {best['candidate']}")
-    print(f"[OK] AUC-PR validacao: {best['val_auc_pr']:.6f}")
+    val_precision_key = f"val_top{PRIMARY_TOP_K}_precision_at_k"
+    val_recall_key = f"val_top{PRIMARY_TOP_K}_recall_at_k"
+    val_lift_key = f"val_top{PRIMARY_TOP_K}_lift_vs_random"
+    if {val_precision_key, val_recall_key, val_lift_key}.issubset(best):
+        print(
+            f"[OK] Top{PRIMARY_TOP_K} Tag-dia validacao: "
+            f"precision={best[val_precision_key]:.6f}, "
+            f"recall={best[val_recall_key]:.6f}, "
+            f"lift={best[val_lift_key]:.6f}"
+        )
+    print(f"[OK] AUC-PR validacao tecnica: {best['val_auc_pr']:.6f}")
     print(f"[OK] Recall teste: {best['test_recall']:.6f}")
-    print(f"[OK] AUC-PR teste: {best['test_auc_pr']:.6f}")
+    test_precision_key = f"test_top{PRIMARY_TOP_K}_precision_at_k"
+    test_recall_key = f"test_top{PRIMARY_TOP_K}_recall_at_k"
+    test_lift_key = f"test_top{PRIMARY_TOP_K}_lift_vs_random"
+    if {test_precision_key, test_recall_key, test_lift_key}.issubset(best):
+        print(
+            f"[OK] Top{PRIMARY_TOP_K} Tag-dia teste: "
+            f"precision={best[test_precision_key]:.6f}, "
+            f"recall={best[test_recall_key]:.6f}, "
+            f"lift={best[test_lift_key]:.6f}"
+        )
     print(f"[OK] Backtesting folds: {result['backtest_folds']}")
     print(f"[OK] Artefato: {result['artifact_path']}")
     print(f"[OK] Relatorio: {result['json_path']}")

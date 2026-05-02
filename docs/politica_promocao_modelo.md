@@ -7,19 +7,24 @@ Data: 02/05/2026
 Padronizar a decisao de promocao para evitar ambiguidade entre "modelo principal"
 e "campeao de benchmark".
 
+Controle formal da alteracao metodologica:
+
+- `docs/controle_alteracoes.md`
+
 ## Regras obrigatorias de promocao
 
 Um modelo so pode ser promovido quando TODAS as condicoes abaixo forem verdadeiras:
 
-1. Campeao por validacao temporal no benchmark (`val_auc_pr`, desempate por
-   `val_precision` e `val_f1`).
+1. Campeao por validacao temporal operacional no benchmark (`val_top15_recall_at_k`,
+   desempate por `val_top15_precision_at_k`, `val_top15_lift_vs_random` e
+   `val_auc_pr` apenas como diagnostico tecnico).
 2. Metas operacionais TopK no teste temporal atendidas:
    - `Precision@Top15 Tag-dia >= 0.60`
    - `Recall@Top15 Tag-dia >= 0.70`
    - `Lift@Top15 Tag-dia >= 1.90`
 3. Gate de estabilidade temporal aprovado (`make gate-stability`):
-   - `std(test_recall) <= 0.03`
-   - `std(test_precision) <= 0.05`
+   - `std(test_top15_recall_at_k) <= 0.03`
+   - `std(test_top15_precision_at_k) <= 0.05`
 4. Segmentos de baixa prevalencia identificados como inconclusivos e fora da
    metrica principal de aceite.
 

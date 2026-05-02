@@ -22,10 +22,10 @@
 
 Responder diariamente: **quais equipamentos devem entrar primeiro na fila de manutenção preventiva nas próximas 4 horas.**
 
-O projeto avalia o modelo em duas perspectivas:
+O projeto avalia o modelo com a mesma metodologia operacional em todas as etapas:
 
-1. **Classificação ciclo-a-ciclo** — recall, precision, AUC-PR, AUC-ROC.
-2. **Priorização operacional por `TopK Tag-dia`** — precision@k, recall@k, lift@k.
+1. **Priorização operacional por `TopK Tag-dia`** — precision@k, recall@k, lift@k.
+2. **Classificação ciclo-a-ciclo** — recall, precision, AUC-PR, AUC-ROC como diagnóstico técnico auxiliar.
 
 ---
 
@@ -35,17 +35,17 @@ O projeto avalia o modelo em duas perspectivas:
 |---|---|
 | Janela de target | `target_4h` |
 | Split temporal | `70 / 15 / 15` |
-| Modelo campeão | `hist_gbdt_regularized` |
+| Modelo campeão | `hist_gbdt_balanced` |
 | Artefato operacional | `models/hist_gbdt_tuned.joblib` |
-| Threshold calibrado (validação) | `0.1802228521655894` |
+| Threshold calibrado (validação) | `0.141388104973226` |
 
 ### Métricas Operacionais — `Top15 Tag-dia` (Teste)
 
 | Métrica | Valor |
 |---|---|
-| `precision@15` | **0.6689** |
-| `recall@15` | **0.7288** |
-| `lift@15` | **2.0569** |
+| `precision@15` | **0.6800** |
+| `recall@15` | **0.7409** |
+| `lift@15` | **2.0910** |
 
 ---
 
@@ -179,8 +179,9 @@ make run-all
 ## Política de Promoção
 
 > Documento oficial: `docs/politica_promocao_modelo.md`
+> Controle de alterações: `docs/controle_alteracoes.md`
 
-1. **Campeão por validação temporal** — `val_auc_pr`, com desempates definidos.
+1. **Campeão por validação temporal operacional** — `val_top15_recall_at_k`, com desempate por `val_top15_precision_at_k`, `val_top15_lift_vs_random` e `val_auc_pr`.
 2. **Metas `Top15 Tag-dia` atendidas** no conjunto de teste.
 3. **Gate de estabilidade aprovado** — sem drift ou degradação.
 4. **Segmentos raros** tratados como inconclusivos, com trilha dedicada.

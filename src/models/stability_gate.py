@@ -6,12 +6,21 @@ from pathlib import Path
 
 import pandas as pd
 
+from src.evaluation.operational_scorecard import PRIMARY_TOP_K
 from src.utils.config import REPORTS_DIR
 
 BACKTEST_REPORT_CSV = REPORTS_DIR / "hist_gbdt_backtest_report.csv"
 DEFAULT_MAX_RECALL_STD = 0.03
 DEFAULT_MAX_PRECISION_STD = 0.05
 DEFAULT_MIN_FOLDS = 3
+
+
+def _resolve_stability_columns(df: pd.DataFrame) -> tuple[str, str, str]:
+    operational_recall = f"test_top{PRIMARY_TOP_K}_recall_at_k"
+    operational_precision = f"test_top{PRIMARY_TOP_K}_precision_at_k"
+    if {operational_recall, operational_precision}.issubset(df.columns):
+        return operational_recall, operational_precision, f"Top{PRIMARY_TOP_K} Tag-dia"
+    return "test_recall", "test_precision", "ciclo-a-ciclo"
 
 
 def run_stability_gate(
@@ -29,12 +38,16 @@ def run_stability_gate(
     if len(df) < min_folds:
         raise ValueError(f"Folds insuficientes: {len(df)} < {min_folds}")
 
-    recall_std = float(df["test_recall"].std(ddof=0))
-    precision_std = float(df["test_precision"].std(ddof=0))
+    recall_col, precision_col, metric_family = _resolve_stability_columns(df)
+    recall_std = float(df[recall_col].std(ddof=0))
+    precision_std = float(df[precision_col].std(ddof=0))
     passed = recall_std <= max_recall_std and precision_std <= max_precision_std
     return {
         "passed": passed,
         "folds": int(len(df)),
+        "metric_family": metric_family,
+        "recall_column": recall_col,
+        "precision_column": precision_col,
         "recall_std": recall_std,
         "precision_std": precision_std,
         "max_recall_std": float(max_recall_std),
@@ -47,6 +60,7 @@ def main() -> None:
     print(
         "[OK] Stability gate: "
         f"folds={result['folds']} "
+        f"metric={result['metric_family']} "
         f"recall_std={result['recall_std']:.4f}/{result['max_recall_std']:.4f} "
         f"precision_std={result['precision_std']:.4f}/{result['max_precision_std']:.4f}"
     )
