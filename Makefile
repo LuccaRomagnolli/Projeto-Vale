@@ -33,7 +33,7 @@ lint:
 	$(PYTHON) -m ruff check src tests
 
 test:
-	$(PYTHON) -m pytest tests -v --cov=src --cov-report=term-missing
+	COVERAGE_FILE=.pytest_cache/.coverage $(PYTHON) -m pytest tests -v --cov=src --cov-config=.coveragerc --cov-report=term-missing
 
 label:
 	$(PYTHON) -m src.data.make_dataset
