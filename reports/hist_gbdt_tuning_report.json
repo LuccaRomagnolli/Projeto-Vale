@@ -66,7 +66,7 @@
   ],
   "best_candidate": {
     "candidate": "hist_gbdt_tuned_04",
-    "fit_seconds": 5.424,
+    "fit_seconds": 5.146,
     "threshold": 0.141388104973226,
     "learning_rate": 0.04,
     "max_iter": 420,
@@ -108,7 +108,7 @@
   "candidates": [
     {
       "candidate": "hist_gbdt_tuned_04",
-      "fit_seconds": 5.424,
+      "fit_seconds": 5.146,
       "threshold": 0.141388104973226,
       "learning_rate": 0.04,
       "max_iter": 420,
@@ -149,7 +149,7 @@
     },
     {
       "candidate": "hist_gbdt_tuned_06",
-      "fit_seconds": 3.291,
+      "fit_seconds": 2.766,
       "threshold": 0.2292101257812594,
       "learning_rate": 0.06,
       "max_iter": 260,
@@ -190,7 +190,7 @@
     },
     {
       "candidate": "hist_gbdt_tuned_01",
-      "fit_seconds": 5.423,
+      "fit_seconds": 5.256,
       "threshold": 0.14074897081087234,
       "learning_rate": 0.035,
       "max_iter": 450,
@@ -231,7 +231,7 @@
     },
     {
       "candidate": "hist_gbdt_tuned_05",
-      "fit_seconds": 6.74,
+      "fit_seconds": 6.393,
       "threshold": 0.1550814490843269,
       "learning_rate": 0.03,
       "max_iter": 520,
@@ -272,7 +272,7 @@
     },
     {
       "candidate": "hist_gbdt_tuned_02",
-      "fit_seconds": 4.058,
+      "fit_seconds": 4.233,
       "threshold": 0.1802228521655894,
       "learning_rate": 0.04,
       "max_iter": 350,
@@ -313,7 +313,7 @@
     },
     {
       "candidate": "hist_gbdt_tuned_03",
-      "fit_seconds": 3.986,
+      "fit_seconds": 3.508,
       "threshold": 0.1479048553809928,
       "learning_rate": 0.05,
       "max_iter": 320,
@@ -367,7 +367,7 @@
   "backtest_path": "reports/hist_gbdt_backtest_report.csv",
   "metadata": {
     "component": "tune_hist_gbdt",
-    "executed_at_utc": "2026-05-02T23:34:53.342632+00:00",
+    "executed_at_utc": "2026-05-03T16:44:51.297536+00:00",
     "data_version": "data_v1",
     "features_version": "features_v1",
     "model_version": "model_v1",

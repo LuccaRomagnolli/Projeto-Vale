@@ -67,7 +67,7 @@
   "winner": {
     "model_name": "hist_gbdt_balanced",
     "estimator": "HistGradientBoostingClassifier",
-    "fit_seconds": 4.301,
+    "fit_seconds": 3.672,
     "threshold": 0.11401265843587063,
     "train_threshold": 0.11401265843587063,
     "train_recall": 0.9996185978932074,
@@ -104,7 +104,7 @@
     {
       "model_name": "hist_gbdt_balanced",
       "estimator": "HistGradientBoostingClassifier",
-      "fit_seconds": 4.301,
+      "fit_seconds": 3.672,
       "threshold": 0.11401265843587063,
       "train_threshold": 0.11401265843587063,
       "train_recall": 0.9996185978932074,
@@ -140,7 +140,7 @@
     {
       "model_name": "hist_gbdt_regularized",
       "estimator": "HistGradientBoostingClassifier",
-      "fit_seconds": 4.07,
+      "fit_seconds": 3.745,
       "threshold": 0.1802228521655894,
       "train_threshold": 0.1802228521655894,
       "train_recall": 0.995477660733745,
@@ -176,7 +176,7 @@
     {
       "model_name": "lightgbm_balanced",
       "estimator": "LGBMClassifier",
-      "fit_seconds": 4.028,
+      "fit_seconds": 3.965,
       "threshold": 0.05342917328770441,
       "train_threshold": 0.05342917328770441,
       "train_recall": 0.9974754812931348,
@@ -212,7 +212,7 @@
     {
       "model_name": "logistic_regression_balanced",
       "estimator": "Pipeline",
-      "fit_seconds": 1.768,
+      "fit_seconds": 1.727,
       "threshold": 0.44427066585297253,
       "train_threshold": 0.44427066585297253,
       "train_recall": 0.9631311296767163,
@@ -248,7 +248,7 @@
     {
       "model_name": "extra_trees_balanced",
       "estimator": "Pipeline",
-      "fit_seconds": 3.469,
+      "fit_seconds": 3.361,
       "threshold": 0.36515069044786286,
       "train_threshold": 0.36515069044786286,
       "train_recall": 0.9853069378859426,
@@ -284,9 +284,9 @@
     {
       "model_name": "random_forest_balanced",
       "estimator": "Pipeline",
-      "fit_seconds": 8.978,
-      "threshold": 0.3515842663756278,
-      "train_threshold": 0.3515842663756278,
+      "fit_seconds": 8.49,
+      "threshold": 0.35158426637562773,
+      "train_threshold": 0.35158426637562773,
       "train_recall": 0.9832909553214675,
       "train_precision": 0.3251807894673618,
       "train_f1": 0.4887340218097783,
@@ -296,7 +296,7 @@
       "train_top15_recall_at_k": 0.7588062622309197,
       "train_top15_lift_vs_random": 2.1945158885472,
       "train_top15_alerts_per_day": 15.0,
-      "val_threshold": 0.3515842663756278,
+      "val_threshold": 0.35158426637562773,
       "val_recall": 0.8559427076160309,
       "val_precision": 0.20686326720809478,
       "val_f1": 0.3331993030424876,
@@ -306,7 +306,7 @@
       "val_top15_recall_at_k": 0.7035040431266847,
       "val_top15_lift_vs_random": 1.9932614555256065,
       "val_top15_alerts_per_day": 15.0,
-      "test_threshold": 0.3515842663756278,
+      "test_threshold": 0.35158426637562773,
       "test_recall": 0.8661955241460542,
       "test_precision": 0.2553560887530817,
       "test_f1": 0.3944326745152726,
@@ -1585,7 +1585,7 @@
   "winner_artifact_path": "models/model_benchmark_winner.joblib",
   "metadata": {
     "component": "benchmark_models",
-    "executed_at_utc": "2026-05-02T23:33:40.253477+00:00",
+    "executed_at_utc": "2026-05-03T16:43:44.546398+00:00",
     "data_version": "data_v1",
     "features_version": "features_v1",
     "model_version": "model_v1",

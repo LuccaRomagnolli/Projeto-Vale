@@ -298,7 +298,7 @@
   "feature_importance_path": "reports/model_feature_importance.csv",
   "metadata": {
     "component": "train_model",
-    "executed_at_utc": "2026-05-02T23:32:52.346824+00:00",
+    "executed_at_utc": "2026-05-03T16:43:01.754311+00:00",
     "data_version": "data_v1",
     "features_version": "features_v1",
     "model_version": "model_v1",
