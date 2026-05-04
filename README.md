@@ -215,23 +215,12 @@ make run-all
 
 ## Notebooks
 
-Entrada principal para avaliação de gestor:
+Notebook ativo do projeto:
 
-- `09_manager_full_walkthrough.ipynb`
+- `notebooks/main.ipynb` - walkthrough tecnico-executivo consolidado.
 
-Trilha técnica de suporte/auditoria:
-
-| # | Notebook |
-|---|---|
-| 01 | `01_business_understanding.ipynb` |
-| 02 | `02_data_understanding_eda.ipynb` |
-| 03 | `03_data_preparation.ipynb` |
-| 04 | `04_modeling_benchmark.ipynb` |
-| 05 | `05_operational_evaluation_application.ipynb` |
-| 06 | `06_segment_analysis_and_risk.ipynb` |
-| 07 | `07_model_governance_and_promotion.ipynb` |
-| 08 | `08_executive_readout_for_head_of_tech.ipynb` |
-| 09 | `09_manager_full_walkthrough.ipynb` |
+> Observacao: referencias antigas a notebooks `01..09` foram removidas da
+> documentacao por nao refletirem mais a estrutura atual versionada.
 
 ---
 

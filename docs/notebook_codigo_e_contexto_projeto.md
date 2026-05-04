@@ -1,3 +1,68 @@
+# Notebook principal e contexto do projeto
+
+Data de atualizacao: 04/05/2026
+
+Arquivo fonte:
+
+- `notebooks/main.ipynb`
+
+## Objetivo do notebook
+
+Consolidar a leitura tecnico-executiva do projeto em um unico fluxo:
+
+1. contexto de negocio;
+2. qualidade dos dados;
+3. engenharia de features;
+4. benchmark de modelos;
+5. avaliacao operacional (`TopK Tag-dia`);
+6. riscos segmentados e recomendacao final.
+
+## Escopo atual (fonte de verdade)
+
+Este documento foi atualizado para refletir apenas o que existe hoje no
+repositorio. As referencias oficiais sao:
+
+- `README.md`
+- `docs/politica_promocao_modelo.md`
+- `docs/controle_alteracoes.md`
+- `reports/model_benchmark_report.json`
+- `reports/hist_gbdt_tuning_report.json`
+- `reports/operational_metrics_report.json`
+- `reports/segment_operational_report.json`
+
+## Mudancas aplicadas nesta atualizacao
+
+1. Remocao de listagens antigas de notebooks `01..09` que nao fazem parte da
+   estrutura atual versionada.
+2. Consolidacao da trilha analitica no notebook unico `notebooks/main.ipynb`.
+3. Alinhamento metodologico com a politica operacional vigente:
+   - selecao por validacao temporal operacional;
+   - metrica executiva centrada em `TopK Tag-dia`;
+   - gate de estabilidade e avaliacao segmentada antes de promocao.
+
+## Como reproduzir o notebook com dados atuais
+
+1. Executar pipeline base:
+
+```bash
+make run-all
+```
+
+2. Opcional para validacao rapida:
+
+```bash
+make smoke
+```
+
+3. Abrir e executar:
+
+- `notebooks/main.ipynb`
+
+## Observacao de governanca
+
+Sempre que houver alteracao de metrica principal, threshold operacional, ou
+politica de promocao, este documento e o `README.md` devem ser atualizados na
+mesma entrega para evitar divergencia de documentacao.
 # Codigo do Notebook e Contexto do Projeto
 
 Data de geracao: 2026-05-03

@@ -1,11 +1,17 @@
+<p align="center">
+  <img src="../../../../pictures/vale-logo-removebg-preview.png" alt="Vale" width="120"/>
+</p>
+
 # Pasta de Datasets
 
-Em cada pastas existem 2 arquivos:
+Nesta pasta existem arquivos de exemplo e dados brutos usados no projeto.
 
-- Arquivo '.xlsx' de Apontamentos: Contém exemplos de apontamentos (códigos) de parada, manutenção e produção.
-- Arquivo '.xlsx' de Telemetria: Contém um exemplo da sequencia de eventos que geraram um alerta Don't Go.
-
-- Arquivos '.parquet': Contém os dados brutos de telemetria e apontamentos.
+- Arquivo `.xlsx` de apontamentos: exemplos de apontamentos (parada,
+  manutencao e producao).
+- Arquivo `.xlsx` de telemetria: exemplo da sequencia de eventos associada a
+  alerta `Don't Go`.
+- Arquivos `.parquet`: dados brutos de telemetria e apontamentos usados no
+  pipeline.
 
 ## Resumo dos Dados
 === Apontamentos ===
