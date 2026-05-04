@@ -4,7 +4,6 @@ import pandas as pd
 import pytest
 from src.models.benchmark_models import (
     build_candidate_models,
-    choose_top_candidates,
     run_benchmark_pipeline,
     select_winner,
 )
@@ -54,11 +53,6 @@ def test_build_candidate_models_includes_lightgbm_when_installed() -> None:
     assert "lightgbm_balanced" in candidates
 
 
-def test_choose_top_candidates_returns_exactly_four_models() -> None:
-    selected = choose_top_candidates(build_candidate_models())
-    assert len(selected) == 4
-
-
 def test_run_benchmark_pipeline_writes_outputs(tmp_path: Path, monkeypatch) -> None:
     split_dir = tmp_path / "splits"
     split_dir.mkdir(parents=True)
@@ -82,22 +76,15 @@ def test_run_benchmark_pipeline_writes_outputs(tmp_path: Path, monkeypatch) -> N
         tmp_path / "reports" / "model_benchmark_scores.parquet",
     )
     monkeypatch.setattr(
-        "src.models.benchmark_models.BENCHMARK_SELECTED_PATH",
-        tmp_path / "models" / "model_benchmark_selected.joblib",
-    )
-    monkeypatch.setattr(
-        "src.models.benchmark_models.BENCHMARK_ITERATION_REPORT_CSV",
-        tmp_path / "reports" / "model_benchmark_iteration_report.csv",
+        "src.models.benchmark_models.BENCHMARK_WINNER_PATH",
+        tmp_path / "models" / "model_benchmark_winner.joblib",
     )
 
-    result = run_benchmark_pipeline(split_dir, random_states=(1, 2))
+    result = run_benchmark_pipeline(split_dir)
 
-    assert result["models_trained"] == 4
-    assert result["models_selected_for_benchmark"] == 4
-    assert result["iterations_per_model"] == 2
-    assert result["selected_name"]
+    assert result["models_trained"] >= 3
+    assert result["winner_name"]
     assert Path(result["json_path"]).exists()
     assert Path(result["csv_path"]).exists()
-    assert Path(result["iteration_csv_path"]).exists()
     assert Path(result["scores_path"]).exists()
-    assert Path(result["selected_artifact_path"]).exists()
+    assert Path(result["winner_artifact_path"]).exists()

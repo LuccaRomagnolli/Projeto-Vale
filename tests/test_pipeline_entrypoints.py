@@ -137,16 +137,13 @@ def test_benchmark_models_main_runs(capsys, monkeypatch) -> None:
         benchmark_models,
         "run_benchmark_pipeline",
         lambda: {
-            "models_trained": 4,
-            "models_selected_for_benchmark": 4,
-            "iterations_per_model": 3,
+            "models_trained": 2,
             "feature_count": 3,
-            "selected_name": "test.Model",
+            "winner_name": "test.Model",
             "json_path": "/tmp/benchmark.json",
             "csv_path": "/tmp/benchmark.csv",
-            "iteration_csv_path": "/tmp/benchmark_iterations.csv",
-            "selected_artifact_path": "/tmp/selected.joblib",
-            "selected_model": {
+            "winner_artifact_path": "/tmp/winner.joblib",
+            "winner": {
                 "val_auc_pr": 0.5,
                 "test_recall": 0.8,
                 "test_auc_pr": 0.4,
