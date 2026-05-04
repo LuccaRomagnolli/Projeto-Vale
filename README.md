@@ -49,6 +49,26 @@ O projeto avalia o modelo com a mesma metodologia operacional em todas as etapas
 
 ---
 
+## Viabilidade e Metodologia (Resumo Executivo)
+
+O projeto esta metodologicamente viavel para **piloto operacional assistido**,
+porque:
+
+1. Usa **split temporal 70/15/15** e threshold calibrado somente na validacao.
+2. Prioriza metrica operacional aderente ao uso real: **TopK Tag-dia**.
+3. Exige gate de estabilidade antes de promocao (`make gate-stability`).
+4. Mantem avaliacao segmentada e separa segmentos de baixa prevalencia como
+   inconclusivos.
+
+Limites atuais conhecidos:
+
+- O uso por threshold global ciclo-a-ciclo ainda gera taxa de alertas alta.
+- Segmentos raros (ex.: baixa prevalencia) exigem trilha dedicada.
+- A confianca operacional depende de monitoramento continuo de drift e de
+  regressao de metricas em CI.
+
+---
+
 ## Estrutura do Repositório
 
 ```text
@@ -115,9 +135,6 @@ Executa em sequência: `make test` → `make infer` → `make evaluate` → `mak
 ### Ambiente isolado recomendado (do zero)
 
 ```bash
-eval "$(/opt/miniconda3/bin/conda shell.zsh hook)"
-conda activate base
-
 conda create -n vale312 python=3.12 -y
 conda activate vale312
 
@@ -126,7 +143,15 @@ echo "setuptools<82" > constraints.txt
 python -m pip install -r requirements.txt -c constraints.txt --prefer-binary
 ```
 
-> **Atenção:** Se aparecer `CondaError: KeyboardInterrupt`, a criação foi interrompida — rode novamente sem cancelar. Não use `source .venv/bin/activate` em conjunto com `conda`.
+> **Windows (PowerShell):**
+> `conda activate` funciona apos `conda init powershell` e reinicio do terminal.
+>
+> **macOS/Linux:**
+> use `eval "$(conda shell.bash hook)"` ou equivalente do seu shell antes do
+> `conda activate`.
+>
+> Se aparecer `CondaError: KeyboardInterrupt`, a criacao foi interrompida;
+> execute novamente sem cancelar.
 
 ### Alternativa: venv tradicional
 

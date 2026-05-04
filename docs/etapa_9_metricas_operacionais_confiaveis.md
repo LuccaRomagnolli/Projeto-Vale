@@ -91,7 +91,7 @@ maior score, qual qualidade teremos?"
 Leitura:
 
 1. O modelo e mais confiavel quando usado como priorizador, nao como classificador binario amplo.
-2. Nos top 1% dos ciclos, a precision sobe para 39.3%, com lift 2.63.
+2. Nos top 1% dos ciclos, a precision sobe para 33.9%, com lift 2.26.
 3. O recall fica baixo nos budgets pequenos porque o volume analisado e pequeno.
 
 ## Metricas por Tag-dia
@@ -113,7 +113,7 @@ Essa e a metrica que eu recomendo levar para a empresa.
 Leitura:
 
 1. Top 10 Tags/dia captura 49.2% dos casos Tag-dia positivos com precision de 67.7%.
-2. Top 15 Tags/dia captura 72.9% dos casos Tag-dia positivos com precision de 66.9%.
+2. Top 15 Tags/dia captura 74.1% dos casos Tag-dia positivos com precision de 68.0%.
 3. Top 20 Tags/dia captura 89.6% dos casos Tag-dia positivos com precision de 61.7%.
 4. O lift fica perto de 2x, ou seja, a priorizacao e aproximadamente duas vezes melhor que escolha aleatoria.
 
@@ -172,6 +172,21 @@ Justificativa:
 AUC-PR e precision global continuam sendo metricas tecnicas auxiliares, mas nao
 devem ser usadas como criterio unico de sucesso do projeto. Para o uso real, o
 modelo deve ser avaliado como ranking operacional de equipamentos.
+
+## Validade metodologica e viabilidade operacional
+
+Pontos que sustentam viabilidade:
+
+1. A selecao de modelo ocorre por validacao temporal, sem usar o teste para escolher campeao.
+2. O criterio principal (TopK Tag-dia) esta alinhado com a capacidade diaria de manutencao.
+3. O threshold e calibrado fora do teste, reduzindo risco de ajuste oportunista.
+4. O projeto mede ganho relativo via lift, evitando leitura isolada de precision.
+
+Riscos a monitorar para manter viabilidade:
+
+1. Drift temporal de prevalencia pode degradar rapidamente precision@K.
+2. Segmentos com baixa prevalencia precisam trilha separada para evitar conclusoes falsas.
+3. Sem regressao automatica de metricas em CI, o desempenho pode cair silenciosamente.
 
 Nova metrica de sucesso recomendada:
 

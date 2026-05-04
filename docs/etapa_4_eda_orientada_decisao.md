@@ -46,4 +46,18 @@ Executar EDA reprodutivel para entender desbalanceamento, qualidade e comportame
 3. Cobertura temporal de `2025-01-01` até `2025-07-01` (UTC).
 4. Duração média de ciclo: `29.6854 min` (P95 `60.0 min`).
 
+## Leitura metodologica
+
+1. A taxa de positivos (~18.7%) confirma desbalanceamento moderado, exigindo metricas robustas para ranking e nao apenas acuracia.
+2. A cobertura temporal de 6 meses e suficiente para split temporal inicial e backtesting, mas ainda exige monitoramento continuo de sazonalidade.
+3. A dispersao de duracao de ciclo (media vs P95) indica heterogeneidade operacional relevante para feature engineering.
+
+## Viabilidade para as proximas etapas
+
+Com base nesta EDA, a continuidade para modelagem e viavel porque:
+
+- ha volume suficiente por periodo;
+- ha variacao temporal e operacional capturavel por features;
+- o target apresenta prevalencia adequada para treinamento supervisionado e avaliacao TopK.
+
 Status: `CONCLUIDA`
