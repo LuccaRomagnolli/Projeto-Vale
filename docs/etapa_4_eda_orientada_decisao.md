@@ -1,63 +1,82 @@
+<p align="center">
+  <img src="../pictures/vale-logo-removebg-preview.png" alt="Vale" width="120"/>
+</p>
+
+<h1 align="center">Mining Fleet Alert Anticipation</h1>
+
+<p align="center">
+  Antecipacao de alertas criticos <strong>"Don't Go"</strong> em equipamentos de mineracao,<br>
+  com foco em priorizacao operacional por <code>Tag</code>.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.11%20%E2%80%93%203.13-1D9E75?style=flat-square&logo=python&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Modelo-HistGBDT-EF9F27?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Janela-4h-085041?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Split-70/15/15-888780?style=flat-square"/>
+</p>
+
+---
+
 # Etapa 4 - EDA orientada a decisao
 
-Data: 02/05/2026
+Data: 04/05/2026
 
 ## Objetivo
 
-Executar EDA reprodutivel para entender desbalanceamento, qualidade e comportamento operacional antes da engenharia de atributos.
+Executar analise exploratoria reprodutivel para entender volume, cobertura
+temporal, distribuicao do alvo, qualidade de dados e variaveis operacionais
+antes da engenharia de atributos.
 
-## Entregaveis implementados
+## Entregaveis
 
-1. Pipeline de EDA em `src/eda/run_eda.py`.
-2. Atualizacao do target `make eda` para execucao real.
-3. Geracao automatica de:
-   - `reports/eda_report.md`
-   - figuras em `reports/figures/`
-4. Testes unitarios da etapa em `tests/test_eda.py`.
+| Entrega | Caminho |
+|---|---|
+| Pipeline de EDA | `src/eda/run_eda.py` |
+| Relatorio | `reports/eda_report.md` |
+| Sumario visual | `reports/eda_executivo.png` |
+| Figuras | `reports/figures/` |
+| Testes | `tests/test_eda.py`, `tests/test_eda_pipeline_outputs.py` |
 
-## Validacao planejada
+## Resultado principal
 
-1. `make lint`
-2. `make test`
-3. `make eda`
+| Indicador | Valor |
+|---|---:|
+| Registros analisados | `377907` |
+| Tags unicas | `47` |
+| Frotas unicas | `5` |
+| Tipos unicos | `2` |
+| Positivos `target_4h` | `70811` |
+| Taxa de positivos | `18.737679%` |
+| Inicio minimo | `2025-01-01 03:00:00+00:00` |
+| Inicio maximo | `2025-07-01 02:57:55+00:00` |
+| Duracao media de ciclo | `29.6854 min` |
+| Duracao mediana de ciclo | `22.9 min` |
+| P95 de duracao | `60.0 min` |
 
-## Resultado da validacao
+## Qualidade observada
 
-- `make lint`: OK
-- `make test`: OK
-- `make eda`: OK
-- Testes: `23 passed`
-- Cobertura total em `src`: `82%`
+| Coluna | Nulos |
+|---|---:|
+| `next_critical_event_time` | `19.3161%` |
+| `tte_horas` | `19.3161%` |
+| Colunas obrigatorias de ingestao | `0.0%` |
 
-## Artefatos gerados
+## Figuras geradas
 
-1. `reports/eda_report.md`
-2. `reports/figures/eda_target_distribution.png`
-3. `reports/figures/eda_ciclos_por_hora.png`
-4. `reports/figures/eda_top_frotas.png`
-5. `reports/figures/eda_duracao_ciclo_hist.png`
-6. `reports/figures/eda_top_classes.png`
-7. `notebooks/01_eda.ipynb`
+- `reports/figures/eda_target_distribution.png`
+- `reports/figures/eda_ciclos_por_hora.png`
+- `reports/figures/eda_top_frotas.png`
+- `reports/figures/eda_duracao_ciclo_hist.png`
+- `reports/figures/eda_top_classes.png`
 
-## Achados principais
+## Decisao
 
-1. Dataset rotulado analisado: `377907` registros.
-2. Target `target_4h` com `70811` positivos (`18.737679%`) apos a correcao da fonte de rotulacao (3b).
-3. Cobertura temporal de `2025-01-01` até `2025-07-01` (UTC).
-4. Duração média de ciclo: `29.6854 min` (P95 `60.0 min`).
+Status: `CONCLUIDA`. O dataset tem volume, cobertura temporal e prevalencia
+adequados para modelagem supervisionada com avaliacao temporal e metrica TopK.
 
-## Leitura metodologica
+---
 
-1. A taxa de positivos (~18.7%) confirma desbalanceamento moderado, exigindo metricas robustas para ranking e nao apenas acuracia.
-2. A cobertura temporal de 6 meses e suficiente para split temporal inicial e backtesting, mas ainda exige monitoramento continuo de sazonalidade.
-3. A dispersao de duracao de ciclo (media vs P95) indica heterogeneidade operacional relevante para feature engineering.
-
-## Viabilidade para as proximas etapas
-
-Com base nesta EDA, a continuidade para modelagem e viavel porque:
-
-- ha volume suficiente por periodo;
-- ha variacao temporal e operacional capturavel por features;
-- o target apresenta prevalencia adequada para treinamento supervisionado e avaliacao TopK.
-
-Status: `CONCLUIDA`
+<p align="center">
+  <sub>Vale · Mining Operations · Fleet Alert Anticipation</sub>
+</p>

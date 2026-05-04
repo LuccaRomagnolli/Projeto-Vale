@@ -20,66 +20,57 @@
 
 # Etapa 6 - Validacao temporal e baseline
 
-Data: 02/05/2026
+Data: 04/05/2026
 
 ## Objetivo
 
-Implementar split temporal 70/15/15 e baseline heuristico para servir como referencia minima antes dos modelos supervisionados.
+Congelar um split temporal honesto e treinar um baseline heuristico para servir
+como referencia minima antes da selecao de modelos supervisionados.
 
-## Entregaveis implementados
+## Entregaveis
 
-1. Split temporal em `src/models/validation.py`.
-2. Persistencia dos splits:
-   - `data/processed/features/splits/features_train.parquet`
-   - `data/processed/features/splits/features_val.parquet`
-   - `data/processed/features/splits/features_test.parquet`
-3. Baseline heuristico em `src/models/train_baseline.py`.
-4. Score do baseline:
-   - `baseline_score = clip(n_alertas_24h / 24, 0, 1)`
-5. Threshold calibrado na validacao temporal com alvo de recall minimo.
-6. Artefatos:
-   - `models/baseline_heuristico.joblib`
-   - `reports/baseline_report.json`
-   - `reports/baseline_scores.parquet`
-7. Testes unitarios:
-   - `tests/test_validation.py`
-   - `tests/test_train_baseline.py`
+| Entrega | Caminho |
+|---|---|
+| Split temporal | `src/models/validation.py` |
+| Baseline | `src/models/train_baseline.py` |
+| Artefato baseline | `models/baseline_heuristico.joblib` |
+| Relatorio baseline | `reports/baseline_report.json` |
+| Scores baseline | `reports/baseline_scores.parquet` |
+| Metadados do split | `data/processed/features/splits/split_metadata.json` |
+| Testes | `tests/test_validation.py`, `tests/test_train_baseline.py` |
 
-## Validacao planejada
+## Split temporal
 
-1. `make lint`
-2. `make test`
-3. `make train`
+| Split | Linhas | Periodo |
+|---|---:|---|
+| Treino | `264534` | `2025-01-01 03:03:43+00:00` a `2025-05-06 06:00:00+00:00` |
+| Validacao | `56686` | `2025-05-06 06:00:00+00:00` a `2025-06-02 15:00:00+00:00` |
+| Teste | `56687` | `2025-06-02 15:00:00+00:00` a `2025-07-01 03:00:00+00:00` |
 
-## Resultado da validacao
+## Baseline heuristico
 
-- `make lint`: OK
-- `make test`: OK
-- `make train`: OK
-- Testes: `30 passed`
-- Cobertura total em `src`: `84%`
+| Item | Valor |
+|---|---|
+| Modelo | `baseline_heuristico_24h` |
+| Score | `n_alertas_24h / 24`, limitado a `[0, 1]` |
+| Threshold | `0.0` |
 
-## Resultado do split temporal
+## Metricas do baseline
 
-- Total: `377907`
-- Treino: `264534` registros, `55060` positivos (`20.81396%`)
-- Validacao: `56686` registros, `7261` positivos (`12.809159%`)
-- Teste: `56687` registros, `8490` positivos (`14.976979%`)
-- Treino: `2025-01-01 03:03:43+00:00` ate `2025-05-06 06:00:00+00:00`
-- Validacao: `2025-05-06 06:00:00+00:00` ate `2025-06-02 15:00:00+00:00`
-- Teste: `2025-06-02 15:00:00+00:00` ate `2025-07-01 03:00:00+00:00`
+| Split | Recall | Precision | F1 | AUC-PR | AUC-ROC |
+|---|---:|---:|---:|---:|---:|
+| Treino | `1.0000` | `0.2081` | `0.3446` | `0.2081` | `0.5000` |
+| Validacao | `1.0000` | `0.1281` | `0.2271` | `0.1281` | `0.5000` |
+| Teste | `1.0000` | `0.1498` | `0.2605` | `0.1498` | `0.5000` |
 
-## Resultado do baseline
+## Decisao
 
-- Threshold calibrado na validacao: `0.0`
-- Recall teste: `1.0`
-- Precision teste: `0.14976978848766032`
-- F1 teste: `0.2605213495558249`
-- AUC-PR teste: `0.14976978848766032`
-- AUC-ROC teste: `0.5`
+Status: `CONCLUIDA`. O baseline captura todos os positivos porque alerta de
+forma ampla, mas tem baixa precisao e nao discrimina risco; por isso a etapa
+seguinte deve usar modelo supervisionado e ranking operacional.
 
-## Leitura tecnica
+---
 
-O baseline atingiu recall maximo porque o threshold `0.0` classifica todos os registros como positivos. Isso e aceitavel como piso conservador, mas confirma que a heuristica `n_alertas_24h / 24` ainda nao discrimina bem o risco. O modelo principal da Etapa 7 deve superar principalmente AUC-PR e precision mantendo recall alto.
-
-Status: `CONCLUIDA`
+<p align="center">
+  <sub>Vale · Mining Operations · Fleet Alert Anticipation</sub>
+</p>

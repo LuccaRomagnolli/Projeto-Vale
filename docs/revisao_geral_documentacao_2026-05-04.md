@@ -1,90 +1,78 @@
-# Revisao geral da documentacao do projeto
+<p align="center">
+  <img src="../pictures/vale-logo-removebg-preview.png" alt="Vale" width="120"/>
+</p>
+
+<h1 align="center">Mining Fleet Alert Anticipation</h1>
+
+<p align="center">
+  Antecipacao de alertas criticos <strong>"Don't Go"</strong> em equipamentos de mineracao,<br>
+  com foco em priorizacao operacional por <code>Tag</code>.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.11%20%E2%80%93%203.13-1D9E75?style=flat-square&logo=python&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Modelo-HistGBDT-EF9F27?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Janela-4h-085041?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Split-70/15/15-888780?style=flat-square"/>
+</p>
+
+---
+
+# Revisao geral da documentacao
 
 Data: 04/05/2026
 
-## Objetivo da revisao
+## Objetivo
 
-Revisar consistencia da documentacao, verificar metodologia e viabilidade dos
-resultados, e consolidar melhorias para uso tecnico e executivo.
+Registrar a padronizacao da documentacao do projeto, alinhando todos os
+documentos de `docs/` ao frame visual do `README.md` e aos resultados oficiais
+dos artefatos atuais.
 
 ## Escopo revisado
 
-- `README.md`
-- `docs/etapa_1_fundacao_engenharia.md`
-- `docs/etapa_2_ingestao_contrato_dados.md`
-- `docs/etapa_3_rotulacao_alert_labeler.md`
-- `docs/etapa_4_eda_orientada_decisao.md`
-- `docs/etapa_5_feature_engineering.md`
-- `docs/etapa_6_validacao_temporal_baseline.md`
-- `docs/etapa_7_modelo_principal.md`
-- `docs/etapa_8_otimizacao_metricas_hist_gbdt.md`
-- `docs/etapa_9_metricas_operacionais_confiaveis.md`
-- `docs/etapa_10_avaliacao_segmentada.md`
-- `docs/benchmark_modelos_recomendacoes.md`
-- `docs/politica_promocao_modelo.md`
-- `docs/relatorio_eficiencia_2026-05-03.md`
-- `docs/controle_alteracoes.md`
-- `docs/notebook_codigo_e_contexto_projeto.md`
-- `reports/eda_report.md`
+| Grupo | Documentos |
+|---|---|
+| Etapas | `etapa_1` a `etapa_11` |
+| Governanca | `politica_promocao_modelo.md`, `controle_alteracoes.md` |
+| Modelagem | `benchmark_modelos_recomendacoes.md` |
+| Operacao | `relatorio_eficiencia_2026-05-03.md` |
+| Notebook | `notebook_codigo_e_contexto_projeto.md` |
+| Indice | `docs/README.md` |
+
+## Ajustes aplicados
+
+1. Inclusao do logo Vale e cabecalho padronizado em todos os Markdown de `docs/`.
+2. Recriacao dos documentos deletados no working tree.
+3. Inclusao de etapa final de inferencia operacional.
+4. Correcao de referencias antigas a notebooks `01..09`.
+5. Consolidacao dos resultados oficiais atuais de dados, features, modelo,
+   threshold, TopK e estabilidade.
 
 ## Diagnostico metodologico
 
-Pontos fortes:
+| Dimensao | Situacao |
+|---|---|
+| Split temporal | Adequado e documentado |
+| Calibracao | Threshold definido na validacao |
+| Metrica primaria | `Top15 Tag-dia`, aderente ao uso operacional |
+| Benchmark | Comparacao consistente entre candidatos |
+| Estabilidade | Gate temporal aprovado |
+| Segmentos raros | Tratados como inconclusivos |
 
-1. Split temporal e calibracao de threshold fora do teste estao documentados.
-2. Criterio principal de negocio (`TopK Tag-dia`) esta coerente com uso real.
-3. Benchmark, tuning e gate de estabilidade seguem linha metodologica consistente.
-4. Analise segmentada reduz risco de mascara por metrica global.
+## Recomendacoes
 
-Pontos de atencao:
+1. Automatizar checagem documental para garantir logo e cabecalho padrao.
+2. Manter regressao de `precision@15`, `recall@15` e `lift@15`.
+3. Criar monitoramento diario de drift, prevalencia e volume de alertas.
+4. Manter trilha dedicada para segmentos raros e Tags com falsos negativos.
 
-1. Algumas narrativas tinham divergencias numericas em relacao as tabelas.
-2. A viabilidade do resultado estava dispersa em varios arquivos, sem consolidacao.
-3. Parte do setup estava orientada a shell Unix, com pouca orientacao para Windows.
+## Decisao
 
-## Verificacao de viabilidade dos resultados
+Status: `CONCLUIDA`. A documentacao esta padronizada para leitura
+tecnico-executiva e alinhada aos artefatos atuais do projeto.
 
-Conclusao: **viavel para piloto operacional assistido**, com governanca ativa.
+---
 
-Justificativas:
-
-1. Meta operacional principal em teste foi atendida (`Top15 Tag-dia` com precision,
-   recall e lift dentro das metas declaradas).
-2. Gate de estabilidade temporal foi reportado como aprovado.
-3. Segmentos de baixa prevalencia ja sao tratados como inconclusivos, evitando
-   decisoes falsas por ruido estatistico.
-
-Restricoes para manter viabilidade:
-
-1. Nao usar threshold global como unica estrategia operacional.
-2. Monitorar drift e regressao de metricas em base continua.
-3. Manter trilha dedicada para segmentos raros e hotspots por Tag.
-
-## Melhorias aplicadas nesta revisao
-
-1. `README.md`
-   - Inclusao de secao executiva sobre metodologia e viabilidade.
-   - Ajuste de orientacao de setup para ambientes Windows PowerShell.
-2. `docs/etapa_9_metricas_operacionais_confiaveis.md`
-   - Correcao de inconsistencias numericas textuais.
-   - Inclusao de secao de validade metodologica e riscos de operacao.
-3. `docs/etapa_4_eda_orientada_decisao.md`
-   - Inclusao de leitura metodologica e justificativa de viabilidade para modelagem.
-
-## Recomendacoes finais (prioridade)
-
-Alta:
-
-1. Criar regressao automatica em CI para `precision@15`, `recall@15` e `lift@15`.
-2. Publicar rotina de monitoramento diario de drift de prevalencia e desempenho.
-
-Media:
-
-1. Consolidar um unico "modelo oficial em producao/piloto" para reduzir ambiguidade
-   entre campeao de benchmark e artefato operacional.
-2. Padronizar todos os documentos com template unico (objetivo, evidencias, riscos, decisao).
-
-Baixa:
-
-1. Revisar padrao editorial (acentuacao, estilo e uniformidade de termos) em toda
-   a pasta `docs`.
+<p align="center">
+  <sub>Vale · Mining Operations · Fleet Alert Anticipation</sub>
+</p>

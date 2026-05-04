@@ -18,67 +18,67 @@
 
 ---
 
-# Etapa 3b - Rotulacao robusta (fonte expandida)
+# Etapa 3 - Rotulacao robusta com Alert Labeler
 
-Data: 30/04/2026
+Data: 04/05/2026
 
 ## Objetivo
 
-Construir a variavel alvo de risco na janela de predição de 4 horas por Tag do equipamento.
+Construir o alvo supervisionado `target_4h`, indicando se um equipamento tera
+evento critico futuro em ate 4 horas, e registrar `tte_horas` como tempo ate o
+proximo evento critico.
 
-## Entregaveis implementados
+## Entregaveis
 
-1. Novo modulo `src/alert_labeler.py`.
-2. Carga e filtro das regras de negocio criticas (`NIVEL = Muito Alto`) a partir de `CMA`.
-3. Leitura de telemetria operacional mensal a partir de `data/raw/.../telemetria/telemetry_*.parquet`.
-4. Match de eventos criticos:
-   - match completo por `TIPO + EVENTO + SITUACAO + NIVEL` quando o evento traz contexto completo;
-   - match por `EVENTO` quando contexto de situacao/nivel nao existe no evento bruto;
-   - fallback por `Is_Dont_Go = 1` para preservar casos rotulados na telemetria.
-5. Construcao de:
-   - `target_4h`: 1 se existe evento critico futuro em ate 4 horas;
-   - `tte_horas`: tempo (em horas) ate o proximo evento critico.
-6. Persistencia de saidas:
-   - `data/processed/labeled/critical_events.parquet`
-   - `data/processed/labeled/apontamentos_labeled.parquet`
-   - `data/processed/labeled/labeling_report.json`
-   - `data/processed/labeled/labeling_report.md`
-7. Integracao no pipeline `make label` via `src/data/make_dataset.py`.
-8. Testes unitarios da etapa em `tests/test_alert_labeler.py`.
+| Entrega | Caminho |
+|---|---|
+| Rotulador | `src/alert_labeler.py` |
+| Integracao no pipeline | `src/data/make_dataset.py` |
+| Eventos criticos | `data/processed/labeled/critical_events.parquet` |
+| Dataset rotulado | `data/processed/labeled/apontamentos_labeled.parquet` |
+| Relatorio JSON | `data/processed/labeled/labeling_report.json` |
+| Relatorio Markdown | `data/processed/labeled/labeling_report.md` |
+| Testes | `tests/test_alert_labeler.py` |
 
-## Validacao planejada
+## Metodo
 
-1. `make lint`
-2. `make test`
-3. `make label`
+| Fonte | Uso |
+|---|---|
+| Regras de negocio | Filtrar eventos `Muito Alto` e contexto critico |
+| Telemetria mensal | Localizar eventos operacionais candidatos |
+| `Is_Dont_Go` | Preservar casos ja marcados como criticos |
+| `Tag` e tempo | Associar evento futuro ao ciclo operacional |
 
-## Resultado da validacao
+## Resultado da execucao real
 
-- `make lint`: OK
-- `make test`: OK
-- `make label`: OK
-- Testes: `23 passed`
-- Cobertura total em `src`: `82%`
-- Execucao real da rotulacao (3b):
-  - arquivos de telemetria processados: `6`
-  - eventos analisados: `37164054`
-  - match completo TIPO+EVENTO+SITUACAO+NIVEL: `0`
-  - match por EVENTO: `105976`
-  - fallback Is_Dont_Go=1: `19962`
-  - eventos criticos finais: `107002`
-  - tags com sobreposicao apontamento x evento: `34`
-  - registros rotulados: `377907`
-  - positivos `target_4h`: `70811` (`18.737679%`)
+| Indicador | Valor |
+|---|---:|
+| Arquivos de telemetria processados | `6` |
+| Eventos analisados | `37164054` |
+| Match completo por contexto | `0` |
+| Match por evento | `105976` |
+| Fallback `Is_Dont_Go=1` | `19962` |
+| Eventos criticos finais | `107002` |
+| Tags com sobreposicao apontamento x evento | `34` |
+| Registros rotulados | `377907` |
+| Positivos `target_4h` | `70811` |
+| Taxa de positivos | `18.737679%` |
+| Primeiro evento critico | `2025-01-01 03:37:35.267000+00:00` |
+| Ultimo evento critico | `2025-07-01 02:59:08.113000+00:00` |
 
-## Estrutura de operacao diaria
+## Evidencias
 
-1. Atualizar os arquivos mensais de telemetria em `data/raw/datasets/datasets/telemetria/`.
-2. Executar `make label`.
-3. Validar `data/processed/labeled/labeling_report.json`:
-   - `rows_total_events`
-   - `rows_critical_events_final`
-   - `target_4h_positive_rate_pct`
-   - `tag_overlap_count`
-4. Se houver queda abrupta no `target_4h_positive_rate_pct`, bloquear treino e abrir incidente de dados.
+- `data/processed/labeled/labeling_report.json`
+- `data/processed/labeled/apontamentos_labeled.parquet`
+- `make label`
 
-Status: `CONCLUIDA`
+## Decisao
+
+Status: `CONCLUIDA`. A rotulacao gera prevalencia suficiente para treinamento
+supervisionado e preserva rastreabilidade para auditoria.
+
+---
+
+<p align="center">
+  <sub>Vale · Mining Operations · Fleet Alert Anticipation</sub>
+</p>
