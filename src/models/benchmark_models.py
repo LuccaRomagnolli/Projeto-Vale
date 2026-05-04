@@ -1,11 +1,11 @@
-"""Benchmark temporal de modelos supervisionados para alerta Don't Go."""
+"""Benchmark temporal robusto para selecao tecnica de modelos."""
 
 from __future__ import annotations
 
 import json
 import time
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 import joblib
 import numpy as np
@@ -40,54 +40,48 @@ from src.utils.metadata import build_execution_metadata, to_repo_relative_path
 BENCHMARK_REPORT_JSON = REPORTS_DIR / "model_benchmark_report.json"
 BENCHMARK_REPORT_CSV = REPORTS_DIR / "model_benchmark_report.csv"
 BENCHMARK_SCORES_PATH = REPORTS_DIR / "model_benchmark_scores.parquet"
-BENCHMARK_WINNER_PATH = MODELS_DIR / "model_benchmark_winner.joblib"
+BENCHMARK_SELECTED_PATH = MODELS_DIR / "model_benchmark_selected.joblib"
+BENCHMARK_ITERATION_REPORT_CSV = REPORTS_DIR / "model_benchmark_iteration_report.csv"
+DEFAULT_RANDOM_STATES = (42, 52, 62)
 
 
-def build_candidate_models(random_state: int = 42) -> dict[str, Any]:
-    """Define modelos candidatos com custo controlado para benchmark recorrente."""
-    candidates: dict[str, Any] = {
-        "logistic_regression_balanced": Pipeline(
+def build_candidate_models() -> dict[str, Callable[[int], Any]]:
+    """Define candidatos tabulares para benchmark robusto."""
+    candidates: dict[str, Callable[[int], Any]] = {
+        "logistic_regression_balanced": lambda random_state: Pipeline(
             steps=[
                 ("imputer", SimpleImputer(strategy="median")),
                 ("scaler", StandardScaler()),
                 (
                     "model",
                     LogisticRegression(
-                        C=0.5,
+                        C=0.6,
                         class_weight="balanced",
-                        max_iter=1000,
+                        max_iter=2000,
                         n_jobs=-1,
                         random_state=random_state,
                     ),
                 ),
             ]
         ),
-        "hist_gbdt_balanced": HistGradientBoostingClassifier(
-            learning_rate=0.06,
-            max_iter=250,
+        "hist_gbdt_regularized": lambda random_state: HistGradientBoostingClassifier(
+            learning_rate=0.035,
+            max_iter=550,
             max_leaf_nodes=31,
-            l2_regularization=0.1,
-            class_weight="balanced",
-            random_state=random_state,
-        ),
-        "hist_gbdt_regularized": HistGradientBoostingClassifier(
-            learning_rate=0.04,
-            max_iter=350,
-            max_leaf_nodes=15,
             min_samples_leaf=80,
-            l2_regularization=1.0,
+            l2_regularization=1.2,
             class_weight="balanced",
             random_state=random_state,
         ),
-        "extra_trees_balanced": Pipeline(
+        "extra_trees_balanced": lambda random_state: Pipeline(
             steps=[
                 ("imputer", SimpleImputer(strategy="median")),
                 (
                     "model",
                     ExtraTreesClassifier(
-                        n_estimators=180,
-                        max_depth=14,
-                        min_samples_leaf=30,
+                        n_estimators=320,
+                        max_depth=16,
+                        min_samples_leaf=24,
                         class_weight="balanced_subsample",
                         n_jobs=-1,
                         random_state=random_state,
@@ -95,15 +89,15 @@ def build_candidate_models(random_state: int = 42) -> dict[str, Any]:
                 ),
             ]
         ),
-        "random_forest_balanced": Pipeline(
+        "random_forest_balanced": lambda random_state: Pipeline(
             steps=[
                 ("imputer", SimpleImputer(strategy="median")),
                 (
                     "model",
                     RandomForestClassifier(
-                        n_estimators=160,
-                        max_depth=12,
-                        min_samples_leaf=50,
+                        n_estimators=280,
+                        max_depth=14,
+                        min_samples_leaf=32,
                         class_weight="balanced_subsample",
                         n_jobs=-1,
                         random_state=random_state,
@@ -116,10 +110,10 @@ def build_candidate_models(random_state: int = 42) -> dict[str, Any]:
     try:
         from lightgbm import LGBMClassifier
 
-        candidates["lightgbm_balanced"] = LGBMClassifier(
+        candidates["lightgbm_balanced"] = lambda random_state: LGBMClassifier(
             objective="binary",
-            n_estimators=600,
-            learning_rate=0.035,
+            n_estimators=900,
+            learning_rate=0.03,
             num_leaves=31,
             subsample=0.85,
             colsample_bytree=0.85,
@@ -133,6 +127,19 @@ def build_candidate_models(random_state: int = 42) -> dict[str, Any]:
         pass
 
     return candidates
+
+
+def choose_top_candidates(candidates: dict[str, Callable[[int], Any]]) -> dict[str, Callable[[int], Any]]:
+    """Seleciona os 4 candidatos tecnicos mais aderentes ao problema."""
+    preferred_order = [
+        "lightgbm_balanced",
+        "hist_gbdt_regularized",
+        "extra_trees_balanced",
+        "logistic_regression_balanced",
+        "random_forest_balanced",
+    ]
+    selected_names = [name for name in preferred_order if name in candidates][:4]
+    return {name: candidates[name] for name in selected_names}
 
 
 def _fit_candidate(model: Any, x_train: pd.DataFrame, y_train: pd.Series) -> tuple[Any, float]:
@@ -179,12 +186,16 @@ def _flatten_metrics(
     model: Any,
     metrics: dict[str, Any],
     fit_seconds: float,
+    iteration: int,
+    random_state: int,
 ) -> dict[str, Any]:
     row: dict[str, Any] = {
         "model_name": name,
         "estimator": type(model).__name__,
         "fit_seconds": round(fit_seconds, 3),
         "threshold": metrics["threshold"],
+        "iteration": int(iteration),
+        "random_state": int(random_state),
     }
     for split_name in ("train", "val", "test"):
         for metric_name, value in metrics[split_name].items():
@@ -193,7 +204,7 @@ def _flatten_metrics(
 
 
 def select_winner(summary: pd.DataFrame) -> str:
-    """Seleciona campeao pelo scorecard operacional de validacao."""
+    """Seleciona modelo pelo scorecard operacional de validacao."""
     operational_cols = [
         f"val_top{PRIMARY_TOP_K}_recall_at_k",
         f"val_top{PRIMARY_TOP_K}_precision_at_k",
@@ -210,17 +221,34 @@ def select_winner(summary: pd.DataFrame) -> str:
     return str(ordered.iloc[0]["model_name"])
 
 
+def _is_better_row(candidate: dict[str, Any], reference: dict[str, Any]) -> bool:
+    """Compara duas iteracoes pela mesma regra operacional de ordenacao."""
+    ranking_keys = [
+        f"val_top{PRIMARY_TOP_K}_recall_at_k",
+        f"val_top{PRIMARY_TOP_K}_precision_at_k",
+        f"val_top{PRIMARY_TOP_K}_lift_vs_random",
+        "val_auc_pr",
+    ]
+    for key in ranking_keys:
+        if candidate.get(key, float("-inf")) > reference.get(key, float("-inf")):
+            return True
+        if candidate.get(key, float("-inf")) < reference.get(key, float("-inf")):
+            return False
+    return candidate.get("test_recall", float("-inf")) > reference.get("test_recall", float("-inf"))
+
+
 def save_benchmark_outputs(
     trained_models: dict[str, Any],
     all_scores: dict[str, dict[str, np.ndarray]],
     summary: pd.DataFrame,
+    iteration_summary: pd.DataFrame,
     feature_columns: list[str],
     train: pd.DataFrame,
     val: pd.DataFrame,
     test: pd.DataFrame,
     min_recall: float,
 ) -> dict[str, str]:
-    """Persiste comparativo, scores e artefato vencedor."""
+    """Persiste comparativo agregado e artefato selecionado."""
     MODELS_DIR.mkdir(parents=True, exist_ok=True)
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -259,6 +287,7 @@ def save_benchmark_outputs(
     summary = summary.sort_values(operational_cols, ascending=[False] * len(operational_cols))
     summary = summary.reset_index(drop=True)
     summary.to_csv(BENCHMARK_REPORT_CSV, index=False)
+    iteration_summary.to_csv(BENCHMARK_ITERATION_REPORT_CSV, index=False)
 
     config_payload = {
         "selection_rule": (
@@ -268,12 +297,14 @@ def save_benchmark_outputs(
         ),
         "min_recall_calibration": min_recall,
         "candidate_models": sorted(list(trained_models.keys())),
+        "selection_size": 4,
+        "iterations_per_model": int(iteration_summary["iteration"].nunique()),
         "primary_operational_top_k": PRIMARY_TOP_K,
     }
     metadata = build_execution_metadata(
         component="benchmark_models",
         feature_count=len(feature_columns),
-        seed=42,
+        seed=min(DEFAULT_RANDOM_STATES),
         config_payload=config_payload,
         period_start=str(train["Fim"].min()),
         period_end=str(test["Fim"].max()),
@@ -287,12 +318,16 @@ def save_benchmark_outputs(
         "feature_count": len(feature_columns),
         "feature_columns": feature_columns,
         "leakage_columns": sorted(LEAKAGE_COLUMNS),
+        "selected_model": winner_row,
         "winner": winner_row,
         "models": summary.to_dict(orient="records"),
+        "iterations": iteration_summary.to_dict(orient="records"),
         "operational_topk": operational_topk.to_dict(orient="records"),
         "scores_path": to_repo_relative_path(BENCHMARK_SCORES_PATH),
         "csv_path": to_repo_relative_path(BENCHMARK_REPORT_CSV),
-        "winner_artifact_path": to_repo_relative_path(BENCHMARK_WINNER_PATH),
+        "iteration_csv_path": to_repo_relative_path(BENCHMARK_ITERATION_REPORT_CSV),
+        "selected_artifact_path": to_repo_relative_path(BENCHMARK_SELECTED_PATH),
+        "winner_artifact_path": to_repo_relative_path(BENCHMARK_SELECTED_PATH),
         "metadata": metadata,
     }
     BENCHMARK_REPORT_JSON.write_text(
@@ -307,24 +342,27 @@ def save_benchmark_outputs(
             "threshold": float(winner_row["threshold"]),
             "selection_rule": report["selection_rule"],
             "primary_operational_top_k": PRIMARY_TOP_K,
+            "iterations_per_model": int(iteration_summary["iteration"].nunique()),
         },
-        BENCHMARK_WINNER_PATH,
+        BENCHMARK_SELECTED_PATH,
     )
 
     return {
         "json_path": str(BENCHMARK_REPORT_JSON),
         "csv_path": str(BENCHMARK_REPORT_CSV),
+        "iteration_csv_path": str(BENCHMARK_ITERATION_REPORT_CSV),
         "scores_path": str(BENCHMARK_SCORES_PATH),
-        "winner_artifact_path": str(BENCHMARK_WINNER_PATH),
-        "winner_name": winner_name,
+        "selected_artifact_path": str(BENCHMARK_SELECTED_PATH),
+        "selected_name": winner_name,
     }
 
 
 def run_benchmark_pipeline(
     split_dir: Path = SPLIT_DIR,
     min_recall: float = 0.80,
+    random_states: tuple[int, ...] = DEFAULT_RANDOM_STATES,
 ) -> dict[str, Any]:
-    """Treina multiplos modelos e compara desempenho em validacao temporal."""
+    """Treina 4 modelos com iteracoes e compara desempenho em validacao temporal."""
     train, val, test = load_splits(split_dir)
     feature_columns = select_feature_columns(train)
     x_train = prepare_model_matrix(train, feature_columns)
@@ -334,25 +372,58 @@ def run_benchmark_pipeline(
     all_scores: dict[str, dict[str, np.ndarray]] = {}
     rows: list[dict[str, Any]] = []
 
-    for name, model in build_candidate_models().items():
-        fitted_model, fit_seconds = _fit_candidate(model, x_train, y_train)
-        metrics, scores = _evaluate_candidate(
-            fitted_model,
-            train=train,
-            val=val,
-            test=test,
-            feature_columns=feature_columns,
-            min_recall=min_recall,
-        )
-        trained_models[name] = fitted_model
-        all_scores[name] = scores
-        rows.append(_flatten_metrics(name, fitted_model, metrics, fit_seconds))
+    selected_candidates = choose_top_candidates(build_candidate_models())
+    for name, model_factory in selected_candidates.items():
+        best_iteration_row: dict[str, Any] | None = None
+        for iteration, random_state in enumerate(random_states, start=1):
+            model = model_factory(random_state)
+            fitted_model, fit_seconds = _fit_candidate(model, x_train, y_train)
+            metrics, scores = _evaluate_candidate(
+                fitted_model,
+                train=train,
+                val=val,
+                test=test,
+                feature_columns=feature_columns,
+                min_recall=min_recall,
+            )
+            row = _flatten_metrics(
+                name=name,
+                model=fitted_model,
+                metrics=metrics,
+                fit_seconds=fit_seconds,
+                iteration=iteration,
+                random_state=random_state,
+            )
+            rows.append(row)
 
-    summary = pd.DataFrame(rows)
+            if best_iteration_row is None:
+                best_iteration_row = row
+                trained_models[name] = fitted_model
+                all_scores[name] = scores
+                continue
+
+            if _is_better_row(row, best_iteration_row):
+                best_iteration_row = row
+                trained_models[name] = fitted_model
+                all_scores[name] = scores
+
+    iteration_summary = pd.DataFrame(rows)
+    summary = (
+        iteration_summary.drop(columns=["iteration", "random_state", "fit_seconds"])
+        .groupby(["model_name", "estimator"], as_index=False)
+        .mean(numeric_only=True)
+    )
+    fit_time = (
+        iteration_summary.groupby("model_name", as_index=False)["fit_seconds"]
+        .mean()
+        .rename(columns={"fit_seconds": "fit_seconds"})
+    )
+    summary = summary.merge(fit_time, on="model_name", how="left")
     output_paths = save_benchmark_outputs(
         trained_models=trained_models,
         all_scores=all_scores,
         summary=summary,
+        iteration_summary=iteration_summary,
         feature_columns=feature_columns,
         train=train,
         val=val,
@@ -360,11 +431,13 @@ def run_benchmark_pipeline(
         min_recall=min_recall,
     )
 
-    winner = summary.loc[summary["model_name"] == output_paths["winner_name"]].iloc[0].to_dict()
+    winner = summary.loc[summary["model_name"] == output_paths["selected_name"]].iloc[0].to_dict()
     return {
         "models_trained": len(summary),
+        "models_selected_for_benchmark": len(selected_candidates),
+        "iterations_per_model": len(random_states),
         "feature_count": len(feature_columns),
-        "winner": winner,
+        "selected_model": winner,
         "summary": summary.to_dict(orient="records"),
         **output_paths,
     }
@@ -372,35 +445,38 @@ def run_benchmark_pipeline(
 
 def main() -> None:
     result = run_benchmark_pipeline()
-    winner = result["winner"]
-    print(f"[OK] Modelos treinados: {result['models_trained']}")
+    selected = result["selected_model"]
+    print(f"[OK] Modelos benchmarkados: {result['models_trained']}")
+    print(f"[OK] Modelos selecionados para comparacao: {result['models_selected_for_benchmark']}")
+    print(f"[OK] Iteracoes por modelo: {result['iterations_per_model']}")
     print(f"[OK] Features usadas: {result['feature_count']}")
-    print(f"[OK] Campeao validacao: {result['winner_name']}")
+    print(f"[OK] Modelo selecionado (validacao): {result['selected_name']}")
     val_precision_key = f"val_top{PRIMARY_TOP_K}_precision_at_k"
     val_recall_key = f"val_top{PRIMARY_TOP_K}_recall_at_k"
     val_lift_key = f"val_top{PRIMARY_TOP_K}_lift_vs_random"
-    if {val_precision_key, val_recall_key, val_lift_key}.issubset(winner):
+    if {val_precision_key, val_recall_key, val_lift_key}.issubset(selected):
         print(
             f"[OK] Top{PRIMARY_TOP_K} Tag-dia validacao: "
-            f"precision={winner[val_precision_key]:.6f}, "
-            f"recall={winner[val_recall_key]:.6f}, "
-            f"lift={winner[val_lift_key]:.6f}"
+            f"precision={selected[val_precision_key]:.6f}, "
+            f"recall={selected[val_recall_key]:.6f}, "
+            f"lift={selected[val_lift_key]:.6f}"
         )
-    print(f"[OK] AUC-PR validacao tecnica: {winner['val_auc_pr']:.6f}")
-    print(f"[OK] Recall teste: {winner['test_recall']:.6f}")
+    print(f"[OK] AUC-PR validacao tecnica: {selected['val_auc_pr']:.6f}")
+    print(f"[OK] Recall teste: {selected['test_recall']:.6f}")
     test_precision_key = f"test_top{PRIMARY_TOP_K}_precision_at_k"
     test_recall_key = f"test_top{PRIMARY_TOP_K}_recall_at_k"
     test_lift_key = f"test_top{PRIMARY_TOP_K}_lift_vs_random"
-    if {test_precision_key, test_recall_key, test_lift_key}.issubset(winner):
+    if {test_precision_key, test_recall_key, test_lift_key}.issubset(selected):
         print(
             f"[OK] Top{PRIMARY_TOP_K} Tag-dia teste: "
-            f"precision={winner[test_precision_key]:.6f}, "
-            f"recall={winner[test_recall_key]:.6f}, "
-            f"lift={winner[test_lift_key]:.6f}"
+            f"precision={selected[test_precision_key]:.6f}, "
+            f"recall={selected[test_recall_key]:.6f}, "
+            f"lift={selected[test_lift_key]:.6f}"
         )
     print(f"[OK] Relatorio JSON: {result['json_path']}")
     print(f"[OK] Relatorio CSV: {result['csv_path']}")
-    print(f"[OK] Artefato campeao: {result['winner_artifact_path']}")
+    print(f"[OK] Relatorio iteracoes: {result['iteration_csv_path']}")
+    print(f"[OK] Artefato selecionado: {result['selected_artifact_path']}")
 
 
 if __name__ == "__main__":

@@ -1,20 +1,11 @@
-<p align="center">
-  <img src="../pictures/vale-logo-removebg-preview.png" alt="Vale" width="120"/>
-</p>
 
-<h1 align="center">Mining Fleet Alert Anticipation</h1>
 
-<p align="center">
-  Antecipacao de alertas criticos <strong>"Don't Go"</strong> em equipamentos de mineracao,<br>
-  com foco em priorizacao operacional por <code>Tag</code>.
-</p>
+# Mining Fleet Alert Anticipation
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3.11%20%E2%80%93%203.13-1D9E75?style=flat-square&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Modelo-HistGBDT-EF9F27?style=flat-square"/>
-  <img src="https://img.shields.io/badge/Janela-4h-085041?style=flat-square"/>
-  <img src="https://img.shields.io/badge/Split-70/15/15-888780?style=flat-square"/>
-</p>
+Antecipacao de alertas criticos **"Don't Go"** em equipamentos de mineracao,  
+com foco em priorizacao operacional por `Tag`.
+
+
 
 ---
 
@@ -30,10 +21,12 @@ na estrutura atual versionada.
 
 ## Notebook oficial
 
-| Item | Caminho |
-|---|---|
-| Notebook principal | `notebooks/main.ipynb` |
+
+| Item               | Caminho                      |
+| ------------------ | ---------------------------- |
+| Notebook principal | `notebooks/main.ipynb`       |
 | Dashboard auxiliar | `notebooks/qc_dashboard.png` |
+
 
 ## Fluxo consolidado no notebook
 
@@ -72,6 +65,4 @@ a notebooks `01..09` foram removidas por nao refletirem a estrutura atual.
 
 ---
 
-<p align="center">
-  <sub>Vale · Mining Operations · Fleet Alert Anticipation</sub>
-</p>
+Vale · Mining Operations · Fleet Alert Anticipation

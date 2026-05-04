@@ -11,7 +11,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.11%20%E2%80%93%203.13-1D9E75?style=flat-square&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Modelo-HistGBDT-EF9F27?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Sele%C3%A7%C3%A3o-4%20Modelos-EF9F27?style=flat-square"/>
   <img src="https://img.shields.io/badge/Janela-4h-085041?style=flat-square"/>
   <img src="https://img.shields.io/badge/Split-70/15/15-888780?style=flat-square"/>
 </p>
@@ -42,6 +42,7 @@ segmentada, promocao e inferencia.
 | Features totais | `57` colunas |
 | Features modelaveis | `48` |
 | Split temporal | `70/15/15` |
+| Selecao benchmark | `4 modelos, sem principal a priori` |
 | Modelo promovido | `hist_gbdt_tuned` |
 | Threshold operacional | `0.141388104973226` |
 | Test `Precision@Top15 Tag-dia` | `0.6800` |
@@ -58,7 +59,7 @@ segmentada, promocao e inferencia.
 | 4 | `docs/etapa_4_eda_orientada_decisao.md` | EDA orientada a decisao |
 | 5 | `docs/etapa_5_feature_engineering.md` | Features sem leakage |
 | 6 | `docs/etapa_6_validacao_temporal_baseline.md` | Split temporal e baseline |
-| 7 | `docs/etapa_7_modelo_principal.md` | Modelo supervisionado principal |
+| 7 | `docs/etapa_7_modelo_principal.md` | Modelagem supervisionada e benchmark tecnico |
 | 8 | `docs/etapa_8_otimizacao_metricas_hist_gbdt.md` | Tuning, backtesting e gate |
 | 9 | `docs/etapa_9_metricas_operacionais_confiaveis.md` | Metricas operacionais TopK |
 | 10 | `docs/etapa_10_avaliacao_segmentada.md` | Segmentos, riscos e hotspots |

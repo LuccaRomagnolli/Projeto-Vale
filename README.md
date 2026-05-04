@@ -11,7 +11,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.11%20–%203.13-1D9E75?style=flat-square&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Modelo-HistGBDT-EF9F27?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Sele%C3%A7%C3%A3o-4%20Modelos-EF9F27?style=flat-square"/>
   <img src="https://img.shields.io/badge/Janela-4h-085041?style=flat-square"/>
   <img src="https://img.shields.io/badge/Split-70/15/15-888780?style=flat-square"/>
 </p>
@@ -35,9 +35,9 @@ O projeto avalia o modelo com a mesma metodologia operacional em todas as etapas
 |---|---|
 | Janela de target | `target_4h` |
 | Split temporal | `70 / 15 / 15` |
-| Modelo campeão | `hist_gbdt_balanced` |
+| Estratégia de modelagem | `benchmark robusto com 4 modelos` |
+| Artefato de benchmark selecionado | `models/model_benchmark_selected.joblib` |
 | Artefato operacional | `models/hist_gbdt_tuned.joblib` |
-| Threshold calibrado (validação) | `0.141388104973226` |
 
 ### Métricas Operacionais — `Top15 Tag-dia` (Teste)
 
@@ -110,8 +110,8 @@ Limites atuais conhecidos:
 | 3 | EDA | `src/eda/run_eda.py` |
 | 4 | Feature engineering | `src/features/build_features.py` |
 | 5 | Split temporal e baseline | `src/models/train_baseline.py` |
-| 6 | Treino principal supervisionado | `src/models/train_model.py` |
-| 7 | Benchmark de candidatos | `src/models/benchmark_models.py` |
+| 6 | Treino supervisionado de referência | `src/models/train_model.py` |
+| 7 | Benchmark robusto de 4 candidatos | `src/models/benchmark_models.py` |
 | 8 | Tuning e backtesting HistGBDT | `src/models/tune_hist_gbdt.py` |
 | 9 | Gate de estabilidade | `src/models/stability_gate.py` |
 | 10 | Avaliação operacional | `src/evaluation/evaluate_model.py` |
@@ -206,7 +206,7 @@ make run-all
 > Documento oficial: `docs/politica_promocao_modelo.md`
 > Controle de alterações: `docs/controle_alteracoes.md`
 
-1. **Campeão por validação temporal operacional** — `val_top15_recall_at_k`, com desempate por `val_top15_precision_at_k`, `val_top15_lift_vs_random` e `val_auc_pr`.
+1. **Seleção técnica posterior ao benchmark** — sem modelo principal a priori; escolher entre 4 candidatos por `val_top15_recall_at_k`, com desempate por `val_top15_precision_at_k`, `val_top15_lift_vs_random` e `val_auc_pr`.
 2. **Metas `Top15 Tag-dia` atendidas** no conjunto de teste.
 3. **Gate de estabilidade aprovado** — sem drift ou degradação.
 4. **Segmentos raros** tratados como inconclusivos, com trilha dedicada.
