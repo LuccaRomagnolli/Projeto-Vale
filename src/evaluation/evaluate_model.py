@@ -19,23 +19,23 @@ from src.evaluation.operational_scorecard import (
 from src.evaluation.operational_scorecard import (
     safe_divide,
 )
+from src.models.model_selection import SELECTED_MODEL_PATH
 from src.models.train_model import load_splits, predict_scores, prepare_model_matrix
 from src.models.validation import TARGET_COL
-from src.utils.config import MODELS_DIR, REPORTS_DIR, SPLIT_DIR
+from src.utils.config import REPORTS_DIR, SPLIT_DIR
 from src.utils.metadata import to_repo_relative_path
 
-TUNED_MODEL_PATH = MODELS_DIR / "hist_gbdt_tuned.joblib"
 OPERATIONAL_REPORT_JSON = REPORTS_DIR / "operational_metrics_report.json"
 BUDGET_METRICS_CSV = REPORTS_DIR / "operational_budget_metrics.csv"
 DAILY_TOPK_METRICS_CSV = REPORTS_DIR / "operational_daily_topk_metrics.csv"
 DEDUP_ALERTS_CSV = REPORTS_DIR / "operational_deduplicated_alerts.csv"
 
 
-def load_model_artifact(model_path: Path = TUNED_MODEL_PATH) -> dict[str, Any]:
+def load_model_artifact(model_path: Path = SELECTED_MODEL_PATH) -> dict[str, Any]:
     """Carrega artefato de modelo com contrato de inferencia."""
     if not model_path.exists():
         raise FileNotFoundError(
-            f"Artefato nao encontrado: {model_path}. Execute make tune-hist-gbdt."
+            f"Artefato nao encontrado: {model_path}. Execute make model-selection."
         )
     artifact = joblib.load(model_path)
     required_keys = {"model", "feature_columns", "threshold"}
@@ -208,7 +208,7 @@ def summarize_deduplicated_alerts(
 
 
 def run_operational_evaluation(
-    model_path: Path = TUNED_MODEL_PATH,
+    model_path: Path = SELECTED_MODEL_PATH,
     split_dir: Path = SPLIT_DIR,
 ) -> dict[str, Any]:
     """Executa avaliacao operacional completa."""

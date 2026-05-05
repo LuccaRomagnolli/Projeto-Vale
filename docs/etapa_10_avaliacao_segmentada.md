@@ -11,7 +11,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.11%20%E2%80%93%203.13-1D9E75?style=flat-square&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Modelo-HistGBDT-EF9F27?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Modelo-Selecao-EF9F27?style=flat-square"/>
   <img src="https://img.shields.io/badge/Janela-4h-085041?style=flat-square"/>
   <img src="https://img.shields.io/badge/Split-70/15/15-888780?style=flat-square"/>
 </p>
@@ -55,7 +55,7 @@ Tags devem receber trilha dedicada antes de ampliacao operacional.
 | `turno` | `manha` | `0.4690` | `0.8312` | `2.3452` | `ok` |
 | `turno` | `tarde` | `0.4368` | `0.7755` | `2.1875` | `ok` |
 | `turno` | `noite` | `0.5200` | `0.7290` | `2.0525` | `ok` |
-| `Tipo` | `Caminhao` | `0.6800` | `0.7445` | `1.6528` | `ok` |
+| `Tipo` | `Caminhao` | `0.6756` | `0.7397` | `1.6420` | `ok` |
 | `Classe` | `Parado` | `0.6511` | `0.7834` | `1.3649` | `ok` |
 | `Classe` | `Hibernando` | `0.0000` | `0.0000` | `0.0000` | `inconclusivo_baixa_prevalencia` |
 | `Tipo` | `Escavadeira` | `0.0074` | `1.0000` | `1.0000` | `inconclusivo_baixa_prevalencia` |

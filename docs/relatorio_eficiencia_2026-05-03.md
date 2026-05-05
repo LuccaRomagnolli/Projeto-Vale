@@ -11,7 +11,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.11%20%E2%80%93%203.13-1D9E75?style=flat-square&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Modelo-HistGBDT-EF9F27?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Modelo-Selecao-EF9F27?style=flat-square"/>
   <img src="https://img.shields.io/badge/Janela-4h-085041?style=flat-square"/>
   <img src="https://img.shields.io/badge/Split-70/15/15-888780?style=flat-square"/>
 </p>
@@ -42,10 +42,9 @@ metricas sustentam uso em piloto operacional assistido.
 | Dados | `377907` registros e `70811` positivos |
 | Features | `57` colunas totais e `48` features modelaveis |
 | Baseline | AUC-PR teste `0.1498` |
-| Modelo principal | AUC-PR teste `0.2810` |
-| Benchmark | Campeao `hist_gbdt_balanced` |
-| Tuning | Promovido `hist_gbdt_tuned_04` |
-| Operacional | `Precision@15=0.6800`, `Recall@15=0.7409`, `Lift@15=2.0910` |
+| Selecao robusta | 4 candidatos oficiais + baseline diagnostico |
+| Artefato operacional | `models/model_selected.joblib` |
+| Operacional | `Precision@15=0.6756`, `Recall@15=0.7361`, `Lift@15=2.0774` |
 | Estabilidade | Gate aprovado |
 | Segmentos | Raros marcados como inconclusivos |
 

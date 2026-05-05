@@ -11,7 +11,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.11%20%E2%80%93%203.13-1D9E75?style=flat-square&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Modelo-HistGBDT-EF9F27?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Modelo-Selecao-EF9F27?style=flat-square"/>
   <img src="https://img.shields.io/badge/Janela-4h-085041?style=flat-square"/>
   <img src="https://img.shields.io/badge/Split-70/15/15-888780?style=flat-square"/>
 </p>
@@ -60,8 +60,8 @@ Depois, abrir `notebooks/main.ipynb` e executar as celulas na ordem.
 - `README.md`
 - `docs/politica_promocao_modelo.md`
 - `docs/controle_alteracoes.md`
-- `reports/model_benchmark_report.json`
-- `reports/hist_gbdt_tuning_report.json`
+- `reports/model_selection_report.json`
+- `reports/model_selection_backtest_report.csv`
 - `reports/operational_metrics_report.json`
 - `reports/segment_operational_report.json`
 

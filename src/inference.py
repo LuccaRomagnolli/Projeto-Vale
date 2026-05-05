@@ -8,10 +8,11 @@ from typing import Any
 import joblib
 import pandas as pd
 
+from src.models.model_selection import SELECTED_MODEL_PATH
 from src.models.train_model import predict_scores, prepare_model_matrix
-from src.utils.config import MODELS_DIR, REPORTS_DIR
+from src.utils.config import REPORTS_DIR
 
-DEFAULT_MODEL_PATH = MODELS_DIR / "hist_gbdt_tuned.joblib"
+DEFAULT_MODEL_PATH = SELECTED_MODEL_PATH
 DEFAULT_OUTPUT_PATH = REPORTS_DIR / "inference_scores.parquet"
 SUPPORTED_EXTENSIONS = {".parquet", ".csv"}
 

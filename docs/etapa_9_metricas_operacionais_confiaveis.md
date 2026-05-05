@@ -11,7 +11,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.11%20%E2%80%93%203.13-1D9E75?style=flat-square&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Modelo-HistGBDT-EF9F27?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Modelo-Selecao-EF9F27?style=flat-square"/>
   <img src="https://img.shields.io/badge/Janela-4h-085041?style=flat-square"/>
   <img src="https://img.shields.io/badge/Split-70/15/15-888780?style=flat-square"/>
 </p>
@@ -43,9 +43,9 @@ metricas ciclo-a-ciclo.
 
 | Campo | Valor |
 |---|---|
-| Modelo | `hist_gbdt_tuned` |
-| Artefato | `models/hist_gbdt_tuned.joblib` |
-| Threshold | `0.141388104973226` |
+| Modelo | Lido de `models/model_selected.joblib` |
+| Artefato | `models/model_selected.joblib` |
+| Threshold | Calibrado na validacao e persistido no artefato |
 | Features | `48` |
 | Split analisado | Teste temporal |
 
@@ -65,11 +65,11 @@ metricas ciclo-a-ciclo.
 
 | TopK Tags/dia | Alertas selecionados | Precision@K | Recall@K | Lift |
 |---:|---:|---:|---:|---:|
-| 3 | `90` | `0.6111` | `0.1332` | `1.8792` |
-| 5 | `150` | `0.6333` | `0.2300` | `1.9475` |
+| 3 | `90` | `0.6889` | `0.1501` | `2.1184` |
+| 5 | `150` | `0.6400` | `0.2324` | `1.9680` |
 | 10 | `300` | `0.6767` | `0.4915` | `2.0808` |
-| 15 | `450` | `0.6800` | `0.7409` | `2.0910` |
-| 20 | `600` | `0.6150` | `0.8935` | `1.8912` |
+| 15 | `450` | `0.6756` | `0.7361` | `2.0774` |
+| 20 | `600` | `0.6233` | `0.9056` | `1.9168` |
 
 ## Deduplicacao operacional
 

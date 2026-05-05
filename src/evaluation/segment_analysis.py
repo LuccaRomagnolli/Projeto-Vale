@@ -19,12 +19,12 @@ from src.evaluation.operational_scorecard import (
 from src.evaluation.operational_scorecard import (
     topk_metrics_by_segment as operational_topk_metrics_by_segment,
 )
+from src.models.model_selection import SELECTED_MODEL_PATH
 from src.models.train_model import load_splits
 from src.models.validation import TARGET_COL
-from src.utils.config import MODELS_DIR, REPORTS_DIR, SPLIT_DIR
+from src.utils.config import REPORTS_DIR, SPLIT_DIR
 from src.utils.metadata import to_repo_relative_path
 
-TUNED_MODEL_PATH = MODELS_DIR / "hist_gbdt_tuned.joblib"
 SEGMENT_REPORT_JSON = REPORTS_DIR / "segment_operational_report.json"
 SEGMENT_THRESHOLD_CSV = REPORTS_DIR / "segment_threshold_metrics.csv"
 SEGMENT_TOPK_CSV = REPORTS_DIR / "segment_topk_tag_day_metrics.csv"
@@ -36,17 +36,17 @@ def decode_one_hot_prefix(df: pd.DataFrame, prefix: str) -> pd.Series:
     return decode_operational_one_hot_prefix(df, prefix)
 
 
-def load_artifact(model_path: Path = TUNED_MODEL_PATH) -> dict[str, Any]:
+def load_artifact(model_path: Path = SELECTED_MODEL_PATH) -> dict[str, Any]:
     """Carrega modelo tunado para analise segmentada."""
     if not model_path.exists():
         raise FileNotFoundError(
-            f"Artefato nao encontrado: {model_path}. Execute make tune-hist-gbdt."
+            f"Artefato nao encontrado: {model_path}. Execute make model-selection."
         )
     return joblib.load(model_path)
 
 
 def score_test_with_segments(
-    model_path: Path = TUNED_MODEL_PATH,
+    model_path: Path = SELECTED_MODEL_PATH,
     split_dir: Path = SPLIT_DIR,
 ) -> pd.DataFrame:
     """Calcula scores do teste e adiciona segmentos de negocio."""
@@ -183,7 +183,7 @@ def tag_hotspots(scored: pd.DataFrame, top_k: int = 15, min_tag_days: int = 5) -
 
 
 def run_segment_analysis(
-    model_path: Path = TUNED_MODEL_PATH,
+    model_path: Path = SELECTED_MODEL_PATH,
     split_dir: Path = SPLIT_DIR,
 ) -> dict[str, Any]:
     """Executa analise segmentada completa no split de teste."""

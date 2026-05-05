@@ -1,6 +1,6 @@
 PYTHON ?= python3
 
-.PHONY: help install format lint test label eda features train benchmark tune-hist-gbdt gate-stability evaluate evaluate-segments infer smoke run-all clean
+.PHONY: help install format lint test label eda features train model-selection benchmark tune-hist-gbdt gate-stability evaluate evaluate-segments infer smoke run-all clean
 
 help:
 	@echo "Targets:"
@@ -11,9 +11,10 @@ help:
 	@echo "  make label     - run data labeling pipeline"
 	@echo "  make eda       - run EDA stage"
 	@echo "  make features  - run feature engineering stage"
-	@echo "  make train     - train baseline and main model"
-	@echo "  make benchmark - train and compare multiple supervised models"
-	@echo "  make tune-hist-gbdt - tune HistGradientBoosting and run backtesting"
+	@echo "  make train     - train baseline and robust model selection"
+	@echo "  make model-selection - tune and select among four supervised model families"
+	@echo "  make benchmark - legacy alias for model-selection"
+	@echo "  make tune-hist-gbdt - legacy alias for model-selection"
 	@echo "  make gate-stability - validate temporal stability before promotion"
 	@echo "  make evaluate  - run model evaluation"
 	@echo "  make evaluate-segments - run segmented operational evaluation"
@@ -46,13 +47,14 @@ features:
 
 train:
 	$(PYTHON) -m src.models.train_baseline
-	$(PYTHON) -m src.models.train_model
+	$(PYTHON) -m src.models.model_selection
 
-benchmark:
-	$(PYTHON) -m src.models.benchmark_models
+model-selection:
+	$(PYTHON) -m src.models.model_selection
 
-tune-hist-gbdt:
-	$(PYTHON) -m src.models.tune_hist_gbdt
+benchmark: model-selection
+
+tune-hist-gbdt: model-selection
 
 gate-stability:
 	$(PYTHON) -m src.models.stability_gate
@@ -68,7 +70,7 @@ infer:
 
 smoke: test infer evaluate evaluate-segments
 
-run-all: label eda features train benchmark tune-hist-gbdt gate-stability evaluate evaluate-segments
+run-all: label eda features train gate-stability evaluate evaluate-segments
 
 clean:
 	rm -rf .pytest_cache .ruff_cache .coverage .coverage.*

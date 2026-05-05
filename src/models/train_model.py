@@ -1,4 +1,4 @@
-"""Etapa 7: treino do modelo supervisionado principal."""
+"""Utilitarios de matriz/scoring e treino supervisionado legado."""
 
 from __future__ import annotations
 
@@ -25,9 +25,9 @@ from src.models.validation import (
 from src.utils.config import MODELS_DIR, REPORTS_DIR, SPLIT_DIR
 from src.utils.metadata import build_execution_metadata, to_repo_relative_path
 
-MODEL_ARTIFACT_PATH = MODELS_DIR / "model_principal.joblib"
-MODEL_REPORT_PATH = REPORTS_DIR / "model_principal_report.json"
-MODEL_SCORES_PATH = REPORTS_DIR / "model_principal_scores.parquet"
+MODEL_ARTIFACT_PATH = MODELS_DIR / "legacy_supervised_model.joblib"
+MODEL_REPORT_PATH = REPORTS_DIR / "legacy_supervised_model_report.json"
+MODEL_SCORES_PATH = REPORTS_DIR / "legacy_supervised_model_scores.parquet"
 FEATURE_IMPORTANCE_PATH = REPORTS_DIR / "model_feature_importance.csv"
 
 LEAKAGE_COLUMNS = {
@@ -250,7 +250,7 @@ def save_model_outputs(
     )
 
     report = {
-        "model_name": "modelo_principal_supervisionado",
+        "model_name": "legacy_supervised_model",
         "model_library": model_library,
         "feature_count": len(feature_columns),
         "feature_columns": feature_columns,
@@ -279,7 +279,7 @@ def save_model_outputs(
 
 
 def run_model_pipeline(split_dir: Path = SPLIT_DIR) -> dict[str, Any]:
-    """Treina e avalia o modelo principal supervisionado."""
+    """Treina e avalia um modelo supervisionado legado."""
     train, val, test = load_splits(split_dir)
     feature_columns = select_feature_columns(train)
     x_train = prepare_model_matrix(train, feature_columns)
@@ -310,7 +310,7 @@ def run_model_pipeline(split_dir: Path = SPLIT_DIR) -> dict[str, Any]:
 
 def main() -> None:
     result = run_model_pipeline()
-    print(f"[OK] Modelo principal: {result['model_library']}")
+    print(f"[OK] Modelo supervisionado legado: {result['model_library']}")
     print(f"[OK] Features usadas: {result['feature_count']}")
     print(f"[OK] Artefato: {result['artifact_path']}")
     print(f"[OK] Relatorio: {result['report_path']}")

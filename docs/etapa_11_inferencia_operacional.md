@@ -11,7 +11,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.11%20%E2%80%93%203.13-1D9E75?style=flat-square&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Modelo-HistGBDT-EF9F27?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Modelo-Selecao-EF9F27?style=flat-square"/>
   <img src="https://img.shields.io/badge/Janela-4h-085041?style=flat-square"/>
   <img src="https://img.shields.io/badge/Split-70/15/15-888780?style=flat-square"/>
 </p>
@@ -32,7 +32,7 @@ operacionais e produzir scores, predicoes e ranking de risco.
 | Entrega | Caminho |
 |---|---|
 | Pipeline de inferencia | `src/inference.py` |
-| Artefato promovido | `models/hist_gbdt_tuned.joblib` |
+| Artefato selecionado | `models/model_selected.joblib` |
 | Entrada padrao | `data/processed/features/splits/features_test.parquet` |
 | Saida padrao | `reports/inference_scores.parquet` |
 | Testes | `tests/test_inference.py` |
@@ -46,6 +46,8 @@ O arquivo `.joblib` deve conter:
 | `model` | Estimador treinado |
 | `feature_columns` | Ordem e nomes das features esperadas |
 | `threshold` | Threshold calibrado na validacao |
+| `model_name` | Familia selecionada pela validacao operacional |
+| `selection_rule` | Regra oficial de desempate e promocao |
 
 ## Contrato de entrada
 
@@ -75,8 +77,8 @@ make infer
 
 | Indicador | Valor atual |
 |---|---|
-| Modelo | `hist_gbdt_tuned` |
-| Threshold | `0.141388104973226` |
+| Modelo | Lido de `models/model_selected.joblib` |
+| Threshold | Lido de `models/model_selected.joblib` |
 | Features | `48` |
 | Saida | `reports/inference_scores.parquet` |
 

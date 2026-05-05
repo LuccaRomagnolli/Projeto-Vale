@@ -55,15 +55,15 @@ def test_run_model_pipeline_writes_outputs(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.setattr("src.models.train_model.REPORTS_DIR", tmp_path / "reports")
     monkeypatch.setattr(
         "src.models.train_model.MODEL_ARTIFACT_PATH",
-        tmp_path / "models" / "model_principal.joblib",
+        tmp_path / "models" / "legacy_supervised_model.joblib",
     )
     monkeypatch.setattr(
         "src.models.train_model.MODEL_REPORT_PATH",
-        tmp_path / "reports" / "model_principal_report.json",
+        tmp_path / "reports" / "legacy_supervised_model_report.json",
     )
     monkeypatch.setattr(
         "src.models.train_model.MODEL_SCORES_PATH",
-        tmp_path / "reports" / "model_principal_scores.parquet",
+        tmp_path / "reports" / "legacy_supervised_model_scores.parquet",
     )
     monkeypatch.setattr(
         "src.models.train_model.FEATURE_IMPORTANCE_PATH",

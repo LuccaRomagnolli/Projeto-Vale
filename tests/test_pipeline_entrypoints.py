@@ -2,7 +2,13 @@ from src import inference
 from src.data import make_dataset
 from src.evaluation import evaluate_model, segment_analysis
 from src.features import build_features
-from src.models import benchmark_models, train_baseline, train_model, tune_hist_gbdt
+from src.models import (
+    benchmark_models,
+    model_selection,
+    train_baseline,
+    train_model,
+    tune_hist_gbdt,
+)
 
 
 def test_make_dataset_main_runs(capsys, monkeypatch) -> None:
@@ -137,20 +143,42 @@ def test_benchmark_models_main_runs(capsys, monkeypatch) -> None:
         benchmark_models,
         "run_benchmark_pipeline",
         lambda: {
-            "models_trained": 2,
-            "feature_count": 3,
-            "winner_name": "test.Model",
-            "json_path": "/tmp/benchmark.json",
-            "csv_path": "/tmp/benchmark.csv",
-            "winner_artifact_path": "/tmp/winner.joblib",
-            "winner": {
-                "val_auc_pr": 0.5,
-                "test_recall": 0.8,
-                "test_auc_pr": 0.4,
-            },
+            "selected_model_name": "hist_gbdt_optuna",
+            "json_path": "/tmp/model_selection_report.json",
+            "artifact_path": "/tmp/model_selected.joblib",
         },
     )
     benchmark_models.main()
+    captured = capsys.readouterr()
+    assert "[OK]" in captured.out
+
+
+def test_model_selection_main_runs(capsys, monkeypatch) -> None:
+    monkeypatch.setattr(
+        model_selection,
+        "run_model_selection_pipeline",
+        lambda: {
+            "official_candidates": [
+                "lightgbm_optuna",
+                "xgboost_optuna",
+                "hist_gbdt_optuna",
+                "extra_trees_optuna",
+            ],
+            "diagnostic_baseline": "logistic_regression_baseline",
+            "trials_per_candidate": 30,
+            "feature_count": 5,
+            "backtest_folds": 3,
+            "artifact_path": "/tmp/model_selected.joblib",
+            "json_path": "/tmp/model_selection_report.json",
+            "selected_model_name": "hist_gbdt_optuna",
+            "selected_model": {
+                "val_auc_pr": 0.4,
+                "test_recall": 0.8,
+                "test_auc_pr": 0.3,
+            },
+        },
+    )
+    model_selection.main()
     captured = capsys.readouterr()
     assert "[OK]" in captured.out
 
@@ -160,17 +188,10 @@ def test_tune_hist_gbdt_main_runs(capsys, monkeypatch) -> None:
         tune_hist_gbdt,
         "run_tuning_pipeline",
         lambda: {
-            "candidates_tested": 2,
-            "feature_count": 5,
+            "selected_model_name": "hist_gbdt_optuna",
             "backtest_folds": 3,
-            "artifact_path": "/tmp/hist_gbdt_tuned.joblib",
-            "json_path": "/tmp/hist_gbdt_tuning_report.json",
-            "best_candidate": {
-                "candidate": "hist_gbdt_tuned_01",
-                "val_auc_pr": 0.4,
-                "test_recall": 0.8,
-                "test_auc_pr": 0.3,
-            },
+            "artifact_path": "/tmp/model_selected.joblib",
+            "json_path": "/tmp/model_selection_report.json",
         },
     )
     tune_hist_gbdt.main()

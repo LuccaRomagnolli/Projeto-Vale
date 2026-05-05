@@ -11,57 +11,41 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.11%20%E2%80%93%203.13-1D9E75?style=flat-square&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Modelo-HistGBDT-EF9F27?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Modelo-Selecao-EF9F27?style=flat-square"/>
   <img src="https://img.shields.io/badge/Janela-4h-085041?style=flat-square"/>
   <img src="https://img.shields.io/badge/Split-70/15/15-888780?style=flat-square"/>
 </p>
 
 ---
 
-# Etapa 8 - Otimizacao de metricas HistGBDT
+# Etapa 8 - Registro legado de otimizacao
 
 Data: 04/05/2026
 
 ## Objetivo
 
-Otimizar o candidato HistGradientBoosting para maximizar utilidade operacional
-em `Top15 Tag-dia`, mantendo calibracao honesta em validacao temporal e
-backtesting para estabilidade.
+Registrar que a antiga otimizacao especifica de uma familia foi substituida
+pela selecao robusta multfamilia em `src/models/model_selection.py`.
 
 ## Entregaveis
 
 | Entrega | Caminho |
 |---|---|
-| Tuning e backtesting | `src/models/tune_hist_gbdt.py` |
+| Selecao robusta vigente | `src/models/model_selection.py` |
 | Gate de estabilidade | `src/models/stability_gate.py` |
-| Artefato promovido | `models/hist_gbdt_tuned.joblib` |
-| Relatorio JSON | `reports/hist_gbdt_tuning_report.json` |
-| Relatorio CSV | `reports/hist_gbdt_tuning_report.csv` |
-| Curva de threshold | `reports/hist_gbdt_threshold_curve.csv` |
-| Backtesting | `reports/hist_gbdt_backtest_report.csv` |
-| Testes | `tests/test_tune_hist_gbdt.py`, `tests/test_stability_gate.py` |
+| Artefato selecionado | `models/model_selected.joblib` |
+| Relatorio JSON | `reports/model_selection_report.json` |
+| Relatorio CSV | `reports/model_selection_report.csv` |
+| Curva de threshold | `reports/model_selected_threshold_curve.csv` |
+| Backtesting | `reports/model_selection_backtest_report.csv` |
+| Testes | `tests/test_model_selection.py`, `tests/test_stability_gate.py` |
 
-## Melhor candidato
+## Politica vigente
 
-| Campo | Valor |
-|---|---|
-| Candidato | `hist_gbdt_tuned_04` |
-| Threshold | `0.141388104973226` |
-| `learning_rate` | `0.04` |
-| `max_iter` | `420` |
-| `max_leaf_nodes` | `21` |
-| `min_samples_leaf` | `120` |
-| `l2_regularization` | `2.0` |
-| `class_weight` | `balanced` |
-| Features | `48` |
-
-## Resultado do candidato promovido
-
-| Split | Precision@15 | Recall@15 | Lift@15 | AUC-PR | AUC-ROC |
-|---|---:|---:|---:|---:|---:|
-| Treino | `0.8413` | `0.7779` | `2.2497` | `0.6805` | `0.8992` |
-| Validacao | `0.6643` | `0.7520` | `2.1307` | `0.2450` | `0.7408` |
-| Teste | `0.6800` | `0.7409` | `2.0910` | `0.2589` | `0.7371` |
+A rodada oficial executa `30` trials Optuna para cada candidato oficial:
+`lightgbm_optuna`, `xgboost_optuna`, `hist_gbdt_optuna` e
+`extra_trees_optuna`. A regressao logistica permanece apenas como baseline
+diagnostico.
 
 ## Backtesting temporal
 
@@ -80,8 +64,8 @@ backtesting para estabilidade.
 
 ## Decisao
 
-Status: `CONCLUIDA`. O candidato `hist_gbdt_tuned_04` atende as metas
-operacionais, passa no gate de estabilidade e e o artefato operacional vigente.
+Status: `SUBSTITUIDA`. O fluxo especifico de uma familia foi mantido apenas
+como historico; o fluxo vigente e `make model-selection`.
 
 ---
 

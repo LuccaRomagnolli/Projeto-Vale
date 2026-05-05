@@ -9,7 +9,7 @@ import pandas as pd
 from src.evaluation.operational_scorecard import PRIMARY_TOP_K
 from src.utils.config import REPORTS_DIR
 
-BACKTEST_REPORT_CSV = REPORTS_DIR / "hist_gbdt_backtest_report.csv"
+BACKTEST_REPORT_CSV = REPORTS_DIR / "model_selection_backtest_report.csv"
 DEFAULT_MAX_RECALL_STD = 0.03
 DEFAULT_MAX_PRECISION_STD = 0.05
 DEFAULT_MIN_FOLDS = 3
@@ -32,7 +32,7 @@ def run_stability_gate(
     """Valida estabilidade minima entre folds temporais."""
     if not backtest_path.exists():
         raise FileNotFoundError(
-            f"Backtesting ausente: {backtest_path}. Execute make tune-hist-gbdt antes do gate."
+            f"Backtesting ausente: {backtest_path}. Execute make model-selection antes do gate."
         )
     df = pd.read_csv(backtest_path)
     if len(df) < min_folds:

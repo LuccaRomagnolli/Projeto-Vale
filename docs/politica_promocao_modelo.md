@@ -11,7 +11,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.11%20%E2%80%93%203.13-1D9E75?style=flat-square&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Modelo-HistGBDT-EF9F27?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Modelo-Selecao-EF9F27?style=flat-square"/>
   <img src="https://img.shields.io/badge/Janela-4h-085041?style=flat-square"/>
   <img src="https://img.shields.io/badge/Split-70/15/15-888780?style=flat-square"/>
 </p>
@@ -24,8 +24,8 @@ Data: 04/05/2026
 
 ## Objetivo
 
-Padronizar a decisao de promocao para evitar ambiguidade entre modelo
-principal, campeao de benchmark e artefato operacional vigente.
+Padronizar a decisao de promocao para evitar ambiguidade entre baseline,
+candidatos oficiais e artefato operacional vigente.
 
 ## Regra obrigatoria
 
@@ -33,7 +33,7 @@ Um modelo so pode ser promovido quando todas as condicoes abaixo forem verdadeir
 
 | Condicao | Regra |
 |---|---|
-| Selecao | Campeao por validacao temporal operacional |
+| Selecao | Modelo selecionado por validacao temporal operacional entre 4 candidatos oficiais |
 | Metrica primaria | Maior `val_top15_recall_at_k` |
 | Desempates | `val_top15_precision_at_k`, `val_top15_lift_vs_random`, `val_auc_pr` |
 | Precision minima no teste | `Precision@Top15 Tag-dia >= 0.60` |
@@ -52,8 +52,7 @@ Um modelo so pode ser promovido quando todas as condicoes abaixo forem verdadeir
 ## Fluxo oficial
 
 ```bash
-make benchmark
-make tune-hist-gbdt
+make model-selection
 make gate-stability
 make evaluate
 make evaluate-segments
@@ -64,18 +63,19 @@ make infer
 
 | Campo | Valor |
 |---|---|
-| Modelo | `hist_gbdt_tuned` |
-| Artefato | `models/hist_gbdt_tuned.joblib` |
-| Threshold | `0.141388104973226` |
-| Test Precision@15 | `0.6800` |
-| Test Recall@15 | `0.7409` |
-| Test Lift@15 | `2.0910` |
+| Modelo | definido em `reports/model_selection_report.json` |
+| Artefato | `models/model_selected.joblib` |
+| Threshold | calibrado na validacao e persistido no artefato |
+| Test Precision@15 | `0.6756` |
+| Test Recall@15 | `0.7361` |
+| Test Lift@15 | `2.0774` |
 
 ## Evidencias minimas
 
-- `reports/model_benchmark_report.json`
-- `reports/hist_gbdt_tuning_report.json`
-- `reports/hist_gbdt_backtest_report.csv`
+- `reports/model_selection_report.json`
+- `reports/model_selection_trials.csv`
+- `reports/model_selection_backtest_report.csv`
+- `reports/model_selected_threshold_curve.csv`
 - `reports/operational_metrics_report.json`
 - `reports/segment_operational_report.json`
 

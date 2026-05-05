@@ -11,7 +11,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.11%20–%203.13-1D9E75?style=flat-square&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Modelo-HistGBDT-EF9F27?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Modelo-Selecao-EF9F27?style=flat-square"/>
   <img src="https://img.shields.io/badge/Janela-4h-085041?style=flat-square"/>
   <img src="https://img.shields.io/badge/Split-70/15/15-888780?style=flat-square"/>
 </p>
@@ -35,17 +35,19 @@ O projeto avalia o modelo com a mesma metodologia operacional em todas as etapas
 |---|---|
 | Janela de target | `target_4h` |
 | Split temporal | `70 / 15 / 15` |
-| Modelo campeão | `hist_gbdt_balanced` |
-| Artefato operacional | `models/hist_gbdt_tuned.joblib` |
-| Threshold calibrado (validação) | `0.141388104973226` |
+| Seleção oficial | `lightgbm_optuna`, `xgboost_optuna`, `hist_gbdt_optuna`, `extra_trees_optuna` |
+| Baseline diagnóstico | `logistic_regression_baseline` |
+| Modelo selecionado | `lightgbm_optuna` |
+| Artefato operacional | `models/model_selected.joblib` |
+| Relatório de seleção | `reports/model_selection_report.json` |
 
 ### Métricas Operacionais — `Top15 Tag-dia` (Teste)
 
 | Métrica | Valor |
 |---|---|
-| `precision@15` | **0.6800** |
-| `recall@15` | **0.7409** |
-| `lift@15` | **2.0910** |
+| `precision@15` | **0.6756** |
+| `recall@15` | **0.7361** |
+| `lift@15` | **2.0774** |
 
 ---
 
@@ -110,13 +112,11 @@ Limites atuais conhecidos:
 | 3 | EDA | `src/eda/run_eda.py` |
 | 4 | Feature engineering | `src/features/build_features.py` |
 | 5 | Split temporal e baseline | `src/models/train_baseline.py` |
-| 6 | Treino principal supervisionado | `src/models/train_model.py` |
-| 7 | Benchmark de candidatos | `src/models/benchmark_models.py` |
-| 8 | Tuning e backtesting HistGBDT | `src/models/tune_hist_gbdt.py` |
-| 9 | Gate de estabilidade | `src/models/stability_gate.py` |
-| 10 | Avaliação operacional | `src/evaluation/evaluate_model.py` |
-| 11 | Análise segmentada | `src/evaluation/segment_analysis.py` |
-| 12 | Inferência operacional | `src/inference.py` |
+| 6 | Seleção robusta de modelos | `src/models/model_selection.py` |
+| 7 | Gate de estabilidade | `src/models/stability_gate.py` |
+| 8 | Avaliação operacional | `src/evaluation/evaluate_model.py` |
+| 9 | Análise segmentada | `src/evaluation/segment_analysis.py` |
+| 10 | Inferência operacional | `src/inference.py` |
 
 ---
 
@@ -169,9 +169,9 @@ pip install -r requirements.txt
 make label              # rotulação
 make eda                # análise exploratória
 make features           # feature engineering
-make train              # treino do modelo
-make benchmark          # benchmark de candidatos
-make tune-hist-gbdt     # tuning HistGBDT
+make train              # baseline + seleção robusta
+make model-selection    # tuning Optuna dos 4 candidatos oficiais
+make benchmark          # alias legado de model-selection
 make gate-stability     # gate de estabilidade
 make evaluate           # avaliação operacional
 make evaluate-segments  # análise segmentada
@@ -206,7 +206,7 @@ make run-all
 > Documento oficial: `docs/politica_promocao_modelo.md`
 > Controle de alterações: `docs/controle_alteracoes.md`
 
-1. **Campeão por validação temporal operacional** — `val_top15_recall_at_k`, com desempate por `val_top15_precision_at_k`, `val_top15_lift_vs_random` e `val_auc_pr`.
+1. **Selecionado por validação temporal operacional** — `val_top15_recall_at_k`, com desempate por `val_top15_precision_at_k`, `val_top15_lift_vs_random` e `val_auc_pr`.
 2. **Metas `Top15 Tag-dia` atendidas** no conjunto de teste.
 3. **Gate de estabilidade aprovado** — sem drift ou degradação.
 4. **Segmentos raros** tratados como inconclusivos, com trilha dedicada.
