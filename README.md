@@ -11,30 +11,28 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.11%20–%203.13-1D9E75?style=flat-square&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Modelo-Selecao-EF9F27?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Modelo-Seleção-EF9F27?style=flat-square"/>
   <img src="https://img.shields.io/badge/Janela-4h-085041?style=flat-square"/>
-  <img src="https://img.shields.io/badge/Divisao-70/15/15-888780?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Divisão-70/15/15-888780?style=flat-square"/>
+</p>
+
+<p align="center">
+  <sub>
+    Autor: <strong>Lucca Maximus Romagnolli</strong> · Universidade de Brasília (UnB)
+  </sub>
 </p>
 
 ---
 
 ## Visão Geral
 
-Este projeto transforma registros históricos de operação de equipamentos de
-mineração em uma lista diária de prioridade para manutenção preventiva. A
-pergunta operacional é simples:
+Este projeto transforma registros históricos de operação de equipamentos de mineração em uma lista diária de prioridade para manutenção preventiva. A pergunta operacional é objetiva:
 
-> **Quais equipamentos devem ser verificados primeiro para reduzir o risco de
-> um alerta crítico nas próximas 4 horas?**
+> **Quais equipamentos devem ser verificados primeiro para reduzir o risco de um alerta crítico nas próximas 4 horas?**
 
-Em vez de tratar o problema apenas como uma classificação individual de ciclos,
-o projeto avalia se o modelo ajuda na decisão real da operação: ordenar as
-`Tags` por risco e destacar, a cada dia, os equipamentos que merecem atenção
-primeiro.
+Em vez de tratar o problema apenas como uma classificação individual de ciclos, o projeto avalia se o modelo apoia a decisão real da operação: ordenar as `Tags` por risco e destacar, a cada dia, os equipamentos que merecem atenção prioritária.
 
-O resultado atual é um artefato operacional promovido em
-`models/model_selected.joblib`, selecionado por validação temporal e avaliado
-com métricas de priorização `Top15 Tag-dia`.
+O resultado é um artefato operacional promovido em `models/model_selected.joblib`, selecionado por validação temporal e avaliado com métricas de priorização `Top15 Tag-dia`.
 
 ---
 
@@ -53,158 +51,138 @@ com métricas de priorização `Top15 Tag-dia`.
 
 ## Dados e Escopo
 
-| Item | Valor atual |
+| Item | Valor |
 |---|---:|
-| Registros do conjunto de dados | `377907` |
+| Registros do conjunto de dados | `377.907` |
 | `Tags` únicas | `47` |
 | Frotas únicas | `5` |
 | Tipos de equipamento | `2` |
-| Eventos críticos finais | `107002` |
-| Positivos em `target_4h` | `70811` (`18.737679%`) |
+| Eventos críticos finais | `107.002` |
+| Positivos em `target_4h` | `70.811` (`18,74%`) |
 | Variáveis totais | `57` colunas |
 | Variáveis modeláveis | `48` |
 
-O alvo principal é `target_4h`: ele vale `1` quando há um evento crítico em até
-4 horas após o ciclo observado, e `0` caso contrário. Essa janela foi adotada
-porque é curta o suficiente para apoiar uma ação operacional e longa o bastante
-para permitir antecipação.
+O alvo principal é `target_4h`: vale `1` quando há um evento crítico em até 4 horas após o ciclo observado, e `0` caso contrário. Essa janela foi adotada por ser curta o suficiente para apoiar ação operacional e longa o bastante para permitir antecipação.
+
+---
+
+## Metodologias Utilizadas
+
+A solução combina metodologias de ciência de dados, aprendizado de máquina e avaliação operacional. O foco não é apenas prever eventos críticos, mas transformar as previsões em uma priorização diária utilizável pela manutenção.
+
+| Metodologia | Aplicação no projeto |
+|---|---|
+| Formulação orientada ao negócio | Conversão do desafio em pergunta operacional: quais `Tags` priorizar antes de um alerta crítico |
+| Rotulação supervisionada temporal | Criação do alvo `target_4h`, indicando ocorrência de evento crítico nas 4 horas seguintes |
+| Análise exploratória de dados | Investigação de distribuição temporal, prevalência do alvo, concentração por frota, tipo, classe e `Tag` |
+| Engenharia de variáveis temporais | Construção de atributos históricos disponíveis até o momento da decisão, sem uso de informação futura |
+| Prevenção de vazamento de informação | Remoção de colunas futuras, identificadores brutos e variáveis que contaminariam o treinamento |
+| Validação temporal | Separação `70 / 15 / 15` em treino, validação e teste com preservação da ordem cronológica |
+| Benchmark supervisionado | Comparação de candidatos sob mesma base, mesma métrica primária e mesma regra de seleção |
+| Otimização de hiperparâmetros | Uso de Optuna sem escolha prévia de modelo por preferência |
+| Calibração de decisão | `threshold` definido na validação, mantendo o teste reservado para reporte final |
+| Avaliação operacional TopK | Medição de `precision@k`, `recall@k` e `lift@k` para listas diárias priorizadas |
+| Avaliação segmentada | Desempenho por frota, tipo e `Tag`, separando riscos globais de recortes inconclusivos |
+| Governança e reprodutibilidade | Artefatos versionados, política de promoção, barreira de estabilidade e comandos via `Makefile` |
 
 ---
 
 ## Metodologia
 
-### 1. Ingestão e contrato dos dados
+### 1. Ingestão e Contrato dos Dados
 
-Os dados são carregados, padronizados e validados antes de qualquer modelagem. O
-objetivo desta etapa é garantir que nomes de colunas, tipos, datas e campos
-obrigatórios estejam consistentes.
+Dados carregados, padronizados e validados antes de qualquer modelagem. Garante consistência de nomes de colunas, tipos, datas e campos obrigatórios.
 
-Arquivo principal: `src/data_loader.py`
+**Arquivo principal:** `src/data_loader.py`
 
-### 2. Rotulação dos alertas
+### 2. Rotulação dos Alertas
 
-A rotulação identifica quais ciclos antecedem um alerta crítico dentro da janela
-de 4 horas. Colunas que olham diretamente para o futuro são usadas apenas para
-criar o alvo e depois são removidas da modelagem.
+Identifica quais ciclos antecedem um alerta crítico dentro da janela de 4 horas. Colunas que olham para o futuro são usadas apenas para criar o alvo e removidas da modelagem na sequência.
 
-Arquivo principal: `src/alert_labeler.py`
+**Arquivo principal:** `src/alert_labeler.py`
 
-### 3. Análise exploratória orientada à decisão
+### 3. Análise Exploratória Orientada à Decisão
 
-A análise exploratória verifica distribuição temporal, prevalência do alvo,
-concentração por `Tag`, frota, tipo de equipamento e padrões que podem afetar a
-operação. A intenção não é apenas descrever a base, mas descobrir riscos de
-modelagem, desbalanceamento e segmentos que exigem cuidado.
+Verifica distribuição temporal, prevalência do alvo, concentração por `Tag`, frota, tipo de equipamento e padrões com impacto operacional. Intenção: descobrir riscos de modelagem, desbalanceamento e segmentos que exigem cuidado — não apenas descrever a base.
 
-Arquivo principal: `src/eda/run_eda.py`
+**Arquivo principal:** `src/eda/run_eda.py`
 
-### 4. Engenharia de variáveis
+### 4. Engenharia de Variáveis
 
-As variáveis são construídas com informação disponível até o momento do ciclo.
-Entram, por exemplo, contagens de ciclos recentes, duração média, variação de
-duração, alertas recentes, sazonalidade, frequência histórica por `Tag` e
-codificações controladas de categorias.
+Variáveis construídas com informação disponível até o momento do ciclo: contagens de ciclos recentes, duração média, variação de duração, alertas recentes, sazonalidade, frequência histórica por `Tag` e codificações controladas de categorias.
 
-Arquivo principal: `src/features/build_features.py`
+**Arquivo principal:** `src/features/build_features.py`
 
-### 5. Divisão temporal
-
-O projeto usa divisão temporal `70 / 15 / 15`:
+### 5. Divisão Temporal
 
 | Parte | Uso |
 |---|---|
-| Treino | Ajustar os modelos |
-| Validação | Calibrar `threshold`, escolher hiperparâmetros e selecionar o modelo |
-| Teste | Reportar desempenho final sem influenciar a escolha |
+| Treino (70%) | Ajustar os modelos |
+| Validação (15%) | Calibrar `threshold`, ajustar hiperparâmetros e selecionar modelo |
+| Teste (15%) | Reportar desempenho final, sem influenciar escolhas |
 
-Essa estratégia evita que informações do futuro influenciem decisões do passado
-e aproxima a avaliação do uso real.
+Essa estratégia evita que informações do futuro influenciem decisões do passado e aproxima a avaliação do uso real em produção.
 
-### 6. Seleção robusta de modelos
+### 6. Seleção Robusta de Modelos
 
-Quatro candidatos oficiais competem com a mesma base, mesma divisão temporal,
-mesma métrica primária e otimização com Optuna:
+Quatro candidatos oficiais competem com a mesma base, mesma divisão temporal, mesma métrica primária e otimização via Optuna:
 
 | Papel | Modelos |
 |---|---|
 | Candidatos oficiais | `lightgbm_optuna`, `xgboost_optuna`, `hist_gbdt_optuna`, `extra_trees_optuna` |
 | Referência diagnóstica | `logistic_regression_baseline` |
 
-O modelo não é escolhido por preferência prévia. Ele é selecionado por
-desempenho operacional na validação.
+O modelo é selecionado por desempenho operacional na validação, sem preferência prévia.
 
-Arquivo principal: `src/models/model_selection.py`
+**Arquivo principal:** `src/models/model_selection.py`
 
-### 7. Avaliação operacional
+### 7. Avaliação Operacional
 
-A avaliação principal usa `TopK Tag-dia`. Para cada dia, o modelo ordena as
-`Tags` por risco e mede a qualidade dos `K` primeiros equipamentos indicados.
+A avaliação principal usa `TopK Tag-dia`: para cada dia, o modelo ordena as `Tags` por risco e mede a qualidade dos `K` primeiros equipamentos indicados.
 
 | Métrica | Interpretação |
 |---|---|
-| `precision@k` | Entre os equipamentos priorizados, quantos realmente tiveram alerta |
+| `precision@k` | Dentre os equipamentos priorizados, quantos realmente tiveram alerta |
 | `recall@k` | Dos equipamentos com alerta, quantos apareceram na lista priorizada |
 | `lift@k` | Quanto a priorização melhora em relação a uma escolha aleatória |
 
-As métricas ciclo-a-ciclo, como `recall`, `precision`, `AUC-PR` e `AUC-ROC`,
-continuam sendo calculadas, mas são usadas como diagnóstico técnico auxiliar.
+Métricas ciclo-a-ciclo (`recall`, `precision`, `AUC-PR`, `AUC-ROC`) são calculadas como diagnóstico técnico auxiliar.
 
-Arquivos principais:
+**Arquivos principais:** `src/evaluation/evaluate_model.py`, `src/evaluation/segment_analysis.py`
 
-- `src/evaluation/evaluate_model.py`
-- `src/evaluation/segment_analysis.py`
+### 8. Promoção e Estabilidade
 
-### 8. Promoção e estabilidade
+Antes do uso operacional assistido, o modelo passa por regras de promoção e estabilidade: metas mínimas no teste, aprovação do `gate` e tratamento explícito de segmentos raros.
 
-Antes de uso operacional assistido, o modelo precisa passar por regras de
-promoção e estabilidade. A política oficial exige metas mínimas em teste,
-aprovação da barreira de estabilidade (`gate`) e tratamento explícito de
-segmentos raros.
-
-Documentos oficiais:
-
-- `docs/politica_promocao_modelo.md`
-- `docs/controle_alteracoes.md`
+**Documentos oficiais:** `docs/politica_promocao_modelo.md`, `docs/controle_alteracoes.md`
 
 ---
 
 ## Estratégias Técnicas
 
-### Prevenção de vazamento de informação
+### Prevenção de Vazamento de Informação
 
-Colunas que revelam o futuro ou identificam diretamente eventos posteriores são
-removidas antes da modelagem:
+Colunas que revelam o futuro ou identificam diretamente eventos posteriores são removidas antes da modelagem:
 
-| Coluna | Motivo |
+| Coluna | Motivo da remoção |
 |---|---|
 | `next_critical_event_time` | Informação futura direta |
 | `tte_horas` | Tempo até evento futuro |
 | `target_4h` | Variável alvo |
-| `Id`, `Inicio`, `Fim` | Identificadores e datas brutas |
+| `Id`, `Inicio`, `Fim` | Identificadores e dados brutos |
 | `Tag`, `Classe` | Substituídas por variáveis históricas ou codificadas |
 
-### Priorização em vez de alarme indiscriminado
+### Priorização em Vez de Alarme Indiscriminado
 
-O projeto evita depender apenas de um `threshold` global ciclo-a-ciclo, porque
-isso pode gerar muitos alertas para a operação. A estratégia principal é
-produzir uma lista ordenada por risco e limitar a decisão ao orçamento diário de
-atenção, como `Top15 Tags por dia`.
+O projeto evita depender apenas de um `threshold` global ciclo-a-ciclo — o que pode gerar volume alto de alertas. A estratégia principal é produzir uma lista ordenada por risco e limitar a decisão ao orçamento diário de atenção, como `Top15 Tags por dia`.
 
-### Validação temporal
+### Avaliação por Segmentos
 
-Todas as decisões relevantes são tomadas na validação temporal. O teste fica
-reservado para estimar como o modelo se comportaria em dados posteriores.
+O desempenho é analisado por recortes operacionais: frota, tipo e `Tag`. Segmentos com baixa prevalência são marcados como inconclusivos, não como falha global, evitando conclusões fortes em amostras pequenas.
 
-### Avaliação por segmentos
+### Governança de Promoção
 
-O desempenho é analisado por recortes operacionais, como frota, tipo e `Tag`.
-Segmentos com baixa prevalência são marcados como inconclusivos, não como falha
-global automática. Isso evita conclusões fortes em amostras pequenas.
-
-### Governança de promoção
-
-A promoção depende de evidências versionadas em `reports/`, política explícita
-em `docs/` e comandos reproduzíveis via `Makefile`.
+A promoção depende de evidências versionadas em `reports/`, política explícita em `docs/` e comandos reproduzíveis via `Makefile`.
 
 ---
 
@@ -219,9 +197,7 @@ em `docs/` e comandos reproduzíveis via `Makefile`.
 | Relatório de seleção | `reports/model_selection_report.json` |
 | `threshold` promovido | Persistido no artefato selecionado |
 
-### Métricas Operacionais no Teste
-
-Resultado em `Top15 Tag-dia`:
+### Métricas Operacionais no Teste — Top15 Tag-dia
 
 | Métrica | Valor |
 |---|---:|
@@ -229,19 +205,15 @@ Resultado em `Top15 Tag-dia`:
 | `recall@15` | **0.7361** |
 | `lift@15` | **2.0774** |
 
-Leitura prática: no teste temporal, a lista diária de 15 equipamentos teve
-precisão de aproximadamente 67,6%, recuperou aproximadamente 73,6% dos casos
-críticos cobertos pelo critério operacional e foi cerca de 2,08 vezes melhor do
-que uma priorização aleatória.
+No teste temporal, a lista diária de 15 equipamentos atingiu precisão de ~67,6%, recuperou ~73,6% dos casos críticos cobertos pelo critério operacional e foi ~2,08× melhor que uma priorização aleatória.
 
 ---
 
 ## Viabilidade Atual
 
-O projeto está metodologicamente apto para **piloto operacional assistido**,
-desde que usado com monitoramento e acompanhamento humano.
+O projeto está metodologicamente apto para **piloto operacional assistido**, desde que usado com monitoramento e acompanhamento humano.
 
-Motivos:
+**Motivos:**
 
 1. A validação respeita a ordem temporal dos dados.
 2. A seleção usa métrica aderente à decisão real da operação.
@@ -249,13 +221,11 @@ Motivos:
 4. Há regra oficial de promoção e barreira de estabilidade (`gate`).
 5. A avaliação segmentada separa riscos globais de recortes inconclusivos.
 
-Limites conhecidos:
+**Limites conhecidos:**
 
-- O uso ciclo-a-ciclo por `threshold` global ainda pode gerar volume alto de
-  alertas.
+- O uso ciclo-a-ciclo por `threshold` global ainda pode gerar volume alto de alertas.
 - Segmentos raros precisam de trilha dedicada antes de decisões automáticas.
-- O desempenho deve ser monitorado continuamente contra mudança de padrão dos
-  dados, degradação de métricas e aumento de falsos alertas.
+- O desempenho deve ser monitorado continuamente contra mudança de padrão, degradação de métricas e aumento de falsos alertas.
 
 ---
 
@@ -300,28 +270,25 @@ Limites conhecidos:
 | 7 | `make evaluate-segments` | `src/evaluation/segment_analysis.py` | análise por segmento |
 | 8 | `make infer` | `src/inference.py` | pontuações de inferência |
 
-Fluxo completo:
+**Fluxo completo:**
 
 ```bash
 make run-all
 ```
 
-Validação rápida:
+**Validação rápida** (testes + inferência + avaliação operacional + avaliação segmentada):
 
 ```bash
 make smoke
 ```
 
-O comando `make smoke` executa testes, inferência, avaliação operacional e
-avaliação segmentada.
-
 ---
 
 ## Configuração do Ambiente
 
-Requisito: Python `>=3.11, <3.14`
+**Requisito:** Python `>=3.11, <3.14`
 
-### Ambiente isolado com Conda
+### Com Conda
 
 ```bash
 conda create -n vale312 python=3.12 -y
@@ -332,28 +299,15 @@ echo "setuptools<82" > constraints.txt
 python -m pip install -r requirements.txt -c constraints.txt --prefer-binary
 ```
 
-No Windows com PowerShell, execute `conda init powershell` e reinicie o
-terminal antes de `conda activate`.
+> **Windows (PowerShell):** execute `conda init powershell` e reinicie o terminal antes de `conda activate`.  
+> **macOS / Linux:** use o hook adequado ao seu shell, por exemplo `eval "$(conda shell.bash hook)"`.
 
-No macOS ou Linux, use o comando de ativação apropriado ao seu terminal, como:
-
-```bash
-eval "$(conda shell.bash hook)"
-conda activate vale312
-```
-
-### Ambiente com venv
+### Com venv
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-No Windows, a ativação costuma ser:
-
-```powershell
-.venv\Scripts\Activate.ps1
+source .venv/bin/activate        # macOS / Linux
+# .venv\Scripts\Activate.ps1    # Windows (PowerShell)
 pip install -r requirements.txt
 ```
 
@@ -362,24 +316,24 @@ pip install -r requirements.txt
 ## Comandos Principais
 
 ```bash
-make install            # instala dependências
-make format             # formata arquivos Python com black
-make lint               # verifica padrões com ruff
-make test               # executa testes com cobertura
-make label              # gera base rotulada
-make eda                # executa análise exploratória
-make features           # constrói variáveis
-make train              # treina referência inicial e seleção robusta
-make model-selection    # seleciona o melhor candidato oficial
-make benchmark          # apelido legado de model-selection
-make tune-hist-gbdt     # apelido legado de model-selection
-make gate-stability     # valida estabilidade temporal
-make evaluate           # avalia métricas operacionais
-make evaluate-segments  # avalia segmentos operacionais
-make infer              # gera inferência com artefato promovido
-make smoke              # validação rápida
-make run-all            # fluxo completo
-make clean              # remove artefatos locais de execução
+make install             # instala dependências
+make format              # formata arquivos Python com black
+make lint                # verifica padrões com ruff
+make test                # executa testes com cobertura
+make label               # gera base rotulada
+make eda                 # executa análise exploratória
+make features            # constrói variáveis
+make train               # treina referência inicial e seleção robusta
+make model-selection     # seleciona o melhor candidato oficial
+make benchmark           # apelido legado de model-selection
+make tune-hist-gbdt      # apelido legado de model-selection
+make gate-stability      # valida estabilidade temporal
+make evaluate            # avalia métricas operacionais
+make evaluate-segments   # avalia segmentos operacionais
+make infer               # gera inferência com artefato promovido
+make smoke               # validação rápida
+make run-all             # fluxo completo
+make clean               # remove artefatos locais de execução
 ```
 
 ---
@@ -395,9 +349,9 @@ make clean              # remove artefatos locais de execução
 5. Gera `score` e `prediction`.
 6. Salva a saída em `reports/inference_scores.parquet`.
 
-Entrada esperada: arquivo `csv` ou `parquet` com as variáveis modeláveis.
+**Entrada esperada:** arquivo `.csv` ou `.parquet` com as variáveis modeláveis.
 
-Saída esperada:
+**Saída esperada:**
 
 | Coluna | Significado |
 |---|---|
@@ -436,7 +390,7 @@ Saída esperada:
 | 10 | `docs/etapa_10_avaliacao_segmentada.md` |
 | 11 | `docs/etapa_11_inferencia_operacional.md` |
 
-Documentos de governança:
+**Documentos de governança:**
 
 - `docs/politica_promocao_modelo.md`
 - `docs/controle_alteracoes.md`
@@ -447,30 +401,26 @@ Documentos de governança:
 
 ## Caderno Técnico
 
-Caderno ativo:
+**Caderno ativo:** `notebooks/main.ipynb` — visão técnico-executiva consolidada do projeto.
 
-- `notebooks/main.ipynb` — visão técnico-executiva consolidada do projeto.
-
-Referências antigas a notebooks `01..09` foram removidas da documentação porque
-não refletem mais a estrutura atual versionada.
+> Referências antigas a notebooks `01..09` foram removidas da documentação por não refletirem a estrutura atual versionada.
 
 ---
 
 ## Regras de Manutenção
 
-Sempre que houver mudança em fluxo, comandos, métricas oficiais, artefato
-promovido ou política de promoção, atualizar no mesmo conjunto de alterações:
+Sempre que houver mudança em fluxo, comandos, métricas oficiais, artefato promovido ou política de promoção, atualizar no mesmo conjunto de alterações:
 
 1. `README.md`
 2. `docs/README.md`
-3. documento da etapa afetada em `docs/`
-4. `docs/controle_alteracoes.md`, quando houver mudança metodológica
+3. Documento da etapa afetada em `docs/`
+4. `docs/controle_alteracoes.md` (quando houver mudança metodológica)
 
-O `threshold` operacional deve vir do artefato promovido. Ele não deve ser
-substituído por valor fixo em variável de ambiente.
+> O `threshold` operacional deve vir do artefato promovido. Não deve ser substituído por valor fixo em variável de ambiente.
 
 ---
 
 <p align="center">
-  <sub>Vale · Operações de Mineração · Antecipação de Alertas Críticos</sub>
+  <sub>Vale · Operações de Mineração · Antecipação de Alertas Críticos</sub><br>
+  <sub>Autor: <strong>Lucca Maximus Romagnolli</strong> · Universidade de Brasília (UnB)</sub>
 </p>
