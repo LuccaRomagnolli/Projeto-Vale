@@ -2,7 +2,7 @@
   <img src="../pictures/vale-logo-removebg-preview.png" alt="Vale" width="120"/>
 </p>
 
-<h1 align="center">Mining Fleet Alert Anticipation</h1>
+<h1 align="center">Antecipação de Alertas Críticos em Frota de Mineração</h1>
 
 <p align="center">
   Antecipacao de alertas criticos <strong>"Don't Go"</strong> em equipamentos de mineracao,<br>
