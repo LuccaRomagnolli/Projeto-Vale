@@ -227,6 +227,24 @@ O projeto está metodologicamente apto para **piloto operacional assistido**, de
 - Segmentos raros precisam de trilha dedicada antes de decisões automáticas.
 - O desempenho deve ser monitorado continuamente contra mudança de padrão, degradação de métricas e aumento de falsos alertas.
 
+### Limitações Honestas da Abordagem
+
+| Limitação | Risco | Mitigação |
+|---|---|---|
+| Janela histórica limitada | A generalização pode mudar em outras regiões, meses ou sazonalidades. | Backtesting contínuo e retreino por janela móvel. |
+| Dados de manutenção preventiva ausentes | O modelo não sabe se uma intervenção recente reduziu o risco de uma `Tag`. | Integrar ordens de serviço e histórico de manutenção. |
+| Custo real de parada ausente no dataset | O impacto financeiro e a priorização econômica ainda ficam aproximados. | Adicionar custo/hora por frota e severidade operacional. |
+| SHAP explica associação, não causalidade | Sinais correlacionais podem ser interpretados incorretamente como causa de falha. | Validar achados com especialistas e experimentos controlados no piloto. |
+
+### Trabalhos Futuros Concretos
+
+| Extensão | Proposta | Justificativa |
+|---|---|---|
+| Novos dados | Integrar manutenção preventiva, falhas mecânicas, clima e contexto de mina. | Aumenta explicação causal e reduz falsos positivos. |
+| Novas features | Criar features em tempo real de sensores e comportamento anonimizado do operador. | Captura degradação mais próxima do evento. |
+| Modelos online | Implementar aprendizado incremental e monitoramento de drift com gatilho de retreino. | Mantém performance quando a operação muda. |
+| Integração operacional | Publicar o Top15 por API ou job diário no sistema do dispatcher. | Fecha o ciclo entre score, inspeção, feedback e governança. |
+
 ---
 
 ## Estrutura do Repositório
