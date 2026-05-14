@@ -51,14 +51,14 @@ Optuna, threshold calibrado somente na validacao e scorecard `Top15 Tag-dia`.
 | Folds de backtesting | `3` |
 | TopK operacional primario | `15 Tags por dia` |
 
-## Colunas removidas por vazamento ou identidade bruta
+## Colunas removidas por vazamento ou identidade sem tratamento
 
 | Coluna | Motivo |
 |---|---|
 | `next_critical_event_time` | Informacao futura direta |
 | `tte_horas` | Tempo ate evento futuro |
 | `target_4h` | Variavel alvo |
-| `Id`, `Inicio`, `Fim` | Identificadores e timestamps brutos |
+| `Id`, `Inicio`, `Fim` | Identificadores e timestamps sem tratamento |
 | `Tag`, `Classe` | Substituidas por features historicas/encodings |
 
 ## Criterio de selecao

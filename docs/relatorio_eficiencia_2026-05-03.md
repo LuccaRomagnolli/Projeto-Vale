@@ -56,7 +56,7 @@ risco e acionar a capacidade operacional diaria, especialmente `Top15 Tag-dia`.
 
 ## Riscos remanescentes
 
-1. Threshold global ciclo-a-ciclo gera alto volume bruto de alertas.
+1. Threshold global ciclo-a-ciclo gera alto volume sem tratamento de alertas.
 2. Segmentos raros como `Escavadeira` e `LeTourneau L 1850` exigem trilha
    separada.
 3. Tags com falsos negativos recorrentes devem entrar em rotina de monitoramento.

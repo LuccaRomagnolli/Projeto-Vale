@@ -4,13 +4,13 @@
 
 # Pasta de Datasets
 
-Nesta pasta existem arquivos de exemplo e dados brutos usados no projeto.
+Nesta pasta existem arquivos de exemplo e dados sem tratamento usados no projeto.
 
 - Arquivo `.xlsx` de apontamentos: exemplos de apontamentos (parada,
   manutencao e producao).
 - Arquivo `.xlsx` de telemetria: exemplo da sequencia de eventos associada a
   alerta `Don't Go`.
-- Arquivos `.parquet`: dados brutos de telemetria e apontamentos usados no
+- Arquivos `.parquet`: dados sem tratamento de telemetria e apontamentos usados no
   pipeline.
 
 ## Resumo dos Dados

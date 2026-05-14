@@ -8,8 +8,8 @@ Referência completa das variáveis, fontes e artefatos do projeto. Descreve o s
 
 - [Convenções](#convenções)
 - [Fontes de dados](#fontes-de-dados)
-- [Apontamentos brutos](#apontamentos-brutos)
-- [Telemetria bruta](#telemetria-bruta)
+- [Apontamentos sem tratamento](#apontamentos-sem-tratamento)
+- [Telemetria sem tratamento](#telemetria-sem-tratamento)
 - [Regras de negócio](#regras-de-negócio)
 - [Base rotulada](#base-rotulada)
 - [Eventos críticos](#eventos-críticos)
@@ -52,8 +52,8 @@ Referência completa das variáveis, fontes e artefatos do projeto. Descreve o s
 
 | Fonte | Caminho | Uso no projeto |
 |---|---|---|
-| Apontamentos brutos | `data/raw/datasets/apontamentos/desenvolver_apontamentos.parquet` | Base de ciclos operacionais. |
-| Telemetria bruta | `data/raw/datasets/telemetria/*.parquet` | Eventos e alarmes dos equipamentos. |
+| Apontamentos sem tratamento | `data/raw/datasets/apontamentos/desenvolver_apontamentos.parquet` | Base de ciclos operacionais. |
+| Telemetria sem tratamento | `data/raw/datasets/telemetria/*.parquet` | Eventos e alarmes dos equipamentos. |
 | Dicionário oficial | `data/external/dicionario/Dicionario_Dados.xlsx` | Descrição original das colunas de apontamentos e telemetria. |
 | Regras de negócio | `data/external/regras_negocio/Alarmes - Regra de Negocio.xlsx` | Fonte de verdade para alarmes críticos e Don't Go. |
 | Base rotulada | `data/processed/labeled/apontamentos_labeled.parquet` | Ciclos com `target_4h`. |
@@ -64,7 +64,7 @@ Referência completa das variáveis, fontes e artefatos do projeto. Descreve o s
 
 ---
 
-## Apontamentos brutos
+## Apontamentos sem tratamento
 
 | Variável | Tipo | Descrição | Uso |
 |---|---|---|---|
@@ -80,7 +80,7 @@ Referência completa das variáveis, fontes e artefatos do projeto. Descreve o s
 
 ---
 
-## Telemetria bruta
+## Telemetria sem tratamento
 
 | Variável | Tipo | Descrição | Uso |
 |---|---|---|---|
@@ -88,7 +88,7 @@ Referência completa das variáveis, fontes e artefatos do projeto. Descreve o s
 | `Data_Evento` | datetime64 | Data e hora do registro do evento. | Alinhamento temporal com ciclos. |
 | `Inicio_Turno` | object | Data/hora de início do turno do evento. | Contexto operacional. |
 | `Fim_Turno` | object | Data/hora de término do turno do evento. | Contexto operacional. |
-| `Dia` | int64 | Dia do mês do evento. | Variável de calendário bruta. |
+| `Dia` | int64 | Dia do mês do evento. | Variável de calendário sem tratamento. |
 | `Localidade` | object | Mina ou localidade onde o equipamento opera. | Contexto e possíveis recortes futuros. |
 | `TAG` | object | Código do equipamento na telemetria. | Ligação com `Tag` dos apontamentos. |
 | `Tag_Frota` | object | Modelo ou frota do equipamento na telemetria. | Conferência e segmentação. |
@@ -127,12 +127,12 @@ Arquivos principais: `apontamentos_labeled.parquet` e `features_dataset.parquet`
 | Variável | Tipo | Descrição | Papel na modelagem |
 |---|---|---|---|
 | `Id` | int64 | Identificador do ciclo. | Auditoria; removido da matriz modelável. |
-| `Inicio` | datetime64[UTC] | Início do ciclo. | Auditoria e criação de features temporais; removido como timestamp bruto. |
-| `Fim` | datetime64[UTC] | Fim do ciclo. | Referência para split temporal, target e features; removido como timestamp bruto. |
-| `Tag` | object | Equipamento do ciclo. | Unidade de priorização; removido cru da matriz modelável. |
+| `Inicio` | datetime64[UTC] | Início do ciclo. | Auditoria e criação de features temporais; removido como timestamp sem tratamento. |
+| `Fim` | datetime64[UTC] | Fim do ciclo. | Referência para split temporal, target e features; removido como timestamp sem tratamento. |
+| `Tag` | object | Equipamento do ciclo. | Unidade de priorização; removido sem tratamento da matriz modelável. |
 | `Frota` | object | Frota ou modelo do equipamento. | Usado antes do one-hot; disponível na base rotulada. |
 | `Tipo` | object | Tipo do equipamento. | Usado antes do one-hot; disponível na base rotulada. |
-| `Classe` | object | Classe da atividade ou ciclo. | Segmentação e encoding; removida crua do modelo final. |
+| `Classe` | object | Classe da atividade ou ciclo. | Segmentação e encoding; removida sem tratamento do modelo final. |
 | `next_critical_event_time` | datetime64[UTC] | Próximo evento crítico futuro associado ao equipamento. | Auditoria e rotulação — vazamento se usada como feature. |
 | `tte_horas` | float64 | Time-to-event em horas até o próximo evento crítico. | Auditoria e rotulação — vazamento se usada como feature. |
 | `target_4h` | int64 | Alvo binário: `1` se há evento crítico em até 4h, `0` caso contrário. | Variável resposta — nunca entra como feature. |
@@ -213,7 +213,7 @@ Calculadas por equipamento em janelas retrospectivas. Usam apenas histórico ant
 
 | Variável | Tipo | Descrição | Observação |
 |---|---|---|---|
-| `Tag_freq` | float64 | Frequência histórica da `Tag` no conjunto de treino. | Substitui uso cru do identificador. |
+| `Tag_freq` | float64 | Frequência histórica da `Tag` no conjunto de treino. | Substitui uso sem tratamento do identificador. |
 | `Operador_freq` | float64 | Frequência histórica do operador anonimizado. | Codificação agregada, sem identificação direta. |
 | `Classe_target_enc` | float64 | Encoding supervisionado da classe de atividade. | Deve ser calculado sem vazamento temporal. |
 | `Frota_793-D 2S` | bool | Indicador one-hot para frota `793-D 2S`. | `True` quando o ciclo pertence à frota. |
@@ -233,10 +233,10 @@ Aparecem nos datasets para auditoria e rotulação, mas não devem ser usadas co
 | Variável | Motivo de remoção |
 |---|---|
 | `Id` | Identificador técnico; não generaliza. |
-| `Inicio` | Timestamp bruto; substituído por features temporais. |
-| `Fim` | Timestamp bruto e referência de rotulação e split. |
+| `Inicio` | Timestamp sem tratamento; substituído por features temporais. |
+| `Fim` | Timestamp sem tratamento e referência de rotulação e split. |
 | `Tag` | Identificador de equipamento; substituído por encoding de frequência e usado para ranking operacional. |
-| `Classe` | Categoria bruta; substituída por encoding e agregações. |
+| `Classe` | Categoria sem tratamento; substituída por encoding e agregações. |
 | `next_critical_event_time` | Informação futura, usada apenas para construir o alvo. |
 | `tte_horas` | Informação futura, diretamente relacionada ao target. |
 | `target_4h` | Variável resposta. |
@@ -432,6 +432,6 @@ Arquivo: `reports/operational/operational_deduplicated_alerts.csv`
 
 > O uso operacional recomendado é o ranking **Top15 Tag-dia**, não o acionamento automático para todo ciclo acima do threshold.
 
-> `target_4h`, `tte_horas` e `next_critical_event_time` existem para rotulação e auditoria e **não devem ser usadas como entrada do modelo**. Identificadores brutos como `Id`, `Tag`, timestamps crus e dados de operador devem ser tratados com cuidado para evitar memorização ou exposição desnecessária.
+> `target_4h`, `tte_horas` e `next_critical_event_time` existem para rotulação e auditoria e **não devem ser usadas como entrada do modelo**. Identificadores sem tratamento como `Id`, `Tag`, timestamps sem tratamento e dados de operador devem ser tratados com cuidado para evitar memorização ou exposição desnecessária.
 
 > As features rolling sempre devem usar apenas histórico anterior ao ciclo avaliado. Toda avaliação final deve respeitar o split temporal para evitar contaminação entre passado e futuro.

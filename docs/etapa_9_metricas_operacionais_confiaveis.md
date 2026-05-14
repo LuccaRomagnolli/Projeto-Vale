@@ -76,7 +76,7 @@ metricas ciclo-a-ciclo.
 | Indicador | Valor |
 |---|---:|
 | Cooldown | `4h` |
-| Preditos positivos brutos | `24925` |
+| Preditos positivos sem tratamento | `24925` |
 | Alertas deduplicados | `2541` |
 | Alertas deduplicados por dia | `87.62` |
 | Precision deduplicada | `0.2621` |
