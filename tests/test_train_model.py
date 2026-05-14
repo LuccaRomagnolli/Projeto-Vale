@@ -52,7 +52,7 @@ def test_run_model_pipeline_writes_outputs(tmp_path: Path, monkeypatch) -> None:
     df.iloc[50:].to_parquet(split_dir / "features_test.parquet", index=False)
 
     monkeypatch.setattr("src.models.train_model.MODELS_DIR", tmp_path / "models")
-    monkeypatch.setattr("src.models.train_model.REPORTS_DIR", tmp_path / "reports")
+    monkeypatch.setattr("src.models.train_model.REPORTS_LEGACY_MODEL_DIR", tmp_path / "reports")
     monkeypatch.setattr(
         "src.models.train_model.MODEL_ARTIFACT_PATH",
         tmp_path / "models" / "legacy_supervised_model.joblib",

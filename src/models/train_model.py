@@ -22,13 +22,13 @@ from src.models.validation import (
     choose_threshold_for_recall,
     compute_binary_metrics,
 )
-from src.utils.config import MODELS_DIR, REPORTS_DIR, SPLIT_DIR
+from src.utils.config import MODELS_DIR, REPORTS_LEGACY_MODEL_DIR, SPLIT_DIR
 from src.utils.metadata import build_execution_metadata, to_repo_relative_path
 
 MODEL_ARTIFACT_PATH = MODELS_DIR / "legacy_supervised_model.joblib"
-MODEL_REPORT_PATH = REPORTS_DIR / "legacy_supervised_model_report.json"
-MODEL_SCORES_PATH = REPORTS_DIR / "legacy_supervised_model_scores.parquet"
-FEATURE_IMPORTANCE_PATH = REPORTS_DIR / "model_feature_importance.csv"
+MODEL_REPORT_PATH = REPORTS_LEGACY_MODEL_DIR / "legacy_supervised_model_report.json"
+MODEL_SCORES_PATH = REPORTS_LEGACY_MODEL_DIR / "legacy_supervised_model_scores.parquet"
+FEATURE_IMPORTANCE_PATH = REPORTS_LEGACY_MODEL_DIR / "model_feature_importance.csv"
 
 LEAKAGE_COLUMNS = {
     "Id",
@@ -203,7 +203,7 @@ def save_model_outputs(
 ) -> dict[str, str]:
     """Persiste artefato, scores, metricas e importancia."""
     MODELS_DIR.mkdir(parents=True, exist_ok=True)
-    REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    REPORTS_LEGACY_MODEL_DIR.mkdir(parents=True, exist_ok=True)
 
     joblib.dump(
         {

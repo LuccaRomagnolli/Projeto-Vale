@@ -53,12 +53,12 @@ posterior, justificativa e evidencias.
 
 | Evidencia | Caminho |
 |---|---|
-| Selecao robusta de modelos | `reports/model_selection_report.json` |
-| Trials por familia | `reports/model_selection_trials.csv` |
-| Scores da selecao com segmentos | `reports/model_selection_scores.parquet` |
-| Backtesting temporal | `reports/model_selection_backtest_report.csv` |
-| Avaliacao operacional | `reports/operational_metrics_report.json` |
-| Analise segmentada | `reports/segment_operational_report.json` |
+| Selecao robusta de modelos | `reports/model_selection/model_selection_report.json` |
+| Trials por familia | `reports/model_selection/model_selection_trials.csv` |
+| Scores da selecao com segmentos | `reports/model_selection/model_selection_scores.parquet` |
+| Backtesting temporal | `reports/model_selection/model_selection_backtest_report.csv` |
+| Avaliacao operacional | `reports/operational/operational_metrics_report.json` |
+| Analise segmentada | `reports/segments/segment_operational_report.json` |
 | Notebook executivo | `notebooks/main.ipynb` |
 
 ## Alteracao 02 - Padronizacao documental

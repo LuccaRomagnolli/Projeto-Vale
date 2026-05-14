@@ -34,10 +34,10 @@ validacao temporal, threshold calibrado fora do teste e selecao por
 | Entrega | Caminho |
 |---|---|
 | Selecao robusta | `src/models/model_selection.py` |
-| Relatorio JSON | `reports/model_selection_report.json` |
-| Relatorio CSV | `reports/model_selection_report.csv` |
-| Trials | `reports/model_selection_trials.csv` |
-| Scores | `reports/model_selection_scores.parquet` |
+| Relatorio JSON | `reports/model_selection/model_selection_report.json` |
+| Relatorio CSV | `reports/model_selection/model_selection_report.csv` |
+| Trials | `reports/model_selection/model_selection_trials.csv` |
+| Scores | `reports/model_selection/model_selection_scores.parquet` |
 | Artefato selecionado | `models/model_selected.joblib` |
 | Testes | `tests/test_model_selection.py` |
 
@@ -54,7 +54,7 @@ validacao temporal, threshold calibrado fora do teste e selecao por
 ## Resultado da selecao
 
 Os resultados vigentes devem ser lidos diretamente em
-`reports/model_selection_report.json` e `reports/model_selection_report.csv`,
+`reports/model_selection/model_selection_report.json` e `reports/model_selection/model_selection_report.csv`,
 pois o artefato final depende dos trials Optuna executados em cada rodada.
 
 ## Recomendacoes

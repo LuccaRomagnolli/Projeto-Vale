@@ -1580,8 +1580,8 @@
       "total_positives": 413
     }
   ],
-  "scores_path": "reports/model_benchmark_scores.parquet",
-  "csv_path": "reports/model_benchmark_report.csv",
+  "scores_path": "reports/modeling_legacy/model_benchmark_scores.parquet",
+  "csv_path": "reports/modeling_legacy/model_benchmark_report.csv",
   "winner_artifact_path": "models/model_benchmark_winner.joblib",
   "metadata": {
     "component": "benchmark_models",

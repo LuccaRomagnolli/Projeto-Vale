@@ -25,7 +25,7 @@ def test_run_baseline_pipeline_writes_artifacts(tmp_path: Path, monkeypatch) -> 
     df.to_parquet(features_path, index=False)
 
     monkeypatch.setattr("src.models.train_baseline.MODELS_DIR", tmp_path / "models")
-    monkeypatch.setattr("src.models.train_baseline.REPORTS_DIR", tmp_path / "reports")
+    monkeypatch.setattr("src.models.train_baseline.REPORTS_BASELINE_DIR", tmp_path / "reports")
     monkeypatch.setattr(
         "src.models.train_baseline.BASELINE_ARTIFACT_PATH",
         tmp_path / "models" / "baseline_heuristico.joblib",

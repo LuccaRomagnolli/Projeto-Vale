@@ -70,7 +70,10 @@ def test_run_model_selection_pipeline_writes_neutral_outputs(tmp_path: Path, mon
     df.iloc[80:].to_parquet(split_dir / "features_test.parquet", index=False)
 
     monkeypatch.setattr("src.models.model_selection.MODELS_DIR", tmp_path / "models")
-    monkeypatch.setattr("src.models.model_selection.REPORTS_DIR", tmp_path / "reports")
+    monkeypatch.setattr(
+        "src.models.model_selection.REPORTS_MODEL_SELECTION_DIR",
+        tmp_path / "reports",
+    )
     monkeypatch.setattr(
         "src.models.model_selection.OFFICIAL_CANDIDATE_NAMES",
         ("hist_gbdt_optuna",),

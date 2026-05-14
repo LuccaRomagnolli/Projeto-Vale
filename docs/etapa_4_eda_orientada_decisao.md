@@ -33,9 +33,9 @@ antes da engenharia de atributos.
 | Entrega | Caminho |
 |---|---|
 | Pipeline de EDA | `src/eda/run_eda.py` |
-| Relatorio | `reports/eda_report.md` |
-| Sumario visual | `reports/eda_executivo.png` |
-| Figuras | `reports/figures/` |
+| Relatorio | `reports/eda/eda_report.md` |
+| Sumario visual | `reports/eda/eda_executivo.png` |
+| Figuras | `reports/eda/figures/` |
 | Testes | `tests/test_eda.py`, `tests/test_eda_pipeline_outputs.py` |
 
 ## Resultado principal
@@ -64,11 +64,11 @@ antes da engenharia de atributos.
 
 ## Figuras geradas
 
-- `reports/figures/eda_target_distribution.png`
-- `reports/figures/eda_ciclos_por_hora.png`
-- `reports/figures/eda_top_frotas.png`
-- `reports/figures/eda_duracao_ciclo_hist.png`
-- `reports/figures/eda_top_classes.png`
+- `reports/eda/figures/eda_target_distribution.png`
+- `reports/eda/figures/eda_ciclos_por_hora.png`
+- `reports/eda/figures/eda_top_frotas.png`
+- `reports/eda/figures/eda_duracao_ciclo_hist.png`
+- `reports/eda/figures/eda_top_classes.png`
 
 ## Decisao
 

@@ -192,8 +192,8 @@
     "row_positive_capture_after_dedup": 0.07962308598351
   },
   "outputs": {
-    "budget_metrics_csv": "reports/operational_budget_metrics.csv",
-    "daily_topk_metrics_csv": "reports/operational_daily_topk_metrics.csv",
-    "deduplicated_alerts_csv": "reports/operational_deduplicated_alerts.csv"
+    "budget_metrics_csv": "reports/operational/operational_budget_metrics.csv",
+    "daily_topk_metrics_csv": "reports/operational/operational_daily_topk_metrics.csv",
+    "deduplicated_alerts_csv": "reports/operational/operational_deduplicated_alerts.csv"
   }
 }

@@ -16,11 +16,11 @@ from src.models.validation import (
     save_split_datasets,
     temporal_train_val_test_split,
 )
-from src.utils.config import FEATURES_DATASET_PATH, MODELS_DIR, REPORTS_DIR, SPLIT_DIR
+from src.utils.config import FEATURES_DATASET_PATH, MODELS_DIR, REPORTS_BASELINE_DIR, SPLIT_DIR
 
 BASELINE_ARTIFACT_PATH = MODELS_DIR / "baseline_heuristico.joblib"
-BASELINE_REPORT_PATH = REPORTS_DIR / "baseline_report.json"
-BASELINE_SCORES_PATH = REPORTS_DIR / "baseline_scores.parquet"
+BASELINE_REPORT_PATH = REPORTS_BASELINE_DIR / "baseline_report.json"
+BASELINE_SCORES_PATH = REPORTS_BASELINE_DIR / "baseline_scores.parquet"
 SPLIT_METADATA_PATH = SPLIT_DIR / "split_metadata.json"
 
 
@@ -60,7 +60,7 @@ def save_baseline_outputs(
 ) -> dict[str, str]:
     """Persiste scores, relatorio e artefato do baseline."""
     MODELS_DIR.mkdir(parents=True, exist_ok=True)
-    REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    REPORTS_BASELINE_DIR.mkdir(parents=True, exist_ok=True)
     SPLIT_DIR.mkdir(parents=True, exist_ok=True)
 
     frames = []

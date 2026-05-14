@@ -9,9 +9,9 @@
     "Classe"
   ],
   "outputs": {
-    "threshold_metrics_csv": "reports/segment_threshold_metrics.csv",
-    "topk_metrics_csv": "reports/segment_topk_tag_day_metrics.csv",
-    "tag_hotspots_csv": "reports/segment_tag_hotspots.csv"
+    "threshold_metrics_csv": "reports/segments/segment_threshold_metrics.csv",
+    "topk_metrics_csv": "reports/segments/segment_topk_tag_day_metrics.csv",
+    "tag_hotspots_csv": "reports/segments/segment_tag_hotspots.csv"
   },
   "weakest_top15_segments": [
     {

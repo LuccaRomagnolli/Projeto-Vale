@@ -1377,12 +1377,12 @@
   },
   "outputs": {
     "artifact_path": "models/model_selected.joblib",
-    "summary_csv": "reports/model_selection_report.csv",
-    "trials_csv": "reports/model_selection_trials.csv",
-    "scores_path": "reports/model_selection_scores.parquet",
-    "backtest_csv": "reports/model_selection_backtest_report.csv",
-    "threshold_curve_csv": "reports/model_selected_threshold_curve.csv",
-    "feature_importance_csv": "reports/model_selected_feature_importance.csv"
+    "summary_csv": "reports/model_selection/model_selection_report.csv",
+    "trials_csv": "reports/model_selection/model_selection_trials.csv",
+    "scores_path": "reports/model_selection/model_selection_scores.parquet",
+    "backtest_csv": "reports/model_selection/model_selection_backtest_report.csv",
+    "threshold_curve_csv": "reports/model_selection/model_selected_threshold_curve.csv",
+    "feature_importance_csv": "reports/model_selection/model_selected_feature_importance.csv"
   },
   "metadata": {
     "component": "model_selection",

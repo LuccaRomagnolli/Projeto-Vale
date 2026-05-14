@@ -194,7 +194,7 @@ A promoção depende de evidências versionadas em `reports/`, política explíc
 | Divisão temporal | `70 / 15 / 15` |
 | Modelo selecionado | `lightgbm_optuna` |
 | Artefato operacional | `models/model_selected.joblib` |
-| Relatório de seleção | `reports/model_selection_report.json` |
+| Relatório de seleção | `reports/model_selection/model_selection_report.json` |
 | `threshold` promovido | Persistido no artefato selecionado |
 
 ### Métricas Operacionais no Teste — Top15 Tag-dia
@@ -259,7 +259,15 @@ O projeto está metodologicamente apto para **piloto operacional assistido**, de
 ├── models/                   # artefatos treinados
 ├── notebooks/                # notebook principal do projeto
 ├── pictures/                 # imagens usadas na documentação
-├── reports/                  # relatórios, métricas e evidências
+├── reports/                  # ranking final na raiz e evidências em subpastas
+│   ├── daily_priority_top15.csv
+│   ├── baseline/
+│   ├── eda/
+│   ├── inference/
+│   ├── model_selection/
+│   ├── modeling_legacy/
+│   ├── operational/
+│   └── segments/
 ├── src/                      # código-fonte do fluxo
 │   ├── data/                 # preparação de dados
 │   ├── eda/                  # análise exploratória
@@ -365,7 +373,8 @@ make clean               # remove artefatos locais de execução
 3. Alinha as colunas de entrada com `feature_columns`.
 4. Preenche variáveis ausentes com `0.0`.
 5. Gera `score` e `prediction`.
-6. Salva a saída em `reports/inference_scores.parquet`.
+6. Salva a saída em `reports/inference/inference_scores.parquet`.
+7. Consolida o ranking diário `Top15 Tag-dia` em `reports/daily_priority_top15.csv`.
 
 **Entrada esperada:** arquivo `.csv` ou `.parquet` com as variáveis modeláveis.
 
@@ -376,19 +385,33 @@ make clean               # remove artefatos locais de execução
 | `score` | probabilidade estimada de alerta crítico na janela |
 | `prediction` | decisão binária após aplicação do `threshold` |
 
+**Ranking operacional acionável:** `reports/daily_priority_top15.csv`
+
+| Coluna | Significado |
+|---|---|
+| `data` | dia operacional do ranking |
+| `rank` | posição da `Tag` no dia |
+| `Tag` | equipamento priorizado |
+| `score` | maior score diário da `Tag` |
+| `Frota`, `Tipo`, `turno` | contexto operacional |
+| `motivo_principal` | sinal resumido para triagem |
+| `risco_segmento` | faixa de prioridade |
+| `acao_recomendada` | sugestão de ação assistida |
+
 ---
 
 ## Relatórios e Evidências
 
 | Arquivo | Conteúdo |
 |---|---|
-| `reports/model_selection_report.json` | modelo selecionado, regra de seleção e métricas |
-| `reports/model_selection_trials.csv` | tentativas de otimização com Optuna |
-| `reports/model_selection_backtest_report.csv` | avaliação temporal retrospectiva |
-| `reports/model_selected_threshold_curve.csv` | curva de calibração de `threshold` |
-| `reports/operational_metrics_report.json` | métricas operacionais consolidadas |
-| `reports/segment_operational_report.json` | desempenho por segmentos |
-| `reports/inference_scores.parquet` | pontuações geradas pela inferência |
+| `reports/model_selection/model_selection_report.json` | modelo selecionado, regra de seleção e métricas |
+| `reports/model_selection/model_selection_trials.csv` | tentativas de otimização com Optuna |
+| `reports/model_selection/model_selection_backtest_report.csv` | avaliação temporal retrospectiva |
+| `reports/model_selection/model_selected_threshold_curve.csv` | curva de calibração de `threshold` |
+| `reports/operational/operational_metrics_report.json` | métricas operacionais consolidadas |
+| `reports/segments/segment_operational_report.json` | desempenho por segmentos |
+| `reports/inference/inference_scores.parquet` | pontuações geradas pela inferência |
+| `reports/daily_priority_top15.csv` | lista diária acionável de `Tags` priorizadas |
 
 ---
 

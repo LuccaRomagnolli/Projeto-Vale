@@ -20,7 +20,7 @@
 
 # Etapa 11 - Inferencia operacional
 
-Data: 04/05/2026
+Data: 14/05/2026
 
 ## Objetivo
 
@@ -34,7 +34,8 @@ operacionais e produzir scores, predicoes e ranking de risco.
 | Pipeline de inferencia | `src/inference.py` |
 | Artefato selecionado | `models/model_selected.joblib` |
 | Entrada padrao | `data/processed/features/splits/features_test.parquet` |
-| Saida padrao | `reports/inference_scores.parquet` |
+| Saida padrao | `reports/inference/inference_scores.parquet` |
+| Ranking diario acionavel | `reports/daily_priority_top15.csv` |
 | Testes | `tests/test_inference.py` |
 
 ## Contrato do artefato
@@ -61,11 +62,28 @@ ausentes sao preenchidas com `0.0`, preservando a ordem esperada pelo modelo.
 
 ## Contrato de saida
 
+### Scores granulares
+
 | Coluna | Descricao |
 |---|---|
 | `score` | Probabilidade ou score de risco do modelo |
 | `prediction` | Classe binaria apos aplicar threshold |
 | Colunas de contexto | Campos de entrada preservados quando disponiveis |
+
+### Ranking operacional Top15 Tag-dia
+
+| Coluna | Descricao |
+|---|---|
+| `data` | Dia operacional do ranking |
+| `rank` | Posicao da `Tag` no dia, ordenada por maior score |
+| `Tag` | Equipamento priorizado |
+| `score` | Maior score diario da `Tag` |
+| `Frota` | Frota decodificada a partir do contexto ou one-hot |
+| `Tipo` | Tipo decodificado a partir do contexto ou one-hot |
+| `turno` | Turno associado ao ciclo de maior score da `Tag` no dia |
+| `motivo_principal` | Sinal operacional resumido para apoiar a triagem |
+| `risco_segmento` | Faixa simples de prioridade do item |
+| `acao_recomendada` | Acao sugerida para manutencao assistida |
 
 ## Execucao
 
@@ -80,7 +98,8 @@ make infer
 | Modelo | Lido de `models/model_selected.joblib` |
 | Threshold | Lido de `models/model_selected.joblib` |
 | Features | `48` |
-| Saida | `reports/inference_scores.parquet` |
+| Saida | `reports/inference/inference_scores.parquet` |
+| Ranking operacional | `reports/daily_priority_top15.csv` |
 
 ## Decisao
 

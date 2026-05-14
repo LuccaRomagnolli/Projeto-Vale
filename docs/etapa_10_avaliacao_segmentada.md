@@ -32,10 +32,10 @@ Tags devem receber trilha dedicada antes de ampliacao operacional.
 | Entrega | Caminho |
 |---|---|
 | Analise segmentada | `src/evaluation/segment_analysis.py` |
-| Relatorio JSON | `reports/segment_operational_report.json` |
-| Threshold por segmento | `reports/segment_threshold_metrics.csv` |
-| TopK por segmento | `reports/segment_topk_tag_day_metrics.csv` |
-| Hotspots por Tag | `reports/segment_tag_hotspots.csv` |
+| Relatorio JSON | `reports/segments/segment_operational_report.json` |
+| Threshold por segmento | `reports/segments/segment_threshold_metrics.csv` |
+| TopK por segmento | `reports/segments/segment_topk_tag_day_metrics.csv` |
+| Hotspots por Tag | `reports/segments/segment_tag_hotspots.csv` |
 | Testes | `tests/test_segment_analysis.py` |
 
 ## Segmentos avaliados

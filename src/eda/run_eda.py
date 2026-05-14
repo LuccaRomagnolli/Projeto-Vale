@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 
-from src.utils.config import FIGURES_DIR, LABELED_DATASET_PATH, REPORTS_DIR
+from src.utils.config import FIGURES_DIR, LABELED_DATASET_PATH, REPORTS_EDA_DIR
 
 matplotlib.use("Agg")
 sns.set_theme(style="whitegrid")
@@ -140,7 +140,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
 def write_eda_report(
     summary: dict[str, Any],
     figure_paths: list[Path],
-    report_path: Path = REPORTS_DIR / "eda_report.md",
+    report_path: Path = REPORTS_EDA_DIR / "eda_report.md",
 ) -> Path:
     """Escreve relatorio markdown da EDA com principais achados."""
     report_path.parent.mkdir(parents=True, exist_ok=True)
@@ -212,7 +212,7 @@ def write_eda_report(
 def run_eda_pipeline(
     dataset_path: Path = LABELED_DATASET_PATH,
     figures_dir: Path = FIGURES_DIR,
-    report_path: Path = REPORTS_DIR / "eda_report.md",
+    report_path: Path = REPORTS_EDA_DIR / "eda_report.md",
 ) -> dict[str, Any]:
     """Executa EDA completa com saídas persistidas."""
     df = load_labeled_dataset(dataset_path=dataset_path)

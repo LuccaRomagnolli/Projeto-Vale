@@ -33,7 +33,14 @@ TELEMETRY_DIR = _resolve_path(
 )
 TELEMETRY_SAMPLE_PATH = TELEMETRY_DIR / "desenvolver_dontgo.xlsx"
 REPORTS_DIR = _resolve_path(os.getenv("REPORT_DIR"), BASE_DIR / "reports")
-FIGURES_DIR = REPORTS_DIR / "figures"
+REPORTS_BASELINE_DIR = REPORTS_DIR / "baseline"
+REPORTS_EDA_DIR = REPORTS_DIR / "eda"
+REPORTS_INFERENCE_DIR = REPORTS_DIR / "inference"
+REPORTS_LEGACY_MODEL_DIR = REPORTS_DIR / "modeling_legacy"
+REPORTS_MODEL_SELECTION_DIR = REPORTS_DIR / "model_selection"
+REPORTS_OPERATIONAL_DIR = REPORTS_DIR / "operational"
+REPORTS_SEGMENT_DIR = REPORTS_DIR / "segments"
+FIGURES_DIR = REPORTS_EDA_DIR / "figures"
 MODELS_DIR = _resolve_path(os.getenv("MODEL_DIR"), BASE_DIR / "models")
 LABELED_DATASET_PATH = LABELED_DIR / "apontamentos_labeled.parquet"
 CRITICAL_EVENTS_PATH = LABELED_DIR / "critical_events.parquet"

@@ -36,11 +36,11 @@ Análise exploratória orientada a decisão para o dataset rotulado `apontamento
 
 ## Figuras geradas
 
-- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/figures/eda_target_distribution.png`
-- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/figures/eda_ciclos_por_hora.png`
-- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/figures/eda_top_frotas.png`
-- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/figures/eda_duracao_ciclo_hist.png`
-- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/figures/eda_top_classes.png`
+- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/eda_target_distribution.png`
+- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/eda_ciclos_por_hora.png`
+- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/eda_top_frotas.png`
+- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/eda_duracao_ciclo_hist.png`
+- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/eda_top_classes.png`
 
 ## Decisões e próximos passos
 

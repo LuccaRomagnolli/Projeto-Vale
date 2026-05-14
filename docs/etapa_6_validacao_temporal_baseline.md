@@ -34,8 +34,8 @@ como referencia minima antes da selecao de modelos supervisionados.
 | Split temporal | `src/models/validation.py` |
 | Baseline | `src/models/train_baseline.py` |
 | Artefato baseline | `models/baseline_heuristico.joblib` |
-| Relatorio baseline | `reports/baseline_report.json` |
-| Scores baseline | `reports/baseline_scores.parquet` |
+| Relatorio baseline | `reports/baseline/baseline_report.json` |
+| Scores baseline | `reports/baseline/baseline_scores.parquet` |
 | Metadados do split | `data/processed/features/splits/split_metadata.json` |
 | Testes | `tests/test_validation.py`, `tests/test_train_baseline.py` |
 

@@ -46,7 +46,8 @@ segmentada, promocao e inferencia.
 | Baseline diagnóstico | `logistic_regression_baseline` |
 | Modelo selecionado | `lightgbm_optuna` |
 | Artefato promovido | `models/model_selected.joblib` |
-| Relatorio de seleção | `reports/model_selection_report.json` |
+| Relatorio de seleção | `reports/model_selection/model_selection_report.json` |
+| Ranking operacional | `reports/daily_priority_top15.csv` |
 | Test `Precision@Top15 Tag-dia` | `0.6756` |
 | Test `Recall@Top15 Tag-dia` | `0.7361` |
 | Test `Lift@Top15 Tag-dia` | `2.0774` |
@@ -87,6 +88,23 @@ Para status atual, priorize nesta ordem:
 3. `docs/politica_promocao_modelo.md`
 4. `docs/controle_alteracoes.md`
 5. Relatorios em `reports/` e `data/processed/`
+
+## Organizacao de reports
+
+Somente o artefato operacional mais importante fica na raiz:
+`reports/daily_priority_top15.csv`.
+
+As demais evidencias ficam em subpastas:
+
+| Pasta | Conteudo |
+|---|---|
+| `reports/baseline/` | baseline heuristico e scores |
+| `reports/eda/` | EDA, figuras e relatorio exploratorio |
+| `reports/inference/` | scores granulares de inferencia |
+| `reports/model_selection/` | selecao oficial, trials, backtest e importancia |
+| `reports/modeling_legacy/` | artefatos historicos/legados de modelagem |
+| `reports/operational/` | metricas operacionais TopK e budget |
+| `reports/segments/` | avaliacao segmentada e hotspots |
 
 ## Regra de manutencao
 

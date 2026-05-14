@@ -22,13 +22,13 @@ from src.evaluation.operational_scorecard import (
 from src.models.model_selection import SELECTED_MODEL_PATH
 from src.models.train_model import load_splits, predict_scores, prepare_model_matrix
 from src.models.validation import TARGET_COL
-from src.utils.config import REPORTS_DIR, SPLIT_DIR
+from src.utils.config import REPORTS_OPERATIONAL_DIR, SPLIT_DIR
 from src.utils.metadata import to_repo_relative_path
 
-OPERATIONAL_REPORT_JSON = REPORTS_DIR / "operational_metrics_report.json"
-BUDGET_METRICS_CSV = REPORTS_DIR / "operational_budget_metrics.csv"
-DAILY_TOPK_METRICS_CSV = REPORTS_DIR / "operational_daily_topk_metrics.csv"
-DEDUP_ALERTS_CSV = REPORTS_DIR / "operational_deduplicated_alerts.csv"
+OPERATIONAL_REPORT_JSON = REPORTS_OPERATIONAL_DIR / "operational_metrics_report.json"
+BUDGET_METRICS_CSV = REPORTS_OPERATIONAL_DIR / "operational_budget_metrics.csv"
+DAILY_TOPK_METRICS_CSV = REPORTS_OPERATIONAL_DIR / "operational_daily_topk_metrics.csv"
+DEDUP_ALERTS_CSV = REPORTS_OPERATIONAL_DIR / "operational_deduplicated_alerts.csv"
 
 
 def load_model_artifact(model_path: Path = SELECTED_MODEL_PATH) -> dict[str, Any]:
@@ -212,7 +212,7 @@ def run_operational_evaluation(
     split_dir: Path = SPLIT_DIR,
 ) -> dict[str, Any]:
     """Executa avaliacao operacional completa."""
-    REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    REPORTS_OPERATIONAL_DIR.mkdir(parents=True, exist_ok=True)
     artifact = load_model_artifact(model_path)
     scored = build_scored_dataset(artifact, split_dir)
 

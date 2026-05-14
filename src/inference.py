@@ -8,12 +8,15 @@ from typing import Any
 import joblib
 import pandas as pd
 
+from src.evaluation.operational_scorecard import decode_one_hot_prefix
 from src.models.model_selection import SELECTED_MODEL_PATH
 from src.models.train_model import predict_scores, prepare_model_matrix
-from src.utils.config import REPORTS_DIR
+from src.utils.config import REPORTS_DIR, REPORTS_INFERENCE_DIR
 
 DEFAULT_MODEL_PATH = SELECTED_MODEL_PATH
-DEFAULT_OUTPUT_PATH = REPORTS_DIR / "inference_scores.parquet"
+DEFAULT_OUTPUT_PATH = REPORTS_INFERENCE_DIR / "inference_scores.parquet"
+DEFAULT_PRIORITY_OUTPUT_PATH = REPORTS_DIR / "daily_priority_top15.csv"
+DEFAULT_OPERATIONAL_TOP_K = 15
 SUPPORTED_EXTENSIONS = {".parquet", ".csv"}
 
 
@@ -88,6 +91,123 @@ def score_features(
     return scored, metadata
 
 
+def _context_series(features_df: pd.DataFrame, column: str) -> pd.Series:
+    """Retorna coluna de contexto quando existir, senao valor padrao."""
+    if column in features_df.columns:
+        return features_df[column].astype(str)
+    return pd.Series(["desconhecido"] * len(features_df), index=features_df.index)
+
+
+def _build_priority_reason(row: pd.Series) -> str:
+    """Resume o principal sinal operacional disponivel para a Tag-dia."""
+    if float(row.get("n_alertas_4h", 0.0) or 0.0) > 0:
+        return "alertas recentes na janela de 4h"
+    if float(row.get("n_alertas_24h", 0.0) or 0.0) > 0:
+        return "historico recente de alertas em 24h"
+    if float(row.get("dias_desde_ultimo_alerta", 9999.0) or 9999.0) <= 1.0:
+        return "alerta critico observado no ultimo dia"
+    if float(row.get("delta_duracao_ciclo_4h_24h", 0.0) or 0.0) > 0:
+        return "aumento recente na duracao do ciclo"
+    if float(row.get("Tag_freq", 0.0) or 0.0) >= 0.03:
+        return "Tag com alta recorrencia operacional"
+    return "maior score diario do modelo"
+
+
+def _risk_band(score: float, threshold: float, rank: int) -> str:
+    """Classifica a prioridade em linguagem operacional simples."""
+    if score >= threshold:
+        return "alto_acima_threshold"
+    if rank <= 5:
+        return "alto_por_ranking"
+    if rank <= 10:
+        return "medio_por_ranking"
+    return "monitorar_por_ranking"
+
+
+def _recommended_action(risk_segment: str) -> str:
+    """Traduz faixa de risco em acao recomendada para a lista diaria."""
+    if risk_segment in {"alto_acima_threshold", "alto_por_ranking"}:
+        return "inspecionar primeiro e registrar achado operacional"
+    if risk_segment == "medio_por_ranking":
+        return "verificar na ronda diaria e acompanhar tendencia"
+    return "monitorar no painel e reavaliar no proximo ciclo"
+
+
+def build_daily_priority_ranking(
+    features_df: pd.DataFrame,
+    scored_df: pd.DataFrame,
+    top_k: int = DEFAULT_OPERATIONAL_TOP_K,
+) -> pd.DataFrame:
+    """Gera ranking operacional TopK Tag-dia a partir dos scores de inferencia."""
+    required_context = {"Tag", "Fim"}
+    missing_context = sorted(required_context - set(scored_df.columns))
+    if missing_context:
+        raise ValueError(f"Contexto operacional ausente para ranking: {missing_context}")
+
+    frame = features_df.copy()
+    frame["Tag"] = scored_df["Tag"].astype(str)
+    frame["Fim"] = pd.to_datetime(scored_df["Fim"], errors="coerce", utc=True)
+    frame["score"] = scored_df["score"].astype(float)
+    frame["threshold"] = scored_df["threshold"].astype(float)
+    frame["data"] = frame["Fim"].dt.date
+    frame["Frota"] = (
+        _context_series(frame, "Frota")
+        if "Frota" in frame.columns
+        else decode_one_hot_prefix(frame, "Frota").astype(str)
+    )
+    frame["Tipo"] = (
+        _context_series(frame, "Tipo")
+        if "Tipo" in frame.columns
+        else decode_one_hot_prefix(frame, "Tipo").astype(str)
+    )
+    frame["turno"] = _context_series(frame, "turno")
+    frame["motivo_principal"] = frame.apply(_build_priority_reason, axis=1)
+
+    frame = frame.dropna(subset=["data", "Tag"])
+    if frame.empty:
+        return pd.DataFrame(
+            columns=[
+                "data",
+                "rank",
+                "Tag",
+                "score",
+                "Frota",
+                "Tipo",
+                "turno",
+                "motivo_principal",
+                "risco_segmento",
+                "acao_recomendada",
+            ]
+        )
+
+    idx = frame.groupby(["data", "Tag"], sort=False)["score"].idxmax()
+    tag_day = frame.loc[idx].sort_values(["data", "score"], ascending=[True, False]).copy()
+    tag_day["rank"] = tag_day.groupby("data").cumcount() + 1
+    top = tag_day.loc[tag_day["rank"] <= top_k].copy()
+    top["risco_segmento"] = [
+        _risk_band(score, threshold, rank)
+        for score, threshold, rank in zip(
+            top["score"], top["threshold"], top["rank"], strict=False
+        )
+    ]
+    top["acao_recomendada"] = top["risco_segmento"].map(_recommended_action)
+
+    output_columns = [
+        "data",
+        "rank",
+        "Tag",
+        "score",
+        "Frota",
+        "Tipo",
+        "turno",
+        "motivo_principal",
+        "risco_segmento",
+        "acao_recomendada",
+    ]
+    top["score"] = top["score"].round(6)
+    return top[output_columns].reset_index(drop=True)
+
+
 def save_inference_output(scored_df: pd.DataFrame, output_path: Path) -> Path:
     """Persiste saida da inferencia em csv ou parquet."""
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -101,21 +221,36 @@ def save_inference_output(scored_df: pd.DataFrame, output_path: Path) -> Path:
     raise ValueError(f"Formato de saida nao suportado: {suffix}")
 
 
+def save_daily_priority_ranking(priority_df: pd.DataFrame, output_path: Path) -> Path:
+    """Persiste ranking operacional diario em CSV."""
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    priority_df.to_csv(output_path, index=False)
+    return output_path
+
+
 def run_inference(
     input_path: Path,
     model_path: Path = DEFAULT_MODEL_PATH,
     output_path: Path = DEFAULT_OUTPUT_PATH,
+    priority_output_path: Path = DEFAULT_PRIORITY_OUTPUT_PATH,
+    top_k: int = DEFAULT_OPERATIONAL_TOP_K,
 ) -> dict[str, Any]:
     """Executa inferencia ponta a ponta usando artefato e dataset de entrada."""
     artifact = load_model_artifact(model_path=model_path)
     features_df = read_inference_input(input_path)
     scored_df, metadata = score_features(features_df, artifact)
     output = save_inference_output(scored_df, output_path=output_path)
+    priority_df = build_daily_priority_ranking(features_df, scored_df, top_k=top_k)
+    priority_output = save_daily_priority_ranking(priority_df, priority_output_path)
     return {
         "input_path": str(input_path),
         "model_path": str(model_path),
         "output_path": str(output),
+        "priority_output_path": str(priority_output),
         "threshold": float(artifact["threshold"]),
+        "priority_rows": int(len(priority_df)),
+        "priority_days": int(priority_df["data"].nunique()) if len(priority_df) else 0,
+        "priority_top_k": int(top_k),
         **metadata,
     }
 
@@ -126,7 +261,14 @@ def main() -> None:
     print(f"[OK] Input inferencia: {result['input_path']}")
     print(f"[OK] Artefato: {result['model_path']}")
     print(f"[OK] Saida: {result['output_path']}")
+    print(f"[OK] Ranking operacional: {result['priority_output_path']}")
     print(f"[OK] Linhas processadas: {result['rows']}")
+    print(
+        "[OK] TopK Tag-dia: "
+        f"top_k={result['priority_top_k']} "
+        f"dias={result['priority_days']} "
+        f"linhas={result['priority_rows']}"
+    )
     print(f"[OK] Threshold aplicado: {result['threshold']:.6f}")
     print(f"[OK] Features ausentes preenchidas: {len(result['missing_feature_columns'])}")
 

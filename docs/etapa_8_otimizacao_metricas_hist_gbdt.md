@@ -34,10 +34,10 @@ pela selecao robusta multfamilia em `src/models/model_selection.py`.
 | Selecao robusta vigente | `src/models/model_selection.py` |
 | Gate de estabilidade | `src/models/stability_gate.py` |
 | Artefato selecionado | `models/model_selected.joblib` |
-| Relatorio JSON | `reports/model_selection_report.json` |
-| Relatorio CSV | `reports/model_selection_report.csv` |
-| Curva de threshold | `reports/model_selected_threshold_curve.csv` |
-| Backtesting | `reports/model_selection_backtest_report.csv` |
+| Relatorio JSON | `reports/model_selection/model_selection_report.json` |
+| Relatorio CSV | `reports/model_selection/model_selection_report.csv` |
+| Curva de threshold | `reports/model_selection/model_selected_threshold_curve.csv` |
+| Backtesting | `reports/model_selection/model_selection_backtest_report.csv` |
 | Testes | `tests/test_model_selection.py`, `tests/test_stability_gate.py` |
 
 ## Politica vigente

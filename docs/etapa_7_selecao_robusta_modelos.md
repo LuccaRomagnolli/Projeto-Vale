@@ -34,11 +34,11 @@ Optuna, threshold calibrado somente na validacao e scorecard `Top15 Tag-dia`.
 |---|---|
 | Selecao robusta | `src/models/model_selection.py` |
 | Artefato selecionado | `models/model_selected.joblib` |
-| Relatorio | `reports/model_selection_report.json` |
-| Trials | `reports/model_selection_trials.csv` |
-| Scores | `reports/model_selection_scores.parquet` |
-| Backtesting | `reports/model_selection_backtest_report.csv` |
-| Importancia de variaveis | `reports/model_selected_feature_importance.csv` |
+| Relatorio | `reports/model_selection/model_selection_report.json` |
+| Trials | `reports/model_selection/model_selection_trials.csv` |
+| Scores | `reports/model_selection/model_selection_scores.parquet` |
+| Backtesting | `reports/model_selection/model_selection_backtest_report.csv` |
+| Importancia de variaveis | `reports/model_selection/model_selected_feature_importance.csv` |
 | Testes | `tests/test_model_selection.py` |
 
 ## Modelos avaliados

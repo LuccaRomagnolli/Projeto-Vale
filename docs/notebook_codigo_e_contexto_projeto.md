@@ -60,10 +60,10 @@ Depois, abrir `notebooks/main.ipynb` e executar as celulas na ordem.
 - `README.md`
 - `docs/politica_promocao_modelo.md`
 - `docs/controle_alteracoes.md`
-- `reports/model_selection_report.json`
-- `reports/model_selection_backtest_report.csv`
-- `reports/operational_metrics_report.json`
-- `reports/segment_operational_report.json`
+- `reports/model_selection/model_selection_report.json`
+- `reports/model_selection/model_selection_backtest_report.csv`
+- `reports/operational/operational_metrics_report.json`
+- `reports/segments/segment_operational_report.json`
 
 ## Decisao
 

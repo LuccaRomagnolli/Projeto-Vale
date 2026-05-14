@@ -261,7 +261,7 @@ Arquivo: `data/processed/features/splits/split_metadata.json`
 
 ## Scores de modelo
 
-Arquivo: `reports/model_selection_scores.parquet`
+Arquivo: `reports/model_selection/model_selection_scores.parquet`
 
 | Variável | Tipo | Descrição |
 |---|---|---|
@@ -283,7 +283,7 @@ Arquivo: `reports/model_selection_scores.parquet`
 
 ## Relatório de seleção de modelo
 
-Arquivo: `reports/model_selection_report.csv`
+Arquivo: `reports/model_selection/model_selection_report.csv`
 
 | Variável | Descrição |
 |---|---|
@@ -310,7 +310,7 @@ Arquivo: `reports/model_selection_report.csv`
 
 ## Métricas operacionais TopK
 
-Arquivo: `reports/operational_daily_topk_metrics.csv`
+Arquivo: `reports/operational/operational_daily_topk_metrics.csv`
 
 | Variável | Descrição |
 |---|---|
@@ -330,7 +330,7 @@ Arquivo: `reports/operational_daily_topk_metrics.csv`
 
 ## Métricas por orçamento de alertas
 
-Arquivo: `reports/operational_budget_metrics.csv`
+Arquivo: `reports/operational/operational_budget_metrics.csv`
 
 | Variável | Descrição |
 |---|---|
@@ -376,7 +376,7 @@ Arquivos: `segment_threshold_metrics.csv`, `segment_topk_tag_day_metrics.csv` e 
 
 ## Hotspots por tag
 
-Arquivo: `reports/segment_tag_hotspots.csv`
+Arquivo: `reports/segments/segment_tag_hotspots.csv`
 
 | Variável | Descrição |
 |---|---|
@@ -396,7 +396,7 @@ Arquivo: `reports/segment_tag_hotspots.csv`
 
 ## Alertas deduplicados para operação
 
-Arquivo: `reports/operational_deduplicated_alerts.csv`
+Arquivo: `reports/operational/operational_deduplicated_alerts.csv`
 
 | Variável | Descrição |
 |---|---|

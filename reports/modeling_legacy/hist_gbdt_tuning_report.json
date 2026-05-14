@@ -362,9 +362,9 @@
     "std_test_precision": 0.03975518447674078
   },
   "artifact_path": "models/hist_gbdt_tuned.joblib",
-  "csv_path": "reports/hist_gbdt_tuning_report.csv",
-  "threshold_curve_path": "reports/hist_gbdt_threshold_curve.csv",
-  "backtest_path": "reports/hist_gbdt_backtest_report.csv",
+  "csv_path": "reports/modeling_legacy/hist_gbdt_tuning_report.csv",
+  "threshold_curve_path": "reports/modeling_legacy/hist_gbdt_threshold_curve.csv",
+  "backtest_path": "reports/modeling_legacy/hist_gbdt_backtest_report.csv",
   "metadata": {
     "component": "tune_hist_gbdt",
     "executed_at_utc": "2026-05-03T16:44:51.297536+00:00",

@@ -294,8 +294,8 @@
     ]
   },
   "artifact_path": "models/model_principal.joblib",
-  "scores_path": "reports/model_principal_scores.parquet",
-  "feature_importance_path": "reports/model_feature_importance.csv",
+  "scores_path": "reports/modeling_legacy/model_principal_scores.parquet",
+  "feature_importance_path": "reports/modeling_legacy/model_feature_importance.csv",
   "metadata": {
     "component": "train_model",
     "executed_at_utc": "2026-05-03T16:43:01.754311+00:00",

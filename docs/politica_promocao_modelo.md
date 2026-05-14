@@ -63,7 +63,7 @@ make infer
 
 | Campo | Valor |
 |---|---|
-| Modelo | definido em `reports/model_selection_report.json` |
+| Modelo | definido em `reports/model_selection/model_selection_report.json` |
 | Artefato | `models/model_selected.joblib` |
 | Threshold | calibrado na validacao e persistido no artefato |
 | Test Precision@15 | `0.6756` |
@@ -72,12 +72,12 @@ make infer
 
 ## Evidencias minimas
 
-- `reports/model_selection_report.json`
-- `reports/model_selection_trials.csv`
-- `reports/model_selection_backtest_report.csv`
-- `reports/model_selected_threshold_curve.csv`
-- `reports/operational_metrics_report.json`
-- `reports/segment_operational_report.json`
+- `reports/model_selection/model_selection_report.json`
+- `reports/model_selection/model_selection_trials.csv`
+- `reports/model_selection/model_selection_backtest_report.csv`
+- `reports/model_selection/model_selected_threshold_curve.csv`
+- `reports/operational/operational_metrics_report.json`
+- `reports/segments/segment_operational_report.json`
 
 ## Decisao
 

@@ -7,9 +7,9 @@ from pathlib import Path
 import pandas as pd
 
 from src.evaluation.operational_scorecard import PRIMARY_TOP_K
-from src.utils.config import REPORTS_DIR
+from src.utils.config import REPORTS_MODEL_SELECTION_DIR
 
-BACKTEST_REPORT_CSV = REPORTS_DIR / "model_selection_backtest_report.csv"
+BACKTEST_REPORT_CSV = REPORTS_MODEL_SELECTION_DIR / "model_selection_backtest_report.csv"
 DEFAULT_MAX_RECALL_STD = 0.03
 DEFAULT_MAX_PRECISION_STD = 0.05
 DEFAULT_MIN_FOLDS = 3

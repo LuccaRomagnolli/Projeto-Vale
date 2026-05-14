@@ -37,7 +37,12 @@ from src.models.validation import (
     choose_threshold_for_recall,
     compute_binary_metrics,
 )
-from src.utils.config import FEATURES_DATASET_PATH, MODELS_DIR, REPORTS_DIR, SPLIT_DIR
+from src.utils.config import (
+    FEATURES_DATASET_PATH,
+    MODELS_DIR,
+    REPORTS_MODEL_SELECTION_DIR,
+    SPLIT_DIR,
+)
 from src.utils.metadata import build_execution_metadata, to_repo_relative_path
 
 OFFICIAL_CANDIDATE_NAMES = (
@@ -52,13 +57,15 @@ DEFAULT_BACKTEST_FOLDS = 3
 DEFAULT_MIN_RECALL = 0.80
 
 SELECTED_MODEL_PATH = MODELS_DIR / "model_selected.joblib"
-SELECTION_REPORT_JSON = REPORTS_DIR / "model_selection_report.json"
-SELECTION_REPORT_CSV = REPORTS_DIR / "model_selection_report.csv"
-SELECTION_TRIALS_CSV = REPORTS_DIR / "model_selection_trials.csv"
-SELECTION_SCORES_PATH = REPORTS_DIR / "model_selection_scores.parquet"
-SELECTION_BACKTEST_CSV = REPORTS_DIR / "model_selection_backtest_report.csv"
-SELECTED_THRESHOLD_CURVE_CSV = REPORTS_DIR / "model_selected_threshold_curve.csv"
-SELECTED_FEATURE_IMPORTANCE_CSV = REPORTS_DIR / "model_selected_feature_importance.csv"
+SELECTION_REPORT_JSON = REPORTS_MODEL_SELECTION_DIR / "model_selection_report.json"
+SELECTION_REPORT_CSV = REPORTS_MODEL_SELECTION_DIR / "model_selection_report.csv"
+SELECTION_TRIALS_CSV = REPORTS_MODEL_SELECTION_DIR / "model_selection_trials.csv"
+SELECTION_SCORES_PATH = REPORTS_MODEL_SELECTION_DIR / "model_selection_scores.parquet"
+SELECTION_BACKTEST_CSV = REPORTS_MODEL_SELECTION_DIR / "model_selection_backtest_report.csv"
+SELECTED_THRESHOLD_CURVE_CSV = REPORTS_MODEL_SELECTION_DIR / "model_selected_threshold_curve.csv"
+SELECTED_FEATURE_IMPORTANCE_CSV = (
+    REPORTS_MODEL_SELECTION_DIR / "model_selected_feature_importance.csv"
+)
 
 
 def scale_pos_weight(y: pd.Series) -> float:
@@ -572,7 +579,7 @@ def save_model_selection_outputs(
 ) -> dict[str, str]:
     """Persiste artefato neutro, reports e evidencias da selecao robusta."""
     MODELS_DIR.mkdir(parents=True, exist_ok=True)
-    REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    REPORTS_MODEL_SELECTION_DIR.mkdir(parents=True, exist_ok=True)
 
     ordered_summary = summary.sort_values(
         ["eligible_for_selection", *selection_columns()],

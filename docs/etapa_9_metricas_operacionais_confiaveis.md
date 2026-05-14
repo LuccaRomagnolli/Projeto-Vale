@@ -33,10 +33,10 @@ metricas ciclo-a-ciclo.
 | Entrega | Caminho |
 |---|---|
 | Avaliador operacional | `src/evaluation/evaluate_model.py` |
-| Relatorio JSON | `reports/operational_metrics_report.json` |
-| Budget por percentual | `reports/operational_budget_metrics.csv` |
-| TopK diario | `reports/operational_daily_topk_metrics.csv` |
-| Alertas deduplicados | `reports/operational_deduplicated_alerts.csv` |
+| Relatorio JSON | `reports/operational/operational_metrics_report.json` |
+| Budget por percentual | `reports/operational/operational_budget_metrics.csv` |
+| TopK diario | `reports/operational/operational_daily_topk_metrics.csv` |
+| Alertas deduplicados | `reports/operational/operational_deduplicated_alerts.csv` |
 | Testes | `tests/test_operational_evaluation.py` |
 
 ## Modelo avaliado

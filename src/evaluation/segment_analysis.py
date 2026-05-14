@@ -22,13 +22,13 @@ from src.evaluation.operational_scorecard import (
 from src.models.model_selection import SELECTED_MODEL_PATH
 from src.models.train_model import load_splits
 from src.models.validation import TARGET_COL
-from src.utils.config import REPORTS_DIR, SPLIT_DIR
+from src.utils.config import REPORTS_SEGMENT_DIR, SPLIT_DIR
 from src.utils.metadata import to_repo_relative_path
 
-SEGMENT_REPORT_JSON = REPORTS_DIR / "segment_operational_report.json"
-SEGMENT_THRESHOLD_CSV = REPORTS_DIR / "segment_threshold_metrics.csv"
-SEGMENT_TOPK_CSV = REPORTS_DIR / "segment_topk_tag_day_metrics.csv"
-TAG_HOTSPOTS_CSV = REPORTS_DIR / "segment_tag_hotspots.csv"
+SEGMENT_REPORT_JSON = REPORTS_SEGMENT_DIR / "segment_operational_report.json"
+SEGMENT_THRESHOLD_CSV = REPORTS_SEGMENT_DIR / "segment_threshold_metrics.csv"
+SEGMENT_TOPK_CSV = REPORTS_SEGMENT_DIR / "segment_topk_tag_day_metrics.csv"
+TAG_HOTSPOTS_CSV = REPORTS_SEGMENT_DIR / "segment_tag_hotspots.csv"
 
 
 def decode_one_hot_prefix(df: pd.DataFrame, prefix: str) -> pd.Series:
@@ -187,7 +187,7 @@ def run_segment_analysis(
     split_dir: Path = SPLIT_DIR,
 ) -> dict[str, Any]:
     """Executa analise segmentada completa no split de teste."""
-    REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    REPORTS_SEGMENT_DIR.mkdir(parents=True, exist_ok=True)
     scored = score_test_with_segments(model_path, split_dir)
     threshold = threshold_metrics_by_segment(scored)
     topk = topk_metrics_by_segment(scored)
