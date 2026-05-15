@@ -1,6 +1,6 @@
 PYTHON ?= python3
 
-.PHONY: help install format lint test label eda features train model-selection benchmark tune-hist-gbdt gate-stability evaluate evaluate-segments infer smoke run-all clean
+.PHONY: help install format lint test label eda dashboard features train model-selection benchmark tune-hist-gbdt gate-stability evaluate evaluate-segments infer smoke run-all clean
 
 help:
 	@echo "Targets:"
@@ -10,6 +10,7 @@ help:
 	@echo "  make test      - run unit tests with coverage"
 	@echo "  make label     - run data labeling pipeline"
 	@echo "  make eda       - run EDA stage"
+	@echo "  make dashboard - run Streamlit EDA dashboard"
 	@echo "  make features  - run feature engineering stage"
 	@echo "  make train     - train baseline and robust model selection"
 	@echo "  make model-selection - tune and select among four supervised model families"
@@ -41,6 +42,9 @@ label:
 
 eda:
 	$(PYTHON) -m src.eda.run_eda
+
+dashboard:
+	streamlit run streamlit_app.py
 
 features:
 	$(PYTHON) -m src.features.build_features
