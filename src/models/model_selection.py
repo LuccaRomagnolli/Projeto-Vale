@@ -10,7 +10,7 @@ from typing import Any
 import joblib
 import numpy as np
 import pandas as pd
-from sklearn.ensemble import ExtraTreesClassifier, HistGradientBoostingClassifier
+from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
@@ -49,7 +49,6 @@ OFFICIAL_CANDIDATE_NAMES = (
     "lightgbm_optuna",
     "xgboost_optuna",
     "hist_gbdt_optuna",
-    "extra_trees_optuna",
 )
 BASELINE_MODEL_NAME = "logistic_regression_baseline"
 DEFAULT_N_TRIALS = 30
@@ -134,14 +133,6 @@ def suggest_candidate_params(
             "l2_regularization": trial.suggest_float("l2_regularization", 0.05, 5.0, log=True),
             "class_weight": "balanced",
         }
-    if candidate_name == "extra_trees_optuna":
-        return {
-            "n_estimators": trial.suggest_int("n_estimators", 150, 600),
-            "max_depth": trial.suggest_int("max_depth", 8, 24),
-            "min_samples_leaf": trial.suggest_int("min_samples_leaf", 10, 90),
-            "max_features": trial.suggest_float("max_features", 0.45, 1.0),
-            "class_weight": "balanced_subsample",
-        }
     raise ValueError(f"Candidato desconhecido: {candidate_name}")
 
 
@@ -174,20 +165,6 @@ def build_candidate_model(
         )
     if candidate_name == "hist_gbdt_optuna":
         return HistGradientBoostingClassifier(random_state=random_state, **params)
-    if candidate_name == "extra_trees_optuna":
-        return Pipeline(
-            steps=[
-                ("imputer", SimpleImputer(strategy="median")),
-                (
-                    "model",
-                    ExtraTreesClassifier(
-                        random_state=random_state,
-                        n_jobs=-1,
-                        **params,
-                    ),
-                ),
-            ]
-        )
     raise ValueError(f"Candidato desconhecido: {candidate_name}")
 
 
@@ -375,9 +352,6 @@ def run_candidate_study(
         best_params["scale_pos_weight"] = scale_pos_weight(train[TARGET_COL].astype(int))
     if candidate_name == "hist_gbdt_optuna":
         best_params["class_weight"] = "balanced"
-    if candidate_name == "extra_trees_optuna":
-        best_params["class_weight"] = "balanced_subsample"
-
     model = build_candidate_model(candidate_name, best_params, random_state=random_state)
     fitted, fit_seconds = _fit_candidate(
         model,
@@ -592,9 +566,9 @@ def save_model_selection_outputs(
     feature_importance.to_csv(SELECTED_FEATURE_IMPORTANCE_CSV, index=False)
     scored = _save_scored_outputs(scores_by_model, ordered_summary, train, val, test)
 
-    selected_row = ordered_summary.loc[
-        ordered_summary["model_name"] == selected_model_name
-    ].iloc[0].to_dict()
+    selected_row = (
+        ordered_summary.loc[ordered_summary["model_name"] == selected_model_name].iloc[0].to_dict()
+    )
     selected_threshold = float(selected_row["threshold"])
     selection_rule = (
         f"maior val_top{PRIMARY_TOP_K}_recall_at_k; desempate por "

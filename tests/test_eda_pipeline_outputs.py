@@ -49,7 +49,7 @@ def test_load_labeled_dataset_raises_when_missing(tmp_path: Path) -> None:
 
 def test_generate_eda_figures_creates_expected_files(tmp_path: Path) -> None:
     figures = generate_eda_figures(_small_eda_df(), figures_dir=tmp_path)
-    assert len(figures) == 5
+    assert len(figures) == 13
     for file_path in figures:
         assert file_path.exists()
         assert file_path.suffix == ".png"
@@ -100,8 +100,9 @@ def test_run_eda_pipeline_end_to_end_with_temp_paths(tmp_path: Path) -> None:
         dataset_path=dataset_path,
         figures_dir=figures_dir,
         report_path=report_path,
+        include_project_artifacts=False,
     )
 
     assert Path(result["report_path"]).exists()
-    assert len(result["figures"]) == 5
+    assert len(result["figures"]) == 13
     assert result["total_rows"] == 2

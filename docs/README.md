@@ -42,7 +42,7 @@ segmentada, promocao e inferencia.
 | Features totais | `57` colunas |
 | Features modelaveis | `48` |
 | Split temporal | `70/15/15` |
-| Seleção oficial | `lightgbm_optuna`, `xgboost_optuna`, `hist_gbdt_optuna`, `extra_trees_optuna` |
+| Seleção oficial | `lightgbm_optuna`, `xgboost_optuna`, `hist_gbdt_optuna` |
 | Baseline diagnóstico | `logistic_regression_baseline` |
 | Modelo selecionado | `lightgbm_optuna` |
 | Artefato promovido | `models/model_selected.joblib` |

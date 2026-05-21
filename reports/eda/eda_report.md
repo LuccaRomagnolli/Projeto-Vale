@@ -41,6 +41,20 @@ Análise exploratória orientada a decisão para o dataset rotulado `apontamento
 - `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/eda_top_frotas.png`
 - `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/eda_duracao_ciclo_hist.png`
 - `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/eda_top_classes.png`
+- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/eda_daily_volume_target_rate.png`
+- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/eda_target_rate_heatmap_hora_dia.png`
+- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/eda_top_tags_target_positives.png`
+- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/eda_target_rate_by_frota.png`
+- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/eda_target_rate_by_tipo_classe.png`
+- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/eda_duracao_por_classe_boxplot.png`
+- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/eda_tte_horas_positivos_hist.png`
+- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/eda_missing_values.png`
+- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/eda_correlation_heatmap.png`
+- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/model_selection_test_top15_metrics.png`
+- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/model_selection_test_auc.png`
+- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/operational_topk_precision_recall.png`
+- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/operational_budget_precision_recall.png`
+- `/Users/luccaromagnolli/Desktop/Projeto-Vale/reports/eda/figures/segments_top15_precision_recall.png`
 
 ## Decisões e próximos passos
 

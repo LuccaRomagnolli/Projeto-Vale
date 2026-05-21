@@ -29,6 +29,7 @@ OPERATIONAL_REPORT_JSON = REPORTS_OPERATIONAL_DIR / "operational_metrics_report.
 BUDGET_METRICS_CSV = REPORTS_OPERATIONAL_DIR / "operational_budget_metrics.csv"
 DAILY_TOPK_METRICS_CSV = REPORTS_OPERATIONAL_DIR / "operational_daily_topk_metrics.csv"
 DEDUP_ALERTS_CSV = REPORTS_OPERATIONAL_DIR / "operational_deduplicated_alerts.csv"
+EXTREME_FALSE_NEGATIVES_CSV = REPORTS_OPERATIONAL_DIR / "extreme_false_negatives.csv"
 
 
 def load_model_artifact(model_path: Path = SELECTED_MODEL_PATH) -> dict[str, Any]:
@@ -207,6 +208,34 @@ def summarize_deduplicated_alerts(
     }
 
 
+def analyze_extreme_false_negatives(scored: pd.DataFrame, split_name: str = "test", percentile: float = 0.10) -> pd.DataFrame:
+    """Extrai casos extremos de falsos negativos para diagnostico (ex: pior decisao do modelo)."""
+    split_df = scored.loc[scored["split"] == split_name].copy()
+    positives = split_df.loc[split_df[TARGET_COL] == 1]
+    
+    if positives.empty:
+        return pd.DataFrame()
+        
+    # Seleciona predições onde o target era 1, mas o score foi muito baixo (< P10 dos positivos)
+    score_threshold = positives["score"].quantile(percentile)
+    extreme_fns = positives.loc[positives["score"] <= score_threshold].copy()
+    
+    # Decodifica se houver colunas one-hot ou usa as existentes
+    for col in ["Frota", "Tipo", "Classe"]:
+        if col not in extreme_fns.columns:
+            # Tenta decodificar do one-hot (se já não estiver presente)
+            from src.evaluation.operational_scorecard import decode_one_hot_prefix
+            extreme_fns[col] = decode_one_hot_prefix(split_df, col)
+
+    if extreme_fns.empty:
+        return pd.DataFrame()
+
+    # Agrupar para ver onde o modelo falha mais sistematicamente
+    grouped = extreme_fns.groupby(["Frota", "Tipo", "Classe"]).size().reset_index(name="count")
+    grouped = grouped.sort_values("count", ascending=False)
+    return grouped
+
+
 def run_operational_evaluation(
     model_path: Path = SELECTED_MODEL_PATH,
     split_dir: Path = SPLIT_DIR,
@@ -221,10 +250,13 @@ def run_operational_evaluation(
     daily_topk_metrics = compute_daily_topk_metrics(scored)
     dedup_alerts = deduplicate_alerts(scored)
     dedup_summary = summarize_deduplicated_alerts(scored)
+    extreme_fns = analyze_extreme_false_negatives(scored, split_name="test")
 
     budget_metrics.to_csv(BUDGET_METRICS_CSV, index=False)
     daily_topk_metrics.to_csv(DAILY_TOPK_METRICS_CSV, index=False)
     dedup_alerts.to_csv(DEDUP_ALERTS_CSV, index=False)
+    if not extreme_fns.empty:
+        extreme_fns.to_csv(EXTREME_FALSE_NEGATIVES_CSV, index=False)
 
     report = {
         "model_path": to_repo_relative_path(model_path),
@@ -241,6 +273,7 @@ def run_operational_evaluation(
             "budget_metrics_csv": to_repo_relative_path(BUDGET_METRICS_CSV),
             "daily_topk_metrics_csv": to_repo_relative_path(DAILY_TOPK_METRICS_CSV),
             "deduplicated_alerts_csv": to_repo_relative_path(DEDUP_ALERTS_CSV),
+            "extreme_false_negatives_csv": to_repo_relative_path(EXTREME_FALSE_NEGATIVES_CSV),
         },
     }
     OPERATIONAL_REPORT_JSON.write_text(

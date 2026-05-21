@@ -45,7 +45,7 @@ Optuna, threshold calibrado somente na validacao e scorecard `Top15 Tag-dia`.
 
 | Campo | Valor |
 |---|---|
-| Candidatos oficiais | `lightgbm_optuna`, `xgboost_optuna`, `hist_gbdt_optuna`, `extra_trees_optuna` |
+| Candidatos oficiais | `lightgbm_optuna`, `xgboost_optuna`, `hist_gbdt_optuna` |
 | Baseline diagnostico | `logistic_regression_baseline` |
 | Trials por candidato | `30` |
 | Folds de backtesting | `3` |

@@ -33,7 +33,7 @@ Um modelo so pode ser promovido quando todas as condicoes abaixo forem verdadeir
 
 | Condicao | Regra |
 |---|---|
-| Selecao | Modelo selecionado por validacao temporal operacional entre 4 candidatos oficiais |
+| Selecao | Modelo selecionado por validacao temporal operacional entre 3 candidatos oficiais |
 | Metrica primaria | Maior `val_top15_recall_at_k` |
 | Desempates | `val_top15_precision_at_k`, `val_top15_lift_vs_random`, `val_auc_pr` |
 | Precision minima no teste | `Precision@Top15 Tag-dia >= 0.60` |

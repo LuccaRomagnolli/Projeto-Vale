@@ -42,7 +42,7 @@ metricas sustentam uso em piloto operacional assistido.
 | Dados | `377907` registros e `70811` positivos |
 | Features | `57` colunas totais e `48` features modelaveis |
 | Baseline | AUC-PR teste `0.1498` |
-| Selecao robusta | 4 candidatos oficiais + baseline diagnostico |
+| Selecao robusta | 3 candidatos oficiais + baseline diagnostico |
 | Artefato operacional | `models/model_selected.joblib` |
 | Operacional | `Precision@15=0.6756`, `Recall@15=0.7361`, `Lift@15=2.0774` |
 | Estabilidade | Gate aprovado |

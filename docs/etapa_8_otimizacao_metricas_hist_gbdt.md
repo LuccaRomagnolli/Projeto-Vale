@@ -43,9 +43,8 @@ pela selecao robusta multfamilia em `src/models/model_selection.py`.
 ## Politica vigente
 
 A rodada oficial executa `30` trials Optuna para cada candidato oficial:
-`lightgbm_optuna`, `xgboost_optuna`, `hist_gbdt_optuna` e
-`extra_trees_optuna`. A regressao logistica permanece apenas como baseline
-diagnostico.
+`lightgbm_optuna`, `xgboost_optuna` e `hist_gbdt_optuna`. A regressao
+logistica permanece apenas como baseline diagnostico.
 
 ## Backtesting temporal
 

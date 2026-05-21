@@ -39,7 +39,6 @@ def test_official_candidates_exclude_diagnostic_baseline() -> None:
         "lightgbm_optuna",
         "xgboost_optuna",
         "hist_gbdt_optuna",
-        "extra_trees_optuna",
     )
     assert BASELINE_MODEL_NAME not in OFFICIAL_CANDIDATE_NAMES
 

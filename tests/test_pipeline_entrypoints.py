@@ -162,7 +162,6 @@ def test_model_selection_main_runs(capsys, monkeypatch) -> None:
                 "lightgbm_optuna",
                 "xgboost_optuna",
                 "hist_gbdt_optuna",
-                "extra_trees_optuna",
             ],
             "diagnostic_baseline": "logistic_regression_baseline",
             "trials_per_candidate": 30,

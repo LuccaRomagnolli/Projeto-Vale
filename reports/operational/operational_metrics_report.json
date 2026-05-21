@@ -194,6 +194,7 @@
   "outputs": {
     "budget_metrics_csv": "reports/operational/operational_budget_metrics.csv",
     "daily_topk_metrics_csv": "reports/operational/operational_daily_topk_metrics.csv",
-    "deduplicated_alerts_csv": "reports/operational/operational_deduplicated_alerts.csv"
+    "deduplicated_alerts_csv": "reports/operational/operational_deduplicated_alerts.csv",
+    "extreme_false_negatives_csv": "reports/operational/extreme_false_negatives.csv"
   }
 }

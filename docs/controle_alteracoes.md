@@ -40,7 +40,7 @@ posterior, justificativa e evidencias.
 
 | Item | Resultado |
 |---|---|
-| Candidatos oficiais | `lightgbm_optuna`, `xgboost_optuna`, `hist_gbdt_optuna`, `extra_trees_optuna` |
+| Candidatos oficiais | `lightgbm_optuna`, `xgboost_optuna`, `hist_gbdt_optuna` |
 | Baseline diagnostico | `logistic_regression_baseline` |
 | Artefato operacional | `models/model_selected.joblib` |
 | Threshold operacional | Calibrado na validacao e persistido no artefato |
@@ -69,10 +69,20 @@ posterior, justificativa e evidencias.
 | Inferencia | Citada no README, sem etapa propria em `docs/` | Nova etapa `docs/etapa_11_inferencia_operacional.md` | Fechar a trilha ponta a ponta ate uso operacional. |
 | Notebooks | Referencias historicas a notebooks `01..09` | Notebook oficial unico `notebooks/main.ipynb` | Alinhar documentacao a estrutura real do repositorio. |
 
+## Alteracao 03 - Conformidade com Estudo Guiado e Boas Praticas
+
+| Campo | Antes | Depois | Justificativa |
+|---|---|---|---|
+| EDA | Sem analise de multicolinearidade numerica | Heatmap de correlacao Spearman inserido | Identificar features redundantes conforme exigencia do guia. |
+| Modelagem | Apenas uma categoria (Classificacao Supervisionada) | Adicao de Deteccao de Anomalias (Isolation Forest) como trilha exploratoria | Cumprir exigencia de no minimo duas abordagens distintas de modelagem. |
+| Interpretabilidade | Nao implementado programaticamente | Scripts para SHAP (summary_plot e waterfall_plot) adicionados | Explicar impacto local e global das features e cumprir requisito do guia. |
+| Analise de Erros | Foco total em metricas TopK globais | Exportacao de matriz de confusao e `extreme_false_negatives.csv` agrupado | Analise sistematica de falhas para entender pontos cegos do modelo. |
+
 ## Decisao
 
 Status: `VIGENTE`. A metrica executiva oficial permanece `TopK Tag-dia`, com
-AUC-PR, precision e recall ciclo-a-ciclo como diagnosticos auxiliares.
+AUC-PR, precision e recall ciclo-a-ciclo como diagnosticos auxiliares. O pipeline
+oficial agora inclui interpretabilidade e modelos nao supervisionados como ferramentas de diagnostico de suporte.
 
 ---
 

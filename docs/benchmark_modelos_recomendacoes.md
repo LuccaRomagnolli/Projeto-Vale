@@ -48,7 +48,6 @@ validacao temporal, threshold calibrado fora do teste e selecao por
 | `lightgbm_optuna` | `LGBMClassifier` | Candidato oficial |
 | `xgboost_optuna` | `XGBClassifier` | Candidato oficial |
 | `hist_gbdt_optuna` | `HistGradientBoostingClassifier` | Candidato oficial |
-| `extra_trees_optuna` | `Pipeline` | Candidato oficial |
 | `logistic_regression_baseline` | `Pipeline` | Baseline diagnostico fora da disputa |
 
 ## Resultado da selecao
