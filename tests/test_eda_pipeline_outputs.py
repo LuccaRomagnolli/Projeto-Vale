@@ -1,9 +1,12 @@
+import json
 from pathlib import Path
 
 import pandas as pd
 import pytest
+import src.eda.run_eda as run_eda_module
 from src.eda.run_eda import (
     generate_eda_figures,
+    generate_project_artifact_figures,
     load_labeled_dataset,
     run_eda_pipeline,
     write_eda_report,
@@ -49,10 +52,54 @@ def test_load_labeled_dataset_raises_when_missing(tmp_path: Path) -> None:
 
 def test_generate_eda_figures_creates_expected_files(tmp_path: Path) -> None:
     figures = generate_eda_figures(_small_eda_df(), figures_dir=tmp_path)
-    assert len(figures) == 13
+    assert len(figures) == 14
     for file_path in figures:
         assert file_path.exists()
         assert file_path.suffix == ".png"
+
+
+def test_generate_project_artifact_figures_adds_threshold_diagnostic(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    model_selection_dir = tmp_path / "model_selection"
+    operational_dir = tmp_path / "operational"
+    figures_dir = tmp_path / "figures"
+    model_selection_dir.mkdir()
+    operational_dir.mkdir()
+
+    pd.DataFrame(
+        {
+            "threshold": [0.10, 0.20, 0.30],
+            "recall": [0.90, 0.75, 0.60],
+            "precision": [0.20, 0.35, 0.50],
+        }
+    ).to_csv(model_selection_dir / "model_selected_threshold_curve.csv", index=False)
+    (operational_dir / "operational_metrics_report.json").write_text(
+        json.dumps(
+            {
+                "threshold_metrics": [
+                    {
+                        "split": "test",
+                        "rows": 100,
+                        "threshold": 0.20,
+                        "true_positive": 30,
+                        "false_positive": 20,
+                        "false_negative": 10,
+                    }
+                ]
+            }
+        )
+    )
+
+    monkeypatch.setattr(run_eda_module, "REPORTS_MODEL_SELECTION_DIR", model_selection_dir)
+    monkeypatch.setattr(run_eda_module, "REPORTS_OPERATIONAL_DIR", operational_dir)
+
+    figures = generate_project_artifact_figures(figures_dir=figures_dir)
+
+    expected_path = figures_dir / "threshold_diagnostic_confusion_matrix.png"
+    assert expected_path in figures
+    assert expected_path.exists()
 
 
 def test_write_eda_report_creates_markdown(tmp_path: Path) -> None:
@@ -104,5 +151,5 @@ def test_run_eda_pipeline_end_to_end_with_temp_paths(tmp_path: Path) -> None:
     )
 
     assert Path(result["report_path"]).exists()
-    assert len(result["figures"]) == 13
+    assert len(result["figures"]) == 14
     assert result["total_rows"] == 2
