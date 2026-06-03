@@ -123,7 +123,8 @@ def test_write_eda_report_creates_markdown(tmp_path: Path) -> None:
     )
     assert report_path.exists()
     content = report_path.read_text()
-    assert "Relatório de EDA - Etapa 4" in content
+    assert "Relatório de EDA" in content
+    assert "Como interpretar as figuras" in content
 
 
 def test_run_eda_pipeline_end_to_end_with_temp_paths(tmp_path: Path) -> None:
