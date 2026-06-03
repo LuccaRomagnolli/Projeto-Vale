@@ -42,7 +42,7 @@ O resultado é um artefato operacional promovido em `models/model_selected.jobli
 |---|---|
 | Base rotulada | Indica se cada ciclo antecede um alerta crítico em até 4 horas |
 | Variáveis de comportamento | Resume histórico recente de ciclos, alertas, duração, frequência e contexto |
-| Modelos concorrentes | Compara quatro famílias supervisionadas sob a mesma regra de seleção |
+| Modelos concorrentes | Compara três famílias supervisionadas oficiais sob a mesma regra de seleção |
 | Artefato promovido | Modelo final, colunas esperadas e `threshold` calibrado |
 | Relatórios operacionais | Métricas `TopK`, avaliação segmentada e evidências de estabilidade |
 | Inferência | Geração de `score` e `prediction` para novos dados |
@@ -78,8 +78,8 @@ A solução combina metodologias de ciência de dados, aprendizado de máquina e
 | Engenharia de variáveis temporais | Construção de atributos históricos disponíveis até o momento da decisão, sem uso de informação futura |
 | Prevenção de vazamento de informação | Remoção de colunas futuras, identificadores brutos e variáveis que contaminariam o treinamento |
 | Validação temporal | Separação `70 / 15 / 15` em treino, validação e teste com preservação da ordem cronológica |
-| Benchmark supervisionado | Comparação de candidatos sob mesma base, mesma métrica primária e mesma regra de seleção |
-| Otimização de hiperparâmetros | Uso de Optuna sem escolha prévia de modelo por preferência |
+| Seleção robusta multifamília | Comparação dos candidatos oficiais sob mesma base, mesma métrica primária e mesma regra de seleção |
+| Otimização de hiperparâmetros | Uso de Optuna com `30` trials por candidato, sem escolha prévia de modelo por preferência |
 | Calibração de decisão | `threshold` definido na validação, mantendo o teste reservado para reporte final |
 | Avaliação operacional TopK | Medição de `precision@k`, `recall@k` e `lift@k` para listas diárias priorizadas |
 | Avaliação segmentada | Desempenho por frota, tipo e `Tag`, separando riscos globais de recortes inconclusivos |
@@ -125,14 +125,15 @@ Essa estratégia evita que informações do futuro influenciem decisões do pass
 
 ### 6. Seleção Robusta de Modelos
 
-Quatro candidatos oficiais competem com a mesma base, mesma divisão temporal, mesma métrica primária e otimização via Optuna:
+Três candidatos oficiais competem com a mesma base, mesma divisão temporal, mesma métrica primária e otimização via Optuna:
 
 | Papel | Modelos |
 |---|---|
-| Candidatos oficiais | `lightgbm_optuna`, `xgboost_optuna`, `hist_gbdt_optuna`, `extra_trees_optuna` |
+| Candidatos oficiais | `lightgbm_optuna`, `xgboost_optuna`, `hist_gbdt_optuna` |
 | Referência diagnóstica | `logistic_regression_baseline` |
+| Trials por candidato | `30` |
 
-O modelo é selecionado por desempenho operacional na validação, sem preferência prévia.
+O modelo é selecionado por desempenho operacional na validação, sem preferência prévia. A regra vigente prioriza o maior `val_top15_recall_at_k` e desempata por `val_top15_precision_at_k`, `val_top15_lift_vs_random` e `val_auc_pr`. A regressão logística permanece apenas como baseline diagnóstico e não disputa a promoção.
 
 **Arquivo principal:** `src/models/model_selection.py`
 
@@ -192,10 +193,11 @@ A promoção depende de evidências versionadas em `reports/`, política explíc
 |---|---|
 | Janela do alvo | `target_4h` |
 | Divisão temporal | `70 / 15 / 15` |
-| Modelo selecionado | `lightgbm_optuna` |
+| Pool oficial vigente | `lightgbm_optuna`, `xgboost_optuna`, `hist_gbdt_optuna` |
+| Modelo selecionado nesta rodada | `lightgbm_optuna` |
 | Artefato operacional | `models/model_selected.joblib` |
 | Relatório de seleção | `reports/model_selection/model_selection_report.json` |
-| `threshold` promovido | Persistido no artefato selecionado |
+| `threshold` promovido | `0.139074` |
 
 ### Métricas Operacionais no Teste — Top15 Tag-dia
 

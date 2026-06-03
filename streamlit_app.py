@@ -110,22 +110,21 @@ def inject_theme() -> None:
         .hero-left {{
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 24px;
         }}
-        .hero-logo-box {{
+        .hero-logo-wrap {{
             display: flex;
             align-items: center;
             justify-content: center;
-            background: {COLORS["surface_2"]};
-            border: 1px solid {COLORS["border"]};
-            border-radius: 14px;
-            width: 60px;
-            height: 60px;
+            width: 112px;
+            min-height: 72px;
             flex-shrink: 0;
         }}
-        .hero-logo-box img {{
-            width: 40px;
-            height: 40px;
+        .hero-logo {{
+            display: block;
+            width: 104px;
+            max-height: 72px;
+            height: auto;
             object-fit: contain;
         }}
         .hero-text h1 {{
@@ -392,7 +391,7 @@ def render_header(df: pd.DataFrame) -> None:
     total = fmt_int(len(df))
 
     try:
-        logo_tag = f'<img src="data:image/png;base64,{_img_b64(LOGO_PATH)}" style="width:38px;height:38px;object-fit:contain;" />'
+        logo_tag = f'<img class="hero-logo" src="data:image/png;base64,{_img_b64(LOGO_PATH)}" alt="Vale" />'
     except Exception:
         logo_tag = "⛏"
 
@@ -400,7 +399,7 @@ def render_header(df: pd.DataFrame) -> None:
         f"""
         <div class="hero-wrap">
             <div class="hero-left">
-                <div class="hero-logo-box">{logo_tag}</div>
+                <div class="hero-logo-wrap">{logo_tag}</div>
                 <div class="hero-text">
                     <h1>Análise Exploratória de Dados</h1>
                     <p>Antecipação de alertas críticos em frota de mineração · Monitoramento de target_4h
