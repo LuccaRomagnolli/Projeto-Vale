@@ -33,7 +33,7 @@ pipeline de antecipacao de alertas criticos com baixo risco operacional.
 |---|---|
 | Configuracao de projeto Python | `pyproject.toml` |
 | Dependencias | `requirements.txt`, `constraints.txt` |
-| Automacao de comandos | `Makefile` |
+| Automacao de comandos | `tasks.py`, `Makefile` |
 | Codigo fonte modular | `src/` |
 | Testes automatizados | `tests/` |
 | Documentacao raiz | `README.md` |
@@ -41,10 +41,10 @@ pipeline de antecipacao de alertas criticos com baixo risco operacional.
 ## Comandos principais
 
 ```bash
-make lint
-make test
-make run-all
-make smoke
+python tasks.py lint
+python tasks.py test
+python tasks.py run-all
+python tasks.py smoke
 ```
 
 ## Resultado
@@ -52,15 +52,16 @@ make smoke
 | Item | Valor |
 |---|---|
 | Linguagem | Python `>=3.11, <3.14` |
-| Pipeline completo | `make run-all` |
-| Validacao rapida | `make smoke` |
+| Pipeline completo | `python tasks.py run-all` |
+| Validacao rapida | `python tasks.py smoke` |
 | Estrutura de testes | `pytest` com cobertura |
 | Qualidade estatica | `ruff` e `black` |
 
 ## Evidencias
 
-- `Makefile` contem targets para ingestao, EDA, features, treino, benchmark,
-  tuning, gate, avaliacao, segmentos, inferencia e testes.
+- `tasks.py` contem tarefas multiplataforma para ingestao, EDA, features,
+  treino, selecao, gate, avaliacao, segmentos, inferencia, notebook e testes.
+- `Makefile` mantem atalhos opcionais que delegam para `tasks.py`.
 - `tests/` cobre os modulos de dados, features, modelos, avaliacao e inferencia.
 - `README.md` documenta setup, comandos e politica operacional.
 

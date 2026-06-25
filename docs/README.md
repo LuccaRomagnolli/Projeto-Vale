@@ -108,7 +108,7 @@ As demais evidencias ficam em subpastas:
 
 ## Regra de manutencao
 
-Quando pipeline, comandos `make`, metricas oficiais, artefato operacional ou
+Quando pipeline, comandos `tasks.py`/`make`, metricas oficiais, artefato operacional ou
 politica de promocao forem alterados, atualizar no mesmo PR:
 
 1. `README.md`
