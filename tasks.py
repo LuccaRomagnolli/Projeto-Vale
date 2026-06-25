@@ -144,6 +144,8 @@ def run_task(task: str) -> None:
 
 
 def clean() -> None:
+    ignored_dirs = {".git", ".venv", "venv", "env", "node_modules"}
+
     for path in [ROOT / ".pytest_cache", ROOT / ".ruff_cache"]:
         if path.exists():
             shutil.rmtree(path)
@@ -157,9 +159,13 @@ def clean() -> None:
                 path.unlink()
             print(f"removed {path.relative_to(ROOT)}")
 
-    ignored_dirs = {".git", ".venv", "venv", "env", "node_modules"}
-    for current_root, dirnames, _ in os.walk(ROOT):
+    for current_root, dirnames, filenames in os.walk(ROOT):
         dirnames[:] = [name for name in dirnames if name not in ignored_dirs]
+        ds_store_path = Path(current_root) / ".DS_Store"
+        if ".DS_Store" in filenames and ds_store_path.exists():
+            ds_store_path.unlink()
+            print(f"removed {ds_store_path.relative_to(ROOT)}")
+
         if "__pycache__" not in dirnames:
             continue
         cache_path = Path(current_root) / "__pycache__"

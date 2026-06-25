@@ -83,7 +83,7 @@ A solução combina metodologias de ciência de dados, aprendizado de máquina e
 | Calibração de decisão | `threshold` definido na validação, mantendo o teste reservado para reporte final |
 | Avaliação operacional TopK | Medição de `precision@k`, `recall@k` e `lift@k` para listas diárias priorizadas |
 | Avaliação segmentada | Desempenho por frota, tipo e `Tag`, separando riscos globais de recortes inconclusivos |
-| Governança e reprodutibilidade | Artefatos versionados, política de promoção, barreira de estabilidade e comandos via `tasks.py` multiplataforma |
+| Governança e reprodutibilidade | Artefatos versionados, política de promoção, barreira de estabilidade e comandos via `tasks.py` e `Makefile` |
 
 ---
 
@@ -183,7 +183,7 @@ O desempenho é analisado por recortes operacionais: frota, tipo e `Tag`. Segmen
 
 ### Governança de Promoção
 
-A promoção depende de evidências versionadas em `reports/`, política explícita em `docs/` e comandos reproduzíveis via `tasks.py`.
+A promoção depende de evidências versionadas em `reports/`, política explícita em `docs/` e comandos reproduzíveis via `tasks.py` ou `Makefile`.
 
 ---
 
@@ -257,7 +257,8 @@ O projeto está metodologicamente apto para **piloto operacional assistido**, de
 │   ├── raw/                  # dados brutos
 │   ├── processed/            # dados rotulados e variáveis geradas
 │   └── external/             # dados auxiliares
-├── docs/                     # documentação por etapa e governança
+├── docs/                     # documentação por etapa, governança e referências
+│   └── reference/            # materiais externos de apoio
 ├── models/                   # artefatos treinados
 ├── notebooks/                # notebook principal do projeto
 ├── pictures/                 # imagens usadas na documentação
@@ -284,31 +285,39 @@ O projeto está metodologicamente apto para **piloto operacional assistido**, de
 └── requirements.txt          # dependências
 ```
 
+A raiz do repositório fica reservada para arquivos de entrada do projeto
+(`README.md`, `Makefile`, `tasks.py`, configurações e app Streamlit). Materiais
+externos de apoio ficam em `docs/reference/`.
+
 ---
 
 ## Fluxo do Projeto
 
-| Etapa | Comando | Arquivo principal | Saída esperada |
-|---:|---|---|---|
-| 1 | `python tasks.py label` | `src/data/make_dataset.py` | base rotulada |
-| 2 | `python tasks.py eda` | `src/eda/run_eda.py` | relatório exploratório |
-| 3 | `python tasks.py features` | `src/features/build_features.py` | variáveis modeláveis |
-| 4 | `python tasks.py train` | `src/models/train_baseline.py` e `src/models/model_selection.py` | referência inicial e seleção |
-| 5 | `python tasks.py gate-stability` | `src/models/stability_gate.py` | validação de estabilidade |
-| 6 | `python tasks.py evaluate` | `src/evaluation/evaluate_model.py` | métricas operacionais |
-| 7 | `python tasks.py evaluate-segments` | `src/evaluation/segment_analysis.py` | análise por segmento |
-| 8 | `python tasks.py infer` | `src/inference.py` | pontuações de inferência |
+| Etapa | Multiplataforma | Make | Arquivo principal | Saída esperada |
+|---:|---|---|---|---|
+| 1 | `python tasks.py label` | `make label` | `src/data/make_dataset.py` | base rotulada |
+| 2 | `python tasks.py eda` | `make eda` | `src/eda/run_eda.py` | relatório exploratório |
+| 3 | `python tasks.py features` | `make features` | `src/features/build_features.py` | variáveis modeláveis |
+| 4 | `python tasks.py train` | `make train` | `src/models/train_baseline.py` e `src/models/model_selection.py` | referência inicial e seleção |
+| 5 | `python tasks.py gate-stability` | `make gate-stability` | `src/models/stability_gate.py` | validação de estabilidade |
+| 6 | `python tasks.py evaluate` | `make evaluate` | `src/evaluation/evaluate_model.py` | métricas operacionais |
+| 7 | `python tasks.py evaluate-segments` | `make evaluate-segments` | `src/evaluation/segment_analysis.py` | análise por segmento |
+| 8 | `python tasks.py infer` | `make infer` | `src/inference.py` | pontuações de inferência |
 
 **Fluxo completo:**
 
 ```bash
 python tasks.py run-all
+# ou
+make run-all
 ```
 
 **Validação rápida** (testes + inferência + avaliação operacional + avaliação segmentada):
 
 ```bash
 python tasks.py smoke
+# ou
+make smoke
 ```
 
 ---
@@ -351,35 +360,35 @@ python -m pip install -r requirements.txt -c constraints.txt --prefer-binary
 
 ---
 
-## Comandos Principais Multiplataforma
+## Comandos Principais
 
-Use estes comandos em Windows, macOS ou Linux:
+Use `python tasks.py ...` em Windows, macOS ou Linux. Se o `make` estiver
+instalado, os comandos `make ...` são atalhos equivalentes.
 
-```bash
-python tasks.py install             # instala dependências
-python tasks.py format              # formata arquivos Python com black
-python tasks.py lint                # verifica padrões com ruff
-python tasks.py test                # executa testes com cobertura
-python tasks.py label               # gera base rotulada
-python tasks.py eda                 # executa análise exploratória
-python tasks.py dashboard           # abre o dashboard Streamlit
-python tasks.py features            # constrói variáveis
-python tasks.py train               # treina referência inicial e seleção robusta
-python tasks.py model-selection     # seleciona o melhor candidato oficial
-python tasks.py benchmark           # apelido legado de model-selection
-python tasks.py tune-hist-gbdt      # apelido legado de model-selection
-python tasks.py gate-stability      # valida estabilidade temporal
-python tasks.py evaluate            # avalia métricas operacionais
-python tasks.py evaluate-segments   # avalia segmentos operacionais
-python tasks.py infer               # gera inferência com artefato promovido
-python tasks.py smoke               # validação rápida
-python tasks.py run-all             # fluxo completo
-python tasks.py clean               # remove artefatos locais de execução
-```
+| Ação | Multiplataforma | Make |
+|---|---|---|
+| Instalar dependências | `python tasks.py install` | `make install` |
+| Formatar código | `python tasks.py format` | `make format` |
+| Verificar lint | `python tasks.py lint` | `make lint` |
+| Executar testes | `python tasks.py test` | `make test` |
+| Gerar base rotulada | `python tasks.py label` | `make label` |
+| Executar EDA | `python tasks.py eda` | `make eda` |
+| Abrir dashboard | `python tasks.py dashboard` | `make dashboard` |
+| Construir features | `python tasks.py features` | `make features` |
+| Treinar seleção robusta | `python tasks.py train` | `make train` |
+| Selecionar modelo | `python tasks.py model-selection` | `make model-selection` |
+| Alias legado benchmark | `python tasks.py benchmark` | `make benchmark` |
+| Alias legado tuning | `python tasks.py tune-hist-gbdt` | `make tune-hist-gbdt` |
+| Validar estabilidade | `python tasks.py gate-stability` | `make gate-stability` |
+| Avaliar operação | `python tasks.py evaluate` | `make evaluate` |
+| Avaliar segmentos | `python tasks.py evaluate-segments` | `make evaluate-segments` |
+| Gerar inferência | `python tasks.py infer` | `make infer` |
+| Validação rápida | `python tasks.py smoke` | `make smoke` |
+| Fluxo completo | `python tasks.py run-all` | `make run-all` |
+| Limpar caches locais | `python tasks.py clean` | `make clean` |
 
-Quem tiver `make` instalado pode continuar usando os atalhos equivalentes,
-como `make test`, `make smoke` e `make run-all`. O `Makefile` delega para
-`tasks.py`, mantendo o mesmo comportamento entre sistemas operacionais.
+O `Makefile` delega para `tasks.py`, mantendo o mesmo comportamento entre
+sistemas operacionais quando `make` estiver disponível.
 
 ---
 

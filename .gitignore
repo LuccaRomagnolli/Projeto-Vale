@@ -6,6 +6,9 @@ venv/
 __pycache__/
 *.pyc
 
+# Operating system metadata
+.DS_Store
+
 # Test and lint caches
 .pytest_cache/
 .ruff_cache/

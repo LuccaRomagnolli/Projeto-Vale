@@ -106,6 +106,16 @@ As demais evidencias ficam em subpastas:
 | `reports/operational/` | metricas operacionais TopK e budget |
 | `reports/segments/` | avaliacao segmentada e hotspots |
 
+## Organizacao de referencias
+
+Materiais externos de apoio ficam em `docs/reference/`, mantendo a raiz do
+repositorio focada em arquivos executaveis, configuracoes e documentacao
+principal.
+
+| Pasta | Conteudo |
+|---|---|
+| `docs/reference/` | guias, enunciados e materiais de referencia do projeto |
+
 ## Regra de manutencao
 
 Quando pipeline, comandos `tasks.py`/`make`, metricas oficiais, artefato operacional ou
