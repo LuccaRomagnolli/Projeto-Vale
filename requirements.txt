@@ -18,8 +18,12 @@ shap==0.45.1
 matplotlib==3.8.4
 seaborn==0.13.2
 plotly==5.20.0
-streamlit==1.54.0
 jupyter==1.0.0
+
+# Operational UI
+fastapi==0.115.12
+uvicorn==0.34.2
+httpx==0.28.1
 
 # Time Series (optional)
 statsmodels==0.14.2

@@ -18,5 +18,10 @@ __pycache__/
 # Notebook checkpoints
 .ipynb_checkpoints/
 
-# Local secrets
+# Local secrets and operator worklog
 .env
+data/interim/ui_worklog.json
+
+# Clones aninhados acidentais do proprio repositorio
+/Projeto-Vale/
+/Projeto-Vale-1/

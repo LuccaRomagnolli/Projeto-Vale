@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vale · Engenharia de Minas</title>
+  <link rel="stylesheet" href="/static/app.css?v=__ASSET_VERSION__" />
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <img src="/brand/logo.png" alt="Vale" class="brand-logo" onerror="this.style.display='none'" />
+      <div>
+        <p class="brand-kicker">Operação de mina</p>
+        <h1>Engenharia de minas</h1>
+      </div>
+    </div>
+    <nav class="nav">
+      <button class="nav-btn active" data-view="board">Prioridade do turno</button>
+      <button class="nav-btn" data-view="alerts">Alertas críticos</button>
+      <button class="nav-btn" data-view="processing">Processamento</button>
+      <button class="nav-btn" data-view="equipment">Equipamento</button>
+      <button class="nav-btn" data-view="actions">Tratativa</button>
+      <button class="nav-btn" data-view="performance">Desempenho do modelo</button>
+    </nav>
+    <div class="sidebar-meta" id="model-meta"></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow" id="view-eyebrow">Turno operacional</p>
+        <h2 id="view-title">Prioridade Don't Go · próximas 4h</h2>
+      </div>
+      <div class="filters">
+        <label>Data
+          <select id="filter-date"></select>
+        </label>
+        <label>Frota
+          <select id="filter-frota"><option value="">Todas</option></select>
+        </label>
+        <label>Tag
+          <select id="filter-tag"><option value="">Todas</option></select>
+        </label>
+        <button id="reload-btn" type="button">Atualizar dados</button>
+      </div>
+    </header>
+
+    <section class="kpis" id="kpis"></section>
+    <section class="content" id="content"></section>
+  </main>
+
+  <dialog id="action-dialog">
+    <form id="action-form" method="dialog">
+      <h3>Registrar tratativa</h3>
+      <p class="dialog-item" id="dialog-item"></p>
+      <label>Status
+        <select id="action-status" required>
+          <option value="pendente">Pendente</option>
+          <option value="em_inspecao">Em inspeção</option>
+          <option value="em_andamento">Em andamento</option>
+          <option value="resolvido">Resolvido</option>
+          <option value="descartado">Descartado</option>
+        </select>
+      </label>
+      <label>Responsável
+        <input id="action-operator" type="text" placeholder="Nome ou turno" />
+      </label>
+      <label>Nota operacional
+        <textarea id="action-note" rows="3" placeholder="Achado, restrição ou ação em campo"></textarea>
+      </label>
+      <div class="dialog-actions">
+        <button value="cancel" class="ghost">Cancelar</button>
+        <button id="action-save" value="default">Salvar tratativa</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="/static/app.js?v=__ASSET_VERSION__"></script>
+</body>
+</html>

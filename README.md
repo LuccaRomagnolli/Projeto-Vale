@@ -277,6 +277,7 @@ O projeto está metodologicamente apto para **piloto operacional assistido**, de
 │   ├── evaluation/           # avaliação operacional e segmentada
 │   ├── features/             # construção de variáveis
 │   ├── models/               # treino, seleção e estabilidade
+│   ├── ui/                   # interface operacional de engenharia de minas
 │   └── utils/                # utilitários
 ├── tests/                    # testes automatizados
 ├── tasks.py                  # runner de comandos multiplataforma
@@ -286,8 +287,8 @@ O projeto está metodologicamente apto para **piloto operacional assistido**, de
 ```
 
 A raiz do repositório fica reservada para arquivos de entrada do projeto
-(`README.md`, `Makefile`, `tasks.py`, configurações e app Streamlit). Materiais
-externos de apoio ficam em `docs/reference/`.
+(`README.md`, `Makefile`, `tasks.py` e configurações). A interface operacional
+fica em `src/ui/`. Materiais externos de apoio ficam em `docs/reference/`.
 
 ---
 
@@ -373,7 +374,7 @@ instalado, os comandos `make ...` são atalhos equivalentes.
 | Executar testes | `python tasks.py test` | `make test` |
 | Gerar base rotulada | `python tasks.py label` | `make label` |
 | Executar EDA | `python tasks.py eda` | `make eda` |
-| Abrir dashboard | `python tasks.py dashboard` | `make dashboard` |
+| Abrir interface operacional | `python tasks.py dashboard` | `make dashboard` |
 | Construir features | `python tasks.py features` | `make features` |
 | Treinar seleção robusta | `python tasks.py train` | `make train` |
 | Selecionar modelo | `python tasks.py model-selection` | `make model-selection` |
@@ -412,6 +413,15 @@ sistemas operacionais quando `make` estiver disponível.
 |---|---|
 | `score` | probabilidade estimada de alerta crítico na janela |
 | `prediction` | decisão binária após aplicação do `threshold` |
+
+A interface em `src/ui/` consome esse ranking, os ciclos rotulados e os
+eventos críticos para a engenharia de minas priorizar inspeções, tratar
+alertas Don't Go e acompanhar o processamento da frota.
+
+```bash
+python tasks.py dashboard
+# abre http://127.0.0.1:8000
+```
 
 **Ranking operacional acionável:** `reports/daily_priority_top15.csv`
 
