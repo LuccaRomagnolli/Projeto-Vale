@@ -8,9 +8,9 @@ from typing import Any
 
 import matplotlib
 import matplotlib.colors as mcolors
+import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
-import matplotlib.patches as mpatches
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -94,12 +94,12 @@ def _styled_bar(
     n = len(x) if orientation == "v" else len(y)
     alphas = np.linspace(0.55, 1.0, n) if alpha_gradient else [1.0] * n
     if orientation == "v":
-        for xi, yi, a in zip(x, y, alphas):
+        for xi, yi, a in zip(x, y, alphas, strict=False):
             ax.bar(
                 xi, yi, color=color, alpha=a, edgecolor=PALETTE["border"], linewidth=0.6, zorder=3
             )
     else:
-        for xi, yi, a in zip(x, y, alphas):
+        for xi, yi, a in zip(x, y, alphas, strict=False):
             ax.barh(
                 xi, yi, color=color, alpha=a, edgecolor=PALETTE["border"], linewidth=0.6, zorder=3
             )
@@ -216,7 +216,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
         linewidth=0.8,
         zorder=3,
     )
-    for bar, val in zip(bars, counts.values):
+    for bar, val in zip(bars, counts.values, strict=False):
         ax.text(
             bar.get_x() + bar.get_width() / 2,
             bar.get_height() + counts.max() * 0.02,
@@ -231,7 +231,10 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
     pct_labels = [f"{v/total:.1%}" for v in counts.values]
     ax.set_xticks(range(len(counts)))
     ax.set_xticklabels(
-        [f"{lbl}\n{pct}" for lbl, pct in zip([f"Sem alerta\n(0)", f"Com alerta\n(1)"], pct_labels)],
+        [
+            f"{lbl}\n{pct}"
+            for lbl, pct in zip(["Sem alerta\n(0)", "Com alerta\n(1)"], pct_labels, strict=False)
+        ],
         color=PALETTE["muted"],
         fontsize=9,
     )
@@ -287,7 +290,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
         linewidth=0.5,
         zorder=3,
     )
-    for val, name in zip(top_frotas.values, top_frotas.index):
+    for val, name in zip(top_frotas.values, top_frotas.index, strict=False):
         ax.text(
             val + top_frotas.max() * 0.01,
             name,
@@ -315,7 +318,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
         sample, bins=60, edgecolor=PALETTE["border"], linewidth=0.4, zorder=3
     )
     norm = plt.Normalize(n.min(), n.max())
-    for patch, count in zip(patches, n):
+    for patch, count in zip(patches, n, strict=False):
         patch.set_facecolor(CMAP_BLUE(norm(count)))
     p50 = sample.median()
     p95 = sample.quantile(0.95)
@@ -351,7 +354,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
         linewidth=0.5,
         zorder=3,
     )
-    for val, name in zip(top_classes.values, top_classes.index):
+    for val, name in zip(top_classes.values, top_classes.index, strict=False):
         ax.text(
             val + top_classes.max() * 0.01,
             name,
@@ -399,7 +402,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
     for spine in ax2.spines.values():
         spine.set_edgecolor(PALETTE["border"])
     lines = ax.get_lines() + ax2.get_lines()
-    labels = [l.get_label() for l in lines]
+    labels = [line.get_label() for line in lines]
     ax.legend(
         lines,
         labels,
@@ -485,7 +488,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
             linewidth=0.5,
             zorder=3,
         )
-        for val, name in zip(positive_tags.values, positive_tags.index):
+        for val, name in zip(positive_tags.values, positive_tags.index, strict=False):
             ax.text(
                 val + positive_tags.max() * 0.01,
                 name,
@@ -518,7 +521,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
         linewidth=0.5,
         zorder=3,
     )
-    for val, cat in zip(frota_rate["taxa_alerta"], frota_rate["categoria"]):
+    for val, cat in zip(frota_rate["taxa_alerta"], frota_rate["categoria"], strict=False):
         ax.text(
             val + frota_rate["taxa_alerta"].max() * 0.01,
             cat,
@@ -569,7 +572,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
             linewidth=0.5,
             zorder=3,
         )
-        for val, cat in zip(rate_table["taxa_alerta"], rate_table["categoria"]):
+        for val, cat in zip(rate_table["taxa_alerta"], rate_table["categoria"], strict=False):
             ax.text(
                 val + rate_table["taxa_alerta"].max() * 0.02,
                 cat,
@@ -619,7 +622,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
         PALETTE["cyan"],
         PALETTE["pink"],
     ]
-    for patch, color in zip(bp["boxes"], box_colors):
+    for patch, color in zip(bp["boxes"], box_colors, strict=False):
         patch.set_facecolor(color)
         patch.set_alpha(0.55)
         patch.set_edgecolor(PALETTE["border"])
@@ -656,7 +659,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
             clipped, bins=24, edgecolor=PALETTE["border"], linewidth=0.4, zorder=3
         )
         norm = plt.Normalize(n.min(), n.max())
-        for patch, count in zip(patches, n):
+        for patch, count in zip(patches, n, strict=False):
             patch.set_facecolor(CMAP_HEAT(norm(count)))
         ax.set_xlabel("Horas até evento crítico", **FONT_LABEL)
         ax.set_ylabel("Frequência", **FONT_LABEL)
@@ -679,7 +682,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
         linewidth=0.5,
         zorder=3,
     )
-    for val, name in zip(missing.values, missing.index):
+    for val, name in zip(missing.values, missing.index, strict=False):
         ax.text(
             val + 0.3,
             name,

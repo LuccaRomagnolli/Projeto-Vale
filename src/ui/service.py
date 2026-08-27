@@ -62,7 +62,7 @@ def json_safe(value: Any) -> Any:
         return None
     if isinstance(value, pd.Timestamp):
         return value.isoformat()
-    if isinstance(value, (datetime, date)):
+    if isinstance(value, datetime | date):
         return value.isoformat()
     if hasattr(value, "item"):
         try:
@@ -159,8 +159,8 @@ class OperationalStore:
         frame["score"] = pd.to_numeric(frame.get("score"), errors="coerce")
         frame["rank"] = pd.to_numeric(frame.get("rank"), errors="coerce")
         if "risco_segmento" in frame.columns:
-            frame["risco_rotulo"] = frame["risco_segmento"].map(RISK_LABELS).fillna(
-                frame["risco_segmento"]
+            frame["risco_rotulo"] = (
+                frame["risco_segmento"].map(RISK_LABELS).fillna(frame["risco_segmento"])
             )
         return frame.sort_values(["data", "rank"], ascending=[False, True])
 
@@ -180,7 +180,9 @@ class OperationalStore:
     def _load_events(self) -> pd.DataFrame:
         frame = _read_parquet_columns(self.paths.events, EVENT_COLUMNS)
         if frame.empty:
-            extra = pd.read_parquet(self.paths.events) if self.paths.events.exists() else pd.DataFrame()
+            extra = (
+                pd.read_parquet(self.paths.events) if self.paths.events.exists() else pd.DataFrame()
+            )
             if extra.empty:
                 return pd.DataFrame(columns=["Tag", "EVENT_TIME", "data"])
             frame = extra
@@ -280,7 +282,8 @@ class OperationalStore:
         pending = sum(
             1
             for item in worklog.values()
-            if isinstance(item, dict) and item.get("status") in {"pendente", "em_inspecao", "em_andamento"}
+            if isinstance(item, dict)
+            and item.get("status") in {"pendente", "em_inspecao", "em_andamento"}
         )
         return {
             "date": day,
@@ -293,7 +296,9 @@ class OperationalStore:
                 "critical_events": int(len(events_day)),
                 "open_actions": pending,
                 "unique_tags": int(self._cycles["Tag"].nunique()) if not self._cycles.empty else 0,
-                "unique_fleets": int(self._cycles["Frota"].nunique()) if not self._cycles.empty else 0,
+                "unique_fleets": (
+                    int(self._cycles["Frota"].nunique()) if not self._cycles.empty else 0
+                ),
             },
             "model": {
                 "name": selected.get("model_name") or self._metrics.get("model_name"),
@@ -324,7 +329,9 @@ class OperationalStore:
             frame = frame.loc[frame["risco_segmento"].astype(str) == risco]
         if query:
             needle = query.strip().casefold()
-            frame = frame.loc[frame["Tag"].astype(str).str.casefold().str.contains(needle, na=False)]
+            frame = frame.loc[
+                frame["Tag"].astype(str).str.casefold().str.contains(needle, na=False)
+            ]
 
         worklog = self._worklog()
         rows = []
@@ -399,7 +406,12 @@ class OperationalStore:
         if not frame.empty and "Fim" in frame.columns:
             frame = frame.sort_values("Fim", ascending=False)
         page_frame, total = paginate(frame, page, page_size)
-        return {"total": total, "page": max(page, 1), "page_size": page_size, "items": records(page_frame)}
+        return {
+            "total": total,
+            "page": max(page, 1),
+            "page_size": page_size,
+            "items": records(page_frame),
+        }
 
     def processing_summary(self, selected_date: str | None = None) -> dict[str, Any]:
         frame = self._cycles

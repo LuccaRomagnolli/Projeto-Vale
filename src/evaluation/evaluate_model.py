@@ -208,23 +208,26 @@ def summarize_deduplicated_alerts(
     }
 
 
-def analyze_extreme_false_negatives(scored: pd.DataFrame, split_name: str = "test", percentile: float = 0.10) -> pd.DataFrame:
+def analyze_extreme_false_negatives(
+    scored: pd.DataFrame, split_name: str = "test", percentile: float = 0.10
+) -> pd.DataFrame:
     """Extrai casos extremos de falsos negativos para diagnostico (ex: pior decisao do modelo)."""
     split_df = scored.loc[scored["split"] == split_name].copy()
     positives = split_df.loc[split_df[TARGET_COL] == 1]
-    
+
     if positives.empty:
         return pd.DataFrame()
-        
+
     # Seleciona predições onde o target era 1, mas o score foi muito baixo (< P10 dos positivos)
     score_threshold = positives["score"].quantile(percentile)
     extreme_fns = positives.loc[positives["score"] <= score_threshold].copy()
-    
+
     # Decodifica se houver colunas one-hot ou usa as existentes
     for col in ["Frota", "Tipo", "Classe"]:
         if col not in extreme_fns.columns:
             # Tenta decodificar do one-hot (se já não estiver presente)
             from src.evaluation.operational_scorecard import decode_one_hot_prefix
+
             extreme_fns[col] = decode_one_hot_prefix(split_df, col)
 
     if extreme_fns.empty:

@@ -186,9 +186,7 @@ def build_daily_priority_ranking(
     top = tag_day.loc[tag_day["rank"] <= top_k].copy()
     top["risco_segmento"] = [
         _risk_band(score, threshold, rank)
-        for score, threshold, rank in zip(
-            top["score"], top["threshold"], top["rank"], strict=False
-        )
+        for score, threshold, rank in zip(top["score"], top["threshold"], top["rank"], strict=False)
     ]
     top["acao_recomendada"] = top["risco_segmento"].map(_recommended_action)
 

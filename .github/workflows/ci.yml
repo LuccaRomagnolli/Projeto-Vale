@@ -18,21 +18,25 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            constraints.txt
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install -r requirements.txt
+          python -m pip install --upgrade pip wheel "setuptools<82"
+          python -m pip install -r requirements.txt -c constraints.txt --prefer-binary
+
+      - name: Check formatting
+        run: python -m black --check src tests
 
       - name: Run lint
         run: make lint
 
       - name: Run tests
         run: make test
-
-      - name: Rebuild backtest artifact
-        run: make tune-hist-gbdt
 
       - name: Run temporal stability gate
         run: make gate-stability

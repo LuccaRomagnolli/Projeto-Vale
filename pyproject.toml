@@ -22,6 +22,13 @@ src = ["src", "tests"]
 select = ["E", "F", "I", "B", "UP"]
 ignore = []
 
+[tool.ruff.lint.per-file-ignores]
+# run_eda.py carrega os textos narrativos do relatorio de EDA (descricoes em
+# portugues de cada figura). Quebrar essas strings em concatenacao implicita
+# prejudicaria a leitura e a busca pelo texto. Nenhuma linha de codigo real
+# excede o limite neste arquivo.
+"src/eda/run_eda.py" = ["E501"]
+
 [tool.pytest.ini_options]
 addopts = "-q"
 testpaths = ["tests"]

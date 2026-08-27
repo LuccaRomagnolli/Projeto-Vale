@@ -39,7 +39,10 @@ def _write_store(tmp_path: Path) -> OperationalStore:
             "Frota": ["793-D 5S", "793-D 2S"],
             "Tipo": ["Caminhao", "Caminhao"],
             "turno": ["tarde", "noite"],
-            "motivo_principal": ["alertas recentes na janela de 4h", "maior score diario do modelo"],
+            "motivo_principal": [
+                "alertas recentes na janela de 4h",
+                "maior score diario do modelo",
+            ],
             "risco_segmento": ["alto_acima_threshold", "monitorar_por_ranking"],
             "acao_recomendada": [
                 "inspecionar primeiro e registrar achado operacional",
@@ -132,6 +135,11 @@ def test_action_roundtrip_and_api(tmp_path: Path) -> None:
 
     invalid = client.post(
         "/api/actions",
-        json={"item_type": "priority", "status": "desconhecido", "tag": "CA1", "date": "2025-06-02"},
+        json={
+            "item_type": "priority",
+            "status": "desconhecido",
+            "tag": "CA1",
+            "date": "2025-06-02",
+        },
     )
     assert invalid.status_code == 400

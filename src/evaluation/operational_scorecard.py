@@ -216,11 +216,7 @@ def primary_topk_by_split(
     if topk_metrics.empty:
         return {}
     primary = topk_metrics.loc[topk_metrics["top_k_tags_per_day"] == top_k]
-    return {
-        str(row["split"]): row
-        for row in primary.to_dict(orient="records")
-        if "split" in row
-    }
+    return {str(row["split"]): row for row in primary.to_dict(orient="records") if "split" in row}
 
 
 def attach_operational_metrics(
@@ -238,14 +234,8 @@ def attach_operational_metrics(
         if split_name not in enriched:
             continue
         enriched[split_name] = enriched[split_name].copy()
-        enriched[split_name][f"top{primary_top_k}_precision_at_k"] = float(
-            row["precision_at_k"]
-        )
+        enriched[split_name][f"top{primary_top_k}_precision_at_k"] = float(row["precision_at_k"])
         enriched[split_name][f"top{primary_top_k}_recall_at_k"] = float(row["recall_at_k"])
-        enriched[split_name][f"top{primary_top_k}_lift_vs_random"] = float(
-            row["lift_vs_random"]
-        )
-        enriched[split_name][f"top{primary_top_k}_alerts_per_day"] = float(
-            row["alerts_per_day"]
-        )
+        enriched[split_name][f"top{primary_top_k}_lift_vs_random"] = float(row["lift_vs_random"])
+        enriched[split_name][f"top{primary_top_k}_alerts_per_day"] = float(row["alerts_per_day"])
     return enriched
