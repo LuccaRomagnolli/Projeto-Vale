@@ -2,7 +2,6 @@ from pathlib import Path
 
 import pandas as pd
 from fastapi.testclient import TestClient
-
 from src.ui.app import create_app
 from src.ui.service import OperationalStore, StorePaths, paginate
 

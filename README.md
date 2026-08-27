@@ -378,8 +378,6 @@ instalado, os comandos `make ...` são atalhos equivalentes.
 | Construir features | `python tasks.py features` | `make features` |
 | Treinar seleção robusta | `python tasks.py train` | `make train` |
 | Selecionar modelo | `python tasks.py model-selection` | `make model-selection` |
-| Alias legado benchmark | `python tasks.py benchmark` | `make benchmark` |
-| Alias legado tuning | `python tasks.py tune-hist-gbdt` | `make tune-hist-gbdt` |
 | Validar estabilidade | `python tasks.py gate-stability` | `make gate-stability` |
 | Avaliar operação | `python tasks.py evaluate` | `make evaluate` |
 | Avaliar segmentos | `python tasks.py evaluate-segments` | `make evaluate-segments` |

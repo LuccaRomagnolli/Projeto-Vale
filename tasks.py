@@ -66,10 +66,7 @@ COMMANDS: dict[str, list[list[str]]] = {
     ],
 }
 
-ALIASES = {
-    "benchmark": "model-selection",
-    "tune-hist-gbdt": "model-selection",
-}
+ALIASES: dict[str, str] = {}
 
 COMPOSITES = {
     "train": ["train-baseline", "model-selection"],
@@ -99,8 +96,6 @@ DESCRIPTIONS = {
     "train": "treina baseline e selecao robusta",
     "train-baseline": "treina o baseline diagnostico",
     "model-selection": "seleciona o melhor candidato oficial",
-    "benchmark": "alias legado de model-selection",
-    "tune-hist-gbdt": "alias legado de model-selection",
     "gate-stability": "valida estabilidade temporal",
     "evaluate": "avalia metricas operacionais",
     "evaluate-segments": "avalia segmentos operacionais",

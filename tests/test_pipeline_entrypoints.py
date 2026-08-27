@@ -2,13 +2,7 @@ from src import inference
 from src.data import make_dataset
 from src.evaluation import evaluate_model, segment_analysis
 from src.features import build_features
-from src.models import (
-    benchmark_models,
-    model_selection,
-    train_baseline,
-    train_model,
-    tune_hist_gbdt,
-)
+from src.models import model_selection, train_baseline, train_model
 
 
 def test_make_dataset_main_runs(capsys, monkeypatch) -> None:
@@ -138,21 +132,6 @@ def test_train_model_main_runs(capsys, monkeypatch) -> None:
     assert "[OK]" in captured.out
 
 
-def test_benchmark_models_main_runs(capsys, monkeypatch) -> None:
-    monkeypatch.setattr(
-        benchmark_models,
-        "run_benchmark_pipeline",
-        lambda: {
-            "selected_model_name": "hist_gbdt_optuna",
-            "json_path": "/tmp/model_selection_report.json",
-            "artifact_path": "/tmp/model_selected.joblib",
-        },
-    )
-    benchmark_models.main()
-    captured = capsys.readouterr()
-    assert "[OK]" in captured.out
-
-
 def test_model_selection_main_runs(capsys, monkeypatch) -> None:
     monkeypatch.setattr(
         model_selection,
@@ -178,22 +157,6 @@ def test_model_selection_main_runs(capsys, monkeypatch) -> None:
         },
     )
     model_selection.main()
-    captured = capsys.readouterr()
-    assert "[OK]" in captured.out
-
-
-def test_tune_hist_gbdt_main_runs(capsys, monkeypatch) -> None:
-    monkeypatch.setattr(
-        tune_hist_gbdt,
-        "run_tuning_pipeline",
-        lambda: {
-            "selected_model_name": "hist_gbdt_optuna",
-            "backtest_folds": 3,
-            "artifact_path": "/tmp/model_selected.joblib",
-            "json_path": "/tmp/model_selection_report.json",
-        },
-    )
-    tune_hist_gbdt.main()
     captured = capsys.readouterr()
     assert "[OK]" in captured.out
 

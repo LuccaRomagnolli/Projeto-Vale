@@ -13,8 +13,6 @@ def test_documented_tasks_are_registered() -> None:
         "features",
         "train",
         "model-selection",
-        "benchmark",
-        "tune-hist-gbdt",
         "gate-stability",
         "evaluate",
         "evaluate-segments",
