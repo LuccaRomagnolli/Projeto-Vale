@@ -15,6 +15,7 @@ from src.utils.config import (
     FEATURES_DIR,
     LABELED_DATASET_PATH,
 )
+from src.utils.timeutils import NS_PER_DAY, NS_PER_HOUR, to_epoch_ns
 
 ROLLING_WINDOWS_HOURS = (4, 8, 24)
 REFERENCE_COL = "Fim"
@@ -96,8 +97,8 @@ def add_cycle_rolling_features(
             out.loc[idx, f"duracao_media_ciclo_{window}h"] = duration_mean.to_numpy()
             out.loc[idx, f"duracao_std_ciclo_{window}h"] = duration_std.to_numpy()
 
-            row_times = temporal.index.tz_convert(None).astype("int64").to_numpy()
-            left_times = row_times - (window * 60 * 60 * 1_000_000_000)
+            row_times = to_epoch_ns(temporal.index)
+            left_times = row_times - (window * NS_PER_HOUR)
             left_positions = np.searchsorted(row_times, left_times, side="left")
             class_values = temporal["Classe"].astype(str).to_numpy()
             diversity = [
@@ -141,20 +142,19 @@ def add_alert_history_features(
     out["dias_desde_ultimo_alerta"] = np.nan
 
     events_by_tag = {
-        tag: group["EVENT_TIME"].dt.tz_convert(None).astype("int64").to_numpy()
-        for tag, group in critical.groupby("TAG", sort=False)
+        tag: to_epoch_ns(group["EVENT_TIME"]) for tag, group in critical.groupby("TAG", sort=False)
     }
 
     for tag, group in out.groupby(tag_col, sort=False):
         row_idx = group.index
-        row_times = group[reference_col].dt.tz_convert(None).astype("int64").to_numpy()
+        row_times = to_epoch_ns(group[reference_col])
         event_times = events_by_tag.get(str(tag).strip().upper())
         if event_times is None or len(event_times) == 0:
             continue
 
         right_positions = np.searchsorted(event_times, row_times, side="left")
         for window in windows_hours:
-            left_times = row_times - (window * 60 * 60 * 1_000_000_000)
+            left_times = row_times - (window * NS_PER_HOUR)
             left_positions = np.searchsorted(event_times, left_times, side="left")
             alert_counts = right_positions - left_positions
             out.loc[row_idx, f"n_alertas_{window}h"] = alert_counts
@@ -163,7 +163,7 @@ def add_alert_history_features(
         has_prior = right_positions > 0
         prior_times = np.full(len(row_times), np.nan)
         prior_times[has_prior] = event_times[right_positions[has_prior] - 1]
-        delta_days = (row_times - prior_times) / (24 * 60 * 60 * 1_000_000_000)
+        delta_days = (row_times - prior_times) / NS_PER_DAY
         out.loc[row_idx, "dias_desde_ultimo_alerta"] = delta_days
 
     out["n_precondicoes_satisfeitas_4h"] = out["n_alertas_4h"]

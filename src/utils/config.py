@@ -3,13 +3,21 @@
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 BASE_DIR = Path(__file__).resolve().parents[2]
+
+# Carrega o .env local, se existir. Sem isto as variaveis documentadas em
+# .env.example e no README nunca chegavam ao processo: o mecanismo estava
+# documentado mas nao implementado. Variaveis ja exportadas no ambiente tem
+# precedencia sobre o arquivo (override=False).
+load_dotenv(BASE_DIR / ".env", override=False)
 
 
 def _resolve_path(value: str | None, default: Path) -> Path:
     """Resolve caminhos de env vars mantendo fallback local do projeto."""
     if not value:
-        return default
+        return default.resolve()
     path = Path(value).expanduser()
     if not path.is_absolute():
         path = BASE_DIR / path

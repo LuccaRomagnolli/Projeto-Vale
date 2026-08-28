@@ -39,8 +39,11 @@ def test_validate_required_columns_raises_when_missing() -> None:
 def test_standardize_datetime_columns_converts_to_utc() -> None:
     df = _sample_df()
     out = standardize_datetime_columns(df)
-    assert str(out["Inicio"].dtype).startswith("datetime64[ns, UTC]")
-    assert str(out["Fim"].dtype).startswith("datetime64[ns, UTC]")
+    # Verifica a intencao (datetime ciente de timezone, em UTC) sem fixar a
+    # resolucao interna, que mudou de ns para us no pandas 3.0.
+    for column in ("Inicio", "Fim"):
+        assert isinstance(out[column].dtype, pd.DatetimeTZDtype)
+        assert str(out[column].dt.tz) == "UTC"
 
 
 def test_build_quality_report_counts_duplicates_and_outliers() -> None:

@@ -603,7 +603,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
             dur_sample.loc[dur_sample["Classe"] == c, "duracao_ciclo_min"].values
             for c in top_dur_classes
         ],
-        labels=[str(c) for c in top_dur_classes],
+        tick_labels=[str(c) for c in top_dur_classes],
         patch_artist=True,
         notch=False,
         showfliers=False,

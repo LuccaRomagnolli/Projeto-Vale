@@ -1,0 +1,10 @@
+# Ferramentas de desenvolvimento: testes, formatacao e lint.
+# Instale junto das dependencias de execucao:
+#   pip install -r requirements.txt -r requirements-dev.txt -c constraints.txt
+
+-r requirements.txt
+
+pytest==9.1.1
+pytest-cov==7.1.0
+black==26.5.1
+ruff==0.16.5

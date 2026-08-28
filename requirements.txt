@@ -1,35 +1,32 @@
+# Dependencias de execucao do pipeline e da interface operacional.
+# Ferramentas de desenvolvimento ficam em requirements-dev.txt.
+
 # Data
-pandas==2.2.2
-numpy==1.26.4
-pyarrow==15.0.2
+pandas==3.0.5
+numpy==2.5.2
+pyarrow==25.0.1
 openpyxl==3.1.5
+joblib==1.5.3
 
 # Machine Learning
-scikit-learn==1.4.2
-lightgbm==4.6.0
-optuna==3.6.1
-imbalanced-learn==0.12.2
-xgboost==2.0.3
+scikit-learn==1.9.0
+lightgbm==4.7.0
+optuna==4.9.0
+xgboost==3.4.1
 
-# Interpretability
-shap==0.45.1
+# Interpretabilidade (usado em notebooks/main.ipynb, executado por `make notebook`)
+shap==0.52.0
 
-# Visualization
-matplotlib==3.8.4
+# Visualizacao
+matplotlib==3.11.1
 seaborn==0.13.2
-plotly==5.20.0
 jupyter==1.0.0
 
-# Operational UI
-fastapi==0.115.12
-uvicorn==0.34.2
+# Interface operacional
+fastapi==0.141.1
+uvicorn==0.52.4
 httpx==0.28.1
+pydantic==2.13.4
 
-# Time Series (optional)
-statsmodels==0.14.2
-
-# Code Quality
-pytest==8.2.0
-pytest-cov==5.0.0
-black==24.4.2
-ruff==0.4.4
+# Configuracao
+python-dotenv==1.2.3

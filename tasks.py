@@ -21,6 +21,8 @@ COMMANDS: dict[str, list[list[str]]] = {
             "install",
             "-r",
             "requirements.txt",
+            "-r",
+            "requirements-dev.txt",
             "-c",
             "constraints.txt",
             "--prefer-binary",

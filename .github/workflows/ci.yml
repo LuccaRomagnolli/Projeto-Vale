@@ -22,12 +22,14 @@ jobs:
           cache: pip
           cache-dependency-path: |
             requirements.txt
+            requirements-dev.txt
             constraints.txt
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip wheel "setuptools<82"
-          python -m pip install -r requirements.txt -c constraints.txt --prefer-binary
+          python -m pip install -r requirements.txt -r requirements-dev.txt \
+            -c constraints.txt --prefer-binary
 
       - name: Check formatting
         run: python -m black --check src tests

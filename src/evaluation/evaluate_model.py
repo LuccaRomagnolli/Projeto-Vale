@@ -24,6 +24,7 @@ from src.models.train_model import load_splits, predict_scores, prepare_model_ma
 from src.models.validation import TARGET_COL
 from src.utils.config import REPORTS_OPERATIONAL_DIR, SPLIT_DIR
 from src.utils.metadata import to_repo_relative_path
+from src.utils.timeutils import hours_to_ns, to_epoch_ns
 
 OPERATIONAL_REPORT_JSON = REPORTS_OPERATIONAL_DIR / "operational_metrics_report.json"
 BUDGET_METRICS_CSV = REPORTS_OPERATIONAL_DIR / "operational_budget_metrics.csv"
@@ -167,10 +168,10 @@ def deduplicate_alerts(
         (scored["split"] == split_name) & (scored["prediction"] == 1)
     ].sort_values(["Tag", "Fim", "score"], ascending=[True, True, False])
 
-    cooldown_ns = pd.Timedelta(hours=cooldown_hours).value
+    cooldown_ns = hours_to_ns(cooldown_hours)
     keep_indexes: list[int] = []
     for _, group in split_df.groupby("Tag", sort=False):
-        timestamps = group["Fim"].astype("int64").to_numpy()
+        timestamps = to_epoch_ns(group["Fim"])
         group_indexes = group.index.to_numpy()
         if len(timestamps) == 0:
             continue

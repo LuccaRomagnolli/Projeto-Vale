@@ -30,6 +30,44 @@ def test_alert_history_features_use_only_past_events() -> None:
     assert round(float(out.loc[1, "dias_desde_ultimo_alerta"]), 4) == round(1 / 24, 4)
 
 
+def test_alert_window_boundary_is_measured_in_hours() -> None:
+    """A janela de N horas precisa excluir eventos anteriores a ela.
+
+    Regressao: o codigo derivava o timestamp inteiro de `astype("int64")` e
+    subtraia uma constante de nanossegundos. Quando o pandas 3.0 mudou a
+    resolucao padrao para microssegundos, a janela de 4h passou a valer ~166
+    dias sem qualquer erro. O teste antigo nao pegava isso porque so havia
+    eventos dentro da janela em ambos os casos.
+    """
+    reference = pd.Timestamp("2026-01-02 12:00:00+00:00")
+    df = pd.DataFrame(
+        {
+            "Tag": ["A"],
+            "Fim": [reference],
+            "Inicio": [reference - pd.Timedelta(minutes=30)],
+            "Classe": ["Operando"],
+            "duracao_ciclo_min": [30.0],
+            "target_4h": [0],
+        }
+    )
+    critical = pd.DataFrame(
+        {
+            "TAG": ["A", "A", "A"],
+            "EVENT_TIME": [
+                reference - pd.Timedelta(hours=3),  # dentro de 4h e de 24h
+                reference - pd.Timedelta(hours=10),  # so dentro de 24h
+                reference - pd.Timedelta(days=30),  # fora de todas as janelas
+            ],
+        }
+    )
+
+    out = add_alert_history_features(df, critical)
+
+    assert int(out.loc[0, "n_alertas_4h"]) == 1
+    assert int(out.loc[0, "n_alertas_24h"]) == 2
+    assert round(float(out.loc[0, "dias_desde_ultimo_alerta"]), 4) == round(3 / 24, 4)
+
+
 def test_build_feature_dataset_adds_model_ready_columns() -> None:
     labeled = pd.DataFrame(
         {
