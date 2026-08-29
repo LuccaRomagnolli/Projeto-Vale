@@ -69,7 +69,7 @@ def setup_logging(level: str | None = None, log_file: str | Path | None = None) 
     quem a importa.
     """
     root = logging.getLogger(LOGGER_ROOT)
-    resolved_level = (level or os.getenv("LOG_LEVEL", DEFAULT_LEVEL)).upper()
+    resolved_level = (level or os.getenv("LOG_LEVEL") or DEFAULT_LEVEL).upper()
     root.setLevel(resolved_level)
 
     # Reconfigurar em nova chamada evita handlers duplicados quando um

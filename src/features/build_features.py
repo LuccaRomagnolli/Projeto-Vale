@@ -100,7 +100,7 @@ def add_cycle_rolling_features(
             out.loc[idx, f"duracao_media_ciclo_{window}h"] = duration_mean.to_numpy()
             out.loc[idx, f"duracao_std_ciclo_{window}h"] = duration_std.to_numpy()
 
-            row_times = to_epoch_ns(temporal.index)
+            row_times = to_epoch_ns(pd.DatetimeIndex(temporal.index))
             left_times = row_times - (window * NS_PER_HOUR)
             left_positions = np.searchsorted(row_times, left_times, side="left")
             class_values = temporal["Classe"].astype(str).to_numpy()

@@ -49,10 +49,16 @@ class CategoricalEncoder:
         if train_df.empty:
             raise ValueError("Nao e possivel ajustar o encoder em um conjunto de treino vazio.")
 
-        self.tag_freq = train_df["Tag"].value_counts(normalize=True).to_dict()
+        self.tag_freq = {
+            str(key): float(value)
+            for key, value in train_df["Tag"].value_counts(normalize=True).items()
+        }
 
         if "Operador" in train_df.columns:
-            self.operador_freq = train_df["Operador"].value_counts(normalize=True).to_dict()
+            self.operador_freq = {
+                str(key): float(value)
+                for key, value in train_df["Operador"].value_counts(normalize=True).items()
+            }
         else:
             self.operador_freq = {}
 
@@ -201,5 +207,7 @@ def align_encoded_columns(df: pd.DataFrame, reference_columns: list[str]) -> pd.
     out = df.copy()
     for column in reference_columns:
         if column not in out.columns:
-            out[column] = np.False_ if column.startswith(ONE_HOT_COLUMNS) else 0.0
+            # Coluna nova recebe escalar; os stubs do pandas nao modelam
+            # atribuicao escalar a coluna inexistente.
+            out[column] = False if column.startswith(ONE_HOT_COLUMNS) else 0.0
     return out

@@ -62,9 +62,11 @@ def create_app(store: OperationalStore | None = None) -> FastAPI:
     )
 
     def get_store() -> OperationalStore:
-        if state["store"] is None:
-            state["store"] = OperationalStore()
-        return state["store"]
+        store = state["store"]
+        if store is None:
+            store = OperationalStore()
+            state["store"] = store
+        return store
 
     @app.get("/api/health")
     def health() -> dict[str, Any]:

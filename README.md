@@ -394,6 +394,7 @@ instalado, os comandos `make ...` são atalhos equivalentes.
 | Instalar dependências | `python tasks.py install` | `make install` |
 | Formatar código | `python tasks.py format` | `make format` |
 | Verificar lint | `python tasks.py lint` | `make lint` |
+| Verificar tipos | `python tasks.py typecheck` | `make typecheck` |
 | Executar testes | `python tasks.py test` | `make test` |
 | Gerar base rotulada | `python tasks.py label` | `make label` |
 | Executar EDA | `python tasks.py eda` | `make eda` |

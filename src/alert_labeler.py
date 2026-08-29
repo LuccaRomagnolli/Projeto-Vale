@@ -116,7 +116,7 @@ def prepare_event_columns(
 
 def _extract_critical_from_prepared_events(
     events: pd.DataFrame, rules_df: pd.DataFrame
-) -> tuple[pd.DataFrame, dict[str, int]]:
+) -> tuple[pd.DataFrame, dict[str, Any]]:
     rules = rules_df.copy()
     rules["EVENTO_NORM"] = rules["EVENTO"].map(_normalize_text)
     rules["TIPO_NORM"] = rules["TIPO"].map(_normalize_text)
@@ -146,7 +146,7 @@ def _extract_critical_from_prepared_events(
     ].copy()
     critical_events = critical_events.sort_values(["TAG", "EVENT_TIME"]).drop_duplicates()
 
-    audit = {
+    audit: dict[str, Any] = {
         "rows_total_events": int(len(events)),
         "rows_match_full_combo": int(events["MATCH_FULL_COMBO"].sum()),
         "rows_match_event_only": int(events["MATCH_EVENT_ONLY"].sum()),
@@ -160,7 +160,7 @@ def build_critical_events(
     events_df: pd.DataFrame,
     rules_df: pd.DataFrame,
     timezone: str = DEFAULT_TIMEZONE,
-) -> tuple[pd.DataFrame, dict[str, int]]:
+) -> tuple[pd.DataFrame, dict[str, Any]]:
     """Identifica eventos criticos para um dataframe de eventos ja carregado."""
     prepared = prepare_event_columns(events_df, timezone=timezone)
     return _extract_critical_from_prepared_events(prepared, rules_df)
@@ -182,11 +182,13 @@ def build_critical_events_from_source(
     rules_df: pd.DataFrame,
     events_source: Path | None = None,
     timezone: str = DEFAULT_TIMEZONE,
-) -> tuple[pd.DataFrame, dict[str, int]]:
+) -> tuple[pd.DataFrame, dict[str, Any]]:
     """Extrai eventos criticos de arquivo unico ou diretorio de telemetria mensal."""
     source = events_source or TELEMETRY_DIR
     critical_frames: list[pd.DataFrame] = []
-    aggregate_audit = {
+    # Acumula contagens e, ao final do pipeline, tambem marcadores textuais de
+    # periodo -- por isso o valor nao e apenas `int`.
+    aggregate_audit: dict[str, Any] = {
         "files_processed": 0,
         "rows_total_events": 0,
         "rows_match_full_combo": 0,
@@ -319,7 +321,7 @@ def build_targets_from_events(
 
 
 def write_labeling_report(
-    audit: dict[str, int],
+    audit: dict[str, Any],
     labeled_df: pd.DataFrame,
     output_dir: Path = LABELED_DIR,
 ) -> tuple[Path, Path]:
@@ -414,6 +416,7 @@ def run_labeling_pipeline(
         set(apontamentos_df["Tag"].map(_normalize_tag)) & set(critical_events_df["TAG"])
     )
     audit["tag_overlap_count"] = int(tag_overlap)
+    # o audit acumula contagens e tambem marcadores textuais de periodo
     audit["critical_events_time_min"] = str(critical_events_df["EVENT_TIME"].min())
     audit["critical_events_time_max"] = str(critical_events_df["EVENT_TIME"].max())
 

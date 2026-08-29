@@ -214,7 +214,7 @@ def evaluate_fitted_model(
     scores = {split: predict_scores(model, matrix) for split, matrix in matrices.items()}
     calibration = calibrate_threshold(val[TARGET_COL], scores["val"], min_recall=min_recall)
     threshold = calibration.threshold
-    metrics = {
+    metrics: dict[str, Any] = {
         "threshold": float(threshold),
         # Fica explicito quando o recall minimo nao foi alcancavel: sem isso o
         # threshold degenerado passava por calibracao normal nos relatorios.
@@ -689,9 +689,9 @@ def save_model_selection_outputs(
             },
             data_path=FEATURES_DATASET_PATH,
             metrics={
-                key: float(value)
+                str(key): float(value)
                 for key, value in selected_row.items()
-                if key.startswith(("test_top", "val_top")) and isinstance(value, int | float)
+                if str(key).startswith(("test_top", "val_top")) and isinstance(value, int | float)
             },
         ),
     }
@@ -903,7 +903,7 @@ def run_model_selection_pipeline(
         )
         run.log_metrics(
             {
-                key: value
+                str(key): value
                 for key, value in selected_row.to_dict().items()
                 if isinstance(value, int | float) and not isinstance(value, bool)
             }

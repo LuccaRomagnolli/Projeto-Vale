@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
 import pandas as pd
 
@@ -31,7 +32,7 @@ def run_stability_gate(
     max_recall_std: float = DEFAULT_MAX_RECALL_STD,
     max_precision_std: float = DEFAULT_MAX_PRECISION_STD,
     min_folds: int = DEFAULT_MIN_FOLDS,
-) -> dict[str, float | int | bool]:
+) -> dict[str, Any]:
     """Valida estabilidade minima entre folds temporais."""
     if not backtest_path.exists():
         raise FileNotFoundError(

@@ -30,6 +30,7 @@ COMMANDS: dict[str, list[list[str]]] = {
     ],
     "format": [[PYTHON, "-m", "black", "src", "tests"]],
     "lint": [[PYTHON, "-m", "ruff", "check", "src", "tests"]],
+    "typecheck": [[PYTHON, "-m", "mypy"]],
     "test": [
         [
             PYTHON,
@@ -96,6 +97,7 @@ DESCRIPTIONS = {
     "install": "instala dependencias Python com wheels binarios quando disponiveis",
     "format": "formata arquivos Python com black",
     "lint": "verifica padroes com ruff",
+    "typecheck": "verifica tipos com mypy",
     "test": "executa testes com cobertura",
     "label": "gera base rotulada",
     "eda": "executa analise exploratoria",

@@ -278,8 +278,9 @@ class OperationalStore:
         if frame.empty:
             return frame
         frame["data"] = _date_key(pd.to_datetime(frame["data"], errors="coerce"))
-        frame["score"] = pd.to_numeric(frame.get("score"), errors="coerce")
-        frame["rank"] = pd.to_numeric(frame.get("rank"), errors="coerce")
+        for column in ("score", "rank"):
+            if column in frame.columns:
+                frame[column] = pd.to_numeric(frame[column], errors="coerce")
         if "risco_segmento" in frame.columns:
             frame["risco_rotulo"] = (
                 frame["risco_segmento"].map(RISK_LABELS).fillna(frame["risco_segmento"])

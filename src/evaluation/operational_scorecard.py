@@ -26,7 +26,10 @@ def decode_one_hot_prefix(df: pd.DataFrame, prefix: str) -> pd.Series:
         return pd.Series(["desconhecido"] * len(df), index=df.index)
 
     matrix = df[columns].fillna(False).astype(bool)
-    decoded = matrix.idxmax(axis=1).str.replace(f"{prefix}_", "", regex=False)
+    # os stubs tipam o retorno de idxmax pelo dtype do frame, e nao pelo nome
+    # da coluna, que e sempre str aqui.
+    columns_of_max = matrix.idxmax(axis=1).astype(str)
+    decoded = columns_of_max.str.replace(f"{prefix}_", "", regex=False)
     decoded.loc[~matrix.any(axis=1)] = "desconhecido"
     return decoded
 
@@ -216,7 +219,11 @@ def primary_topk_by_split(
     if topk_metrics.empty:
         return {}
     primary = topk_metrics.loc[topk_metrics["top_k_tags_per_day"] == top_k]
-    return {str(row["split"]): row for row in primary.to_dict(orient="records") if "split" in row}
+    return {
+        str(row["split"]): {str(key): value for key, value in row.items()}
+        for row in primary.to_dict(orient="records")
+        if "split" in row
+    }
 
 
 def attach_operational_metrics(
