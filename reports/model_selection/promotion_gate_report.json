@@ -6,21 +6,21 @@
   "criterios": [
     {
       "criterio": "test_top15_precision_at_k",
-      "observado": 0.8177777777777778,
+      "observado": 0.8311111111111111,
       "limite": 0.6,
       "comparacao": ">=",
       "aprovado": true
     },
     {
       "criterio": "test_top15_recall_at_k",
-      "observado": 0.8910411622276029,
+      "observado": 0.9055690072639225,
       "limite": 0.7,
       "comparacao": ">=",
       "aprovado": true
     },
     {
       "criterio": "test_top15_lift_vs_random",
-      "observado": 2.5147161689534574,
+      "observado": 2.5557169760559595,
       "limite": 1.9,
       "comparacao": ">=",
       "aprovado": true

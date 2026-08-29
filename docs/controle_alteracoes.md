@@ -154,6 +154,71 @@ com vazamento: o otimismo real pode ser um pouco maior que o medido.
 
 Todos os pisos da politica de promocao permanecem atendidos.
 
+## Alteracao 05 - Objetivo da busca, calibracao do threshold e rastreamento
+
+Data: 29/08/2026
+
+### 5.1 Objetivo do Optuna
+
+| Campo | Antes | Depois | Justificativa |
+|---|---|---|---|
+| Objetivo da busca | Escalar `recall*1e6 + precision*1e3 + lift + auc*1e-3` | Metrica primaria da politica (`val_top15_recall_at_k`) | Diferencas de recall abaixo de `1e-3` eram engolidas pelo termo de precisao; `lift` nao e limitado e acima de `1000` inverteria a prioridade |
+| Escolha do melhor trial | `study.best_trial`, que so enxerga o escalar | Ordenacao lexicografica completa da politica | Os criterios de desempate passam a valer tambem dentro da familia |
+| Reinjecao de parametros no refit | Manual, para `scale_pos_weight`, `subsample_freq` e `class_weight` | `params_json` do trial, que ja guarda a configuracao completa | Elimina divergencia entre a configuracao avaliada e a treinada |
+
+### 5.2 Atribuicao medida do impacto
+
+Tres execucoes completas, isolando uma variavel de cada vez:
+
+| Execucao | Stack | Objetivo | `precision@15` | `recall@15` | `lift@15` |
+|---|---|---|---:|---:|---:|
+| A | `pandas 3.0.5` | escalar | `0.817778` | `0.891041` | `2.514716` |
+| B | `pandas 2.3.3` | escalar | `0.817778` | `0.891041` | `2.514716` |
+| C | `pandas 2.3.3` | metrica primaria | `0.831111` | `0.905569` | `2.555717` |
+
+`A == B` ate a sexta casa decimal: a mudanca de versao do pandas nao teve
+**nenhum** efeito sobre as metricas, como esperado apos `src/utils/timeutils.py`
+tornar o codigo independente da resolucao de datetime.
+
+`B -> C` concentra toda a variacao (`+0.0133` em precisao). A causa nao e a regra
+de selecao: comparando os dois criterios sobre os mesmos trials, ambos escolhem
+o **mesmo** trial nas tres familias. A diferenca vem da trajetoria de busca --
+o TPE usa o objetivo para guiar a exploracao, entao um objetivo diferente
+explora trials diferentes.
+
+### 5.3 Threshold degenerado
+
+A calibracao devolvia silenciosamente o menor threshold quando o recall minimo
+era inalcancavel. O caso ocorreu com o baseline heuristico, publicado com
+threshold `0.0` e recall `1.0`.
+
+O flag decisivo nao e "alvo inalcancavel": alertar sobre tudo **atinge** qualquer
+alvo de recall. O que caracteriza a falha e a taxa de alerta. `ThresholdChoice`
+passa a expor `alert_rate` e `degenerate`, e o gate de promocao bloqueia a
+promocao nesse caso. O modelo vigente registra `alert_rate = 0.400`.
+
+### 5.4 Demais itens
+
+| Item | Estado |
+|---|---|
+| `subsample` do LightGBM | Era inerte sem `subsample_freq`; a dimensao era buscada em 30 trials sem efeito |
+| Teste durante a busca | Deixou de ser pontuado nos trials: economiza cerca de um terco da avaliacao e remove o risco de vazamento por ordenacao |
+| Calibracao de probabilidade | `src/models/calibration.py`, isotonica ajustada na validacao. Desligada por padrao: nao altera metricas TopK, mas altera a leitura do score e o threshold publicado |
+| Rastreamento | MLflow com store sqlite em `mlruns/`. O backend de arquivos foi descontinuado no MLflow 3.x |
+| Pruner do Optuna | **Nao implementado.** Exige valores intermediarios, e cada trial e um `fit` unico. Reportar por iteracao seria possivel em LightGBM e XGBoost, mas nao em HistGradientBoosting: as familias ficariam com orcamentos de busca desiguais, enviesando a comparacao |
+| `pandas` | Fixado em `2.3.3`: o MLflow 3.x exige `pandas<3` |
+
+### 5.5 Impacto no artefato promovido
+
+| Item | Antes | Depois |
+|---|---|---|
+| `test_top15_precision_at_k` | `0.8178` | `0.8311` |
+| `test_top15_recall_at_k` | `0.8910` | `0.9056` |
+| `test_top15_lift_vs_random` | `2.5147` | `2.5557` |
+
+Modelo selecionado permanece `hist_gbdt_optuna`. Todos os criterios da politica
+seguem atendidos.
+
 ## Decisao
 
 Status: `VIGENTE`. A metrica executiva oficial permanece `TopK Tag-dia`, com

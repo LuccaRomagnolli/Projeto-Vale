@@ -68,8 +68,8 @@ metricas ciclo-a-ciclo.
 | 3 | `90` | `1.0000` | `0.2179` | `3.0751` |
 | 5 | `150` | `0.9867` | `0.3584` | `3.0341` |
 | 10 | `300` | `0.9700` | `0.7046` | `2.9828` |
-| 15 | `450` | `0.8178` | `0.8910` | `2.5147` |
-| 20 | `600` | `0.6750` | `0.9806` | `2.0757` |
+| 15 | `450` | `0.8311` | `0.9056` | `2.5557` |
+| 20 | `600` | `0.6767` | `0.9831` | `2.0808` |
 
 > Valores de 29/08/2026, apos o reparo das features de historico de alertas e a
 > correcao de vazamento nos encodings. Ver `docs/controle_alteracoes.md`,
