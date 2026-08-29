@@ -1,0 +1,42 @@
+{
+  "_aviso": "SIMULACAO baseada em premissas fornecidas pelo usuario e em faixas de literatura publica. NAO e medicao da operacao. A eficacia da prevencao NAO foi observada: o conjunto de dados nao possui registro de intervencoes.",
+  "premissas_nao_medidas": {
+    "custo_hora_parada_usd": 12500.0,
+    "eficacia_prevencao": 0.35,
+    "custo_inspecao_usd": 400.0,
+    "horas_parada_por_evento": 6.0
+  },
+  "entradas_medidas": {
+    "dias_avaliados": 30,
+    "casos_capturados_pelo_modelo": 366,
+    "casos_capturados_por_acaso": 146.4,
+    "casos_adicionais": 219.6,
+    "inspecoes_por_dia": 15,
+    "casos_criticos_totais": 413,
+    "origem": "reports/operational/operational_metrics_report.json"
+  },
+  "horizonte_dias": 30,
+  "eventos_evitados_simulado": 76.9,
+  "horas_de_parada_evitadas_simulado": 461.2,
+  "beneficio_bruto_usd_simulado": 5764840.12,
+  "custo_inspecoes_usd": 180000.0,
+  "beneficio_liquido_usd_simulado": 5584840.12,
+  "razao_retorno_simulado": 32.03,
+  "ponto_de_equilibrio_eficacia": {
+    "custo_hora_5000": 0.0273,
+    "custo_hora_12500": 0.0109,
+    "custo_hora_20000": 0.0068
+  },
+  "faixa_sensibilidade": {
+    "custo_hora_parada_usd": [
+      5000.0,
+      20000.0
+    ],
+    "eficacia_prevencao": [
+      0.1,
+      0.6
+    ],
+    "beneficio_liquido_min_usd": 478838.87,
+    "beneficio_liquido_max_usd": 15632132.89
+  }
+}

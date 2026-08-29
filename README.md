@@ -406,6 +406,7 @@ instalado, os comandos `make ...` são atalhos equivalentes.
 | Avaliar operação | `python tasks.py evaluate` | `make evaluate` |
 | Avaliar segmentos | `python tasks.py evaluate-segments` | `make evaluate-segments` |
 | Medir custo do fix de vazamento | `python tasks.py leakage-ablation` | `make leakage-ablation` |
+| Simular cenário econômico | `python tasks.py simulate` | `make simulate` |
 | Gerar inferência | `python tasks.py infer` | `make infer` |
 | Processar lotes diários | `python tasks.py batch` | `make batch` |
 | Congelar referência de drift | `python tasks.py monitor-baseline` | `make monitor-baseline` |

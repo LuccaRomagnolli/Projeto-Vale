@@ -28,3 +28,6 @@ data/interim/ui_worklog.json
 
 # Store local de rastreamento de experimentos (MLflow)
 mlruns/
+
+# Modelo de demonstracao treinado com features simuladas
+models/demo/

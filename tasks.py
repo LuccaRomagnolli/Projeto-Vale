@@ -58,6 +58,7 @@ COMMANDS: dict[str, list[list[str]]] = {
     "batch": [[PYTHON, "-m", "src.batch_inference"]],
     "monitor-baseline": [[PYTHON, "-m", "src.monitoring", "baseline"]],
     "monitor": [[PYTHON, "-m", "src.monitoring", "check"]],
+    "simulate": [[PYTHON, "-m", "src.simulation"]],
     "notebook": [
         [
             PYTHON,
@@ -115,6 +116,7 @@ DESCRIPTIONS = {
     "batch": "processa lotes diarios do diretorio de entrada",
     "monitor-baseline": "congela o perfil de referencia do modelo promovido",
     "monitor": "verifica drift do lote mais recente",
+    "simulate": "simula cenario economico do piloto (premissas explicitas)",
     "notebook": "executa notebooks/main.ipynb",
     "smoke": "executa validacao rapida",
     "run-all": "executa o fluxo completo oficial",

@@ -1,0 +1,20 @@
+{
+  "_aviso": "SIMULACAO. As features de manutencao sao inventadas; este resultado mede a arquitetura, nao o desempenho que se obteria em campo.",
+  "bracos": [
+    {
+      "braco": "sem manutencao (real)",
+      "features": 44,
+      "precision_at_15": 0.8133333333333334,
+      "recall_at_15": 0.8861985472154964,
+      "lift_at_15": 2.501049233252623
+    },
+    {
+      "braco": "com manutencao (SIMULADA)",
+      "features": 46,
+      "precision_at_15": 0.8133333333333334,
+      "recall_at_15": 0.8861985472154964,
+      "lift_at_15": 2.501049233252623
+    }
+  ],
+  "delta_precision_at_15": 0.0
+}

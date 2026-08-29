@@ -79,6 +79,7 @@ segmentada, promocao e inferencia.
 | `docs/benchmark_modelos_recomendacoes.md` | Selecao robusta de candidatos e recomendacoes |
 | `docs/politica_promocao_modelo.md` | Regra unica para promocao de modelo |
 | `docs/controle_alteracoes.md` | Registro das mudancas metodologicas |
+| `docs/simulacao_piloto.md` | Simulacao economica e de manutencao (NAO e medicao) |
 | `docs/notebook_codigo_e_contexto_projeto.md` | Contexto do notebook principal |
 | `docs/relatorio_eficiencia_2026-05-03.md` | Revisao de eficiencia ponta a ponta |
 | `docs/revisao_geral_documentacao_2026-05-04.md` | Revisao de consistencia documental |

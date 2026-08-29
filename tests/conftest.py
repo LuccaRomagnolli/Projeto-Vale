@@ -155,16 +155,21 @@ def log_records() -> Any:
         logger.setLevel(previous_level)
 
 
+class LinearTestModel:
+    """Score proporcional a primeira feature, suficiente para ordenar.
+
+    Definida no nivel do modulo, e nao dentro da fixture: uma classe local nao
+    e serializavel, e os testes que gravam o artefato com joblib falhariam.
+    """
+
+    def predict_proba(self, x: pd.DataFrame) -> np.ndarray:
+        positive = np.clip(x.iloc[:, 0].to_numpy(dtype=float) / 10.0, 0, 1)
+        return np.column_stack([1 - positive, positive])
+
+
 @pytest.fixture
 def artifact_factory() -> Callable[..., dict[str, Any]]:
     """Artefato de modelo no contrato minimo exigido pela inferencia."""
-
-    class _LinearModel:
-        """Score proporcional a primeira feature, suficiente para ordenar."""
-
-        def predict_proba(self, x: pd.DataFrame) -> np.ndarray:
-            positive = np.clip(x.iloc[:, 0].to_numpy(dtype=float) / 10.0, 0, 1)
-            return np.column_stack([1 - positive, positive])
 
     def _build(
         feature_columns: list[str] | None = None,
@@ -172,7 +177,7 @@ def artifact_factory() -> Callable[..., dict[str, Any]]:
         model_name: str = "modelo_de_teste",
     ) -> dict[str, Any]:
         return {
-            "model": _LinearModel(),
+            "model": LinearTestModel(),
             "model_name": model_name,
             "feature_columns": feature_columns or ["n_alertas_4h", "duracao_ciclo_min"],
             "threshold": threshold,
