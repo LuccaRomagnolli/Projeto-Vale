@@ -25,3 +25,6 @@ data/interim/ui_worklog.json
 # Clones aninhados acidentais do proprio repositorio
 /Projeto-Vale/
 /Projeto-Vale-1/
+
+# Store local de rastreamento de experimentos (MLflow)
+mlruns/

@@ -2,7 +2,9 @@
 # Ferramentas de desenvolvimento ficam em requirements-dev.txt.
 
 # Data
-pandas==3.0.5
+# MLflow 3.x exige pandas<3; o codigo e independente da resolucao de datetime
+# (ver src/utils/timeutils.py), entao roda igual nas duas series.
+pandas==2.3.3
 numpy==2.5.2
 pyarrow==25.0.1
 openpyxl==3.1.5
@@ -30,6 +32,9 @@ pydantic==2.13.4
 
 # Contrato de dados na inferencia
 pandera==0.32.1
+
+# Rastreamento de experimentos (store local em sqlite)
+mlflow==3.15.2
 
 # Configuracao
 python-dotenv==1.2.3

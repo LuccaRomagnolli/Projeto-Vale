@@ -49,8 +49,10 @@ from src.utils.config import (
 from src.utils.metadata import (
     build_artifact_provenance,
     build_execution_metadata,
+    git_revision,
     to_repo_relative_path,
 )
+from src.utils.tracking import track_run
 
 OFFICIAL_CANDIDATE_NAMES = (
     "lightgbm_optuna",
@@ -270,14 +272,31 @@ def selection_columns() -> list[str]:
     ]
 
 
-def selection_score(row: dict[str, Any] | pd.Series) -> float:
-    """Score escalar que preserva a prioridade lexicografica das metricas oficiais."""
-    return (
-        float(row.get(f"val_top{PRIMARY_TOP_K}_recall_at_k", 0.0)) * 1_000_000
-        + float(row.get(f"val_top{PRIMARY_TOP_K}_precision_at_k", 0.0)) * 1_000
-        + float(row.get(f"val_top{PRIMARY_TOP_K}_lift_vs_random", 0.0))
-        + float(row.get("val_auc_pr", 0.0)) * 0.001
+PRIMARY_OBJECTIVE_COLUMN = f"val_top{PRIMARY_TOP_K}_recall_at_k"
+
+
+def selection_key(row: dict[str, Any] | pd.Series) -> tuple[float, ...]:
+    """Chave de ordenacao lexicografica pelas metricas oficiais, na ordem da politica.
+
+    Substitui um score escalar que empacotava quatro metricas com pesos
+    `1e6 / 1e3 / 1 / 1e-3`. O empacotamento tinha dois defeitos: diferencas de
+    recall abaixo de `1e-3` eram engolidas pelo termo de precisao, e `lift` nao
+    e limitado -- um valor acima de `1000` inverteria a prioridade das metricas.
+    Uma tupla compara exatamente como a politica descreve.
+
+    Metrica ausente vira `-inf`, e nao `0.0`: um candidato sem a metrica nao
+    pode empatar com outro que legitimamente pontuou zero.
+    """
+    return tuple(
+        float(row[column]) if row.get(column) is not None and column in row else float("-inf")
+        for column in selection_columns()
     )
+
+
+def primary_objective(row: dict[str, Any] | pd.Series) -> float:
+    """Metrica primaria da politica, usada como objetivo do Optuna."""
+    value = row.get(PRIMARY_OBJECTIVE_COLUMN)
+    return float(value) if value is not None else float("-inf")
 
 
 def select_model(summary: pd.DataFrame) -> str:
@@ -321,13 +340,14 @@ def _trial_objective(
         splits=("train", "val"),
     )
     row = flatten_metrics(candidate_name, "official_candidate", fitted, metrics, fit_seconds, True)
-    score = selection_score(row)
     for key, value in row.items():
         if isinstance(value, str | int | float | bool):
             trial.set_user_attr(key, value)
     trial.set_user_attr("params_json", json.dumps(params, ensure_ascii=False, sort_keys=True))
-    trial.set_user_attr("selection_score", score)
-    return score
+    # O Optuna precisa de um escalar para guiar a busca, e a metrica primaria da
+    # politica cumpre esse papel sem inventar pesos. Os criterios de desempate
+    # sao aplicados depois, por ordenacao lexicografica sobre os trials.
+    return primary_objective(row)
 
 
 def run_candidate_study(
@@ -372,7 +392,6 @@ def run_candidate_study(
             "model_name": candidate_name,
             "trial_number": trial.number,
             "state": trial.state.name,
-            "selection_score": trial.user_attrs.get("selection_score", np.nan),
             "params_json": trial.user_attrs.get("params_json", "{}"),
         }
         for key, value in trial.user_attrs.items():
@@ -381,16 +400,19 @@ def run_candidate_study(
         trial_rows.append(row)
     trials_df = pd.DataFrame(trial_rows)
 
-    # `study.best_params` traz apenas o que foi sugerido pelo trial. Parametros
-    # fixados fora da busca precisam ser reinjetados aqui, senao o refit final
-    # roda com uma configuracao diferente da que foi avaliada.
-    best_params = dict(study.best_params)
-    if candidate_name in {"lightgbm_optuna", "xgboost_optuna"}:
-        best_params["scale_pos_weight"] = scale_pos_weight(train[TARGET_COL].astype(int))
-    if candidate_name == "lightgbm_optuna":
-        best_params["subsample_freq"] = 1
-    if candidate_name == "hist_gbdt_optuna":
-        best_params["class_weight"] = "balanced"
+    # O melhor trial da familia sai da ordenacao lexicografica completa da
+    # politica, e nao de `study.best_trial`, que so enxerga a metrica primaria.
+    # Assim os criterios de desempate valem tambem dentro da familia.
+    completed = [t for t in study.trials if t.user_attrs.get("params_json")]
+    if not completed:
+        raise ValueError(f"Nenhum trial concluido para {candidate_name}.")
+    best_trial = max(completed, key=lambda t: selection_key(t.user_attrs))
+
+    # `params_json` guarda a configuracao COMPLETA usada no trial, incluindo os
+    # parametros fixados fora da busca. O refit final reproduz exatamente o que
+    # foi avaliado, sem a reinjecao manual que antes era necessaria porque
+    # `study.best_params` so devolve o que foi sugerido.
+    best_params = json.loads(best_trial.user_attrs["params_json"])
     model = build_candidate_model(candidate_name, best_params, random_state=random_state)
     fitted, fit_seconds = _fit_candidate(
         model,
@@ -501,7 +523,7 @@ def make_backtest_folds(
 
     n_rows = len(ordered)
     times = ordered[TIME_COL]
-    embargo = pd.Timedelta(hours=embargo_hours)
+    embargo = pd.Timedelta(embargo_hours, unit="h")
     val_size = max(int(n_rows * val_frac), 1)
     test_size = max(int(n_rows * test_frac), 1)
     available = 1.0 - train_start_frac - val_frac - test_frac
@@ -842,7 +864,7 @@ def run_model_selection_pipeline(
         n_trials=n_trials,
     )
 
-    return {
+    result = {
         "models_evaluated": int(len(summary)),
         "official_candidates": list(OFFICIAL_CANDIDATE_NAMES),
         "diagnostic_baseline": BASELINE_MODEL_NAME,
@@ -852,6 +874,43 @@ def run_model_selection_pipeline(
         "selected_model": selected_row.to_dict(),
         **output_paths,
     }
+
+    # Os relatorios em reports/ descrevem sempre a ultima execucao. O registro
+    # aqui preserva o historico comparavel entre rodadas.
+    with track_run(f"model-selection-{selected_model_name}") as run:
+        run.set_tags(
+            {
+                "selected_model": selected_model_name,
+                "primary_objective": PRIMARY_OBJECTIVE_COLUMN,
+                "git_revision": git_revision() or "desconhecido",
+            }
+        )
+        run.log_params(
+            {
+                "trials_per_candidate": n_trials,
+                "backtest_folds": n_backtest_folds,
+                "min_recall": min_recall,
+                "random_state": DEFAULT_RANDOM_STATE,
+                "feature_count": len(feature_columns),
+                "rows_train": len(train),
+                "rows_val": len(val),
+                "rows_test": len(test),
+                "best_params": json.dumps(selected_row.get("best_params", "{}")),
+            }
+        )
+        run.log_metrics(
+            {
+                key: value
+                for key, value in selected_row.to_dict().items()
+                if isinstance(value, int | float) and not isinstance(value, bool)
+            }
+        )
+        for artifact_path in (SELECTION_REPORT_JSON, SELECTION_BACKTEST_CSV, SELECTION_TRIALS_CSV):
+            run.log_artifact(artifact_path)
+        result["tracking_active"] = run.active
+        result["tracking_reason"] = run.reason
+
+    return result
 
 
 def main() -> None:

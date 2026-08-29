@@ -56,7 +56,7 @@ def temporal_train_val_test_split(
     train_boundary = times.iloc[min(int(n_rows * train_frac), n_rows - 1)]
     val_boundary = times.iloc[min(int(n_rows * (train_frac + val_frac)), n_rows - 1)]
 
-    embargo = pd.Timedelta(hours=embargo_hours)
+    embargo = pd.Timedelta(embargo_hours, unit="h")
 
     # Corte por timestamp: empates ficam inteiramente do lado direito.
     train_all = times < train_boundary
