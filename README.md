@@ -432,6 +432,11 @@ A interface em `src/ui/` consome esse ranking, os ciclos rotulados e os
 eventos críticos para a engenharia de minas priorizar inspeções, tratar
 alertas Don't Go e acompanhar o processamento da frota.
 
+**Degradação controlada.** Cada artefato é carregado isoladamente: um arquivo
+ausente ou corrompido degrada apenas o painel que depende dele, em vez de
+impedir o servidor de subir. `GET /api/health` reporta o estado real de cada
+fonte e lista as degradadas.
+
 ```bash
 python tasks.py dashboard
 # abre http://127.0.0.1:8000

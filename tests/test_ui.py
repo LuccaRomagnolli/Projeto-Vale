@@ -110,8 +110,20 @@ def test_action_roundtrip_and_api(tmp_path: Path) -> None:
     assert home.status_code == 200
     assert "Engenharia de minas" in home.text
 
-    health = client.get("/api/health")
-    assert health.json()["status"] == "ok"
+    # /api/health passou a refletir o estado real dos artefatos em vez de
+    # devolver "ok" fixo. Este store de teste so semeia parte deles, entao
+    # "degraded" e a resposta correta -- e cada fonte precisa ser descrita.
+    health = client.get("/api/health").json()
+    assert health["status"] == "degraded"
+    assert set(health["sources"]) == {
+        "priority",
+        "cycles",
+        "events",
+        "hotspots",
+        "metrics",
+        "selection",
+    }
+    assert health["sources"]["priority"]["exists"] is True
 
     alerts = client.get("/api/alerts", params={"date": "2025-06-02"})
     assert alerts.status_code == 200

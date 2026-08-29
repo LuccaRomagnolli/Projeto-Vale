@@ -16,6 +16,16 @@ const titles = {
 
 const $ = (id) => document.getElementById(id);
 
+// `note` e `operator` sao texto livre digitado pela operacao e chegam aqui via
+// innerHTML. Sem escape, uma tratativa com `<img onerror=...>` executava para
+// todos os demais operadores que abrissem o painel.
+function esc(value) {
+  if (value === null || value === undefined) return "";
+  return String(value).replace(/[&<>"']/g, (c) => (
+    { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+  ));
+}
+
 function fmtInt(value) {
   return Number(value || 0).toLocaleString("pt-BR");
 }
@@ -42,11 +52,11 @@ function riskLabel(code) {
 }
 function riskChip(item) {
   const detail = item.risco_rotulo || item.risco_segmento || "";
-  return `<span class="badge ${riskClass(item.risco_segmento)}" title="${detail}">${riskLabel(item.risco_segmento)}</span>`;
+  return `<span class="badge ${riskClass(item.risco_segmento)}" title="${esc(detail)}">${riskLabel(item.risco_segmento)}</span>`;
 }
 function statusChip(status) {
   const value = status || "—";
-  return `<span class="badge chip-status status-${value}">${String(value).replace(/_/g, " ")}</span>`;
+  return `<span class="badge chip-status status-${value}">${esc(String(value).replace(/_/g, " "))}</span>`;
 }
 
 async function api(path, options) {
@@ -147,13 +157,13 @@ async function renderBoard() {
   const rows = data.items.map((item) => `
     <tr>
       <td>${item.rank}</td>
-      <td><a href="#" data-tag="${item.Tag}">${item.Tag}</a></td>
-      <td class="nowrap">${item.Frota || "—"}</td>
-      <td class="nowrap">${item.turno || "—"}</td>
+      <td><a href="#" data-tag="${esc(item.Tag)}">${esc(item.Tag)}</a></td>
+      <td class="nowrap">${esc(item.Frota) || "—"}</td>
+      <td class="nowrap">${esc(item.turno) || "—"}</td>
       <td class="num">${fmtNum(item.score, 3)}</td>
       <td>${riskChip(item)}</td>
-      <td><span class="clamp">${item.motivo_principal || "—"}</span></td>
-      <td><span class="clamp">${item.acao_recomendada || "—"}</span></td>
+      <td><span class="clamp">${esc(item.motivo_principal) || "—"}</span></td>
+      <td><span class="clamp">${esc(item.acao_recomendada) || "—"}</span></td>
       <td>${statusChip(item.status)}</td>
       <td>${actionButton({ item_type: "priority", tag: item.Tag, date: item.data, status: item.status, note: item.note, operator: item.operator })}</td>
     </tr>`);
@@ -179,11 +189,11 @@ async function renderAlerts() {
   const data = await api(`/api/alerts?${params}`);
   const rows = data.items.map((item) => `
     <tr>
-      <td><a href="#" data-tag="${item.Tag}">${item.Tag}</a></td>
+      <td><a href="#" data-tag="${esc(item.Tag)}">${esc(item.Tag)}</a></td>
       <td>${fmtTime(item.EVENT_TIME)}</td>
       <td>${item.data || "—"}</td>
       <td>${statusChip(item.status)}</td>
-      <td><span class="clamp">${item.note || "—"}</span></td>
+      <td><span class="clamp">${esc(item.note) || "—"}</span></td>
       <td>${actionButton({ item_type: "event", tag: item.Tag, event_time: item.EVENT_TIME, status: item.status, note: item.note })}</td>
     </tr>`);
   $("content").innerHTML = `
@@ -206,9 +216,9 @@ async function renderProcessing() {
   const cycleRows = cycles.items.map((item) => `
     <tr>
       <td>${item.Id}</td>
-      <td><a href="#" data-tag="${item.Tag}">${item.Tag}</a></td>
-      <td>${item.Frota || "—"}</td>
-      <td>${item.Classe || "—"}</td>
+      <td><a href="#" data-tag="${esc(item.Tag)}">${esc(item.Tag)}</a></td>
+      <td>${esc(item.Frota) || "—"}</td>
+      <td>${esc(item.Classe) || "—"}</td>
       <td>${fmtTime(item.Inicio)}</td>
       <td>${fmtTime(item.Fim)}</td>
       <td>${fmtNum(item.duracao_ciclo_min, 1)} min</td>
@@ -240,10 +250,10 @@ async function renderEquipment() {
   const data = await api(`/api/equipment/${encodeURIComponent(tag)}`);
   const hotspot = data.hotspot || {};
   const history = data.priority_history.map((item) => `
-    <tr><td>${item.data}</td><td class="num">${item.rank}</td><td class="num">${fmtNum(item.score, 3)}</td><td>${riskChip(item)}</td><td><span class="clamp">${item.motivo_principal || "—"}</span></td></tr>`);
+    <tr><td>${item.data}</td><td class="num">${item.rank}</td><td class="num">${fmtNum(item.score, 3)}</td><td>${riskChip(item)}</td><td><span class="clamp">${esc(item.motivo_principal) || "—"}</span></td></tr>`);
   const alerts = data.recent_alerts.map((item) => `<tr><td>${fmtTime(item.EVENT_TIME)}</td></tr>`);
   const cycles = data.recent_cycles.map((item) => `
-    <tr><td>${fmtTime(item.Fim)}</td><td>${item.Classe || "—"}</td><td>${fmtNum(item.duracao_ciclo_min, 1)}</td><td>${item.target_4h ? "Sim" : "Não"}</td></tr>`);
+    <tr><td>${fmtTime(item.Fim)}</td><td>${esc(item.Classe) || "—"}</td><td>${fmtNum(item.duracao_ciclo_min, 1)}</td><td>${item.target_4h ? "Sim" : "Não"}</td></tr>`);
   $("content").innerHTML = `
     <div class="equipment-search">
       <p class="muted">${data.context.Tipo || "Equipamento"} · ${data.context.Frota || "Frota não informada"} · ciclos ${fmtInt(data.totals.cycles)} · alertas ${fmtInt(data.totals.alerts)} · positivos ${fmtInt(data.totals.positives)}</p>
@@ -272,8 +282,8 @@ async function renderActions() {
       <td>${item.tag || "—"}</td>
       <td>${item.date || fmtTime(item.event_time)}</td>
       <td>${statusChip(item.status)}</td>
-      <td>${item.operator || "—"}</td>
-      <td><span class="clamp">${item.note || "—"}</span></td>
+      <td>${esc(item.operator) || "—"}</td>
+      <td><span class="clamp">${esc(item.note) || "—"}</span></td>
       <td>${fmtTime(item.updated_at)}</td>
     </tr>`);
   $("content").innerHTML = renderTable(
@@ -295,7 +305,7 @@ async function renderPerformance() {
     </tr>`);
   const hotspots = (data.hotspots || []).map((row) => `
     <tr>
-      <td><a href="#" data-tag="${row.Tag}">${row.Tag}</a></td>
+      <td><a href="#" data-tag="${esc(row.Tag)}">${esc(row.Tag)}</a></td>
       <td>${fmtInt(row.positive_days)}</td>
       <td>${fmtInt(row.selected_days)}</td>
       <td>${fmtPct(row.selected_precision)}</td>

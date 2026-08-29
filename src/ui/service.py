@@ -3,6 +3,9 @@
 from __future__ import annotations
 
 import json
+import os
+import tempfile
+import threading
 from dataclasses import dataclass
 from datetime import UTC, date, datetime
 from pathlib import Path
@@ -118,6 +121,29 @@ def _to_utc(series: pd.Series) -> pd.Series:
     return parsed
 
 
+def _date_key(series: pd.Series) -> pd.Series:
+    """Chave de dia como texto `YYYY-MM-DD`.
+
+    Guardar `dt.date` produzia uma coluna `object` de 377 mil objetos Python, e
+    cada filtro por data chamava `.astype(str)` elemento a elemento -- custo que
+    segura o GIL e nao paraleliza entre requisicoes. Como texto, a comparacao e
+    vetorizada e o formato exposto pela API continua o mesmo.
+    """
+    return series.dt.strftime("%Y-%m-%d")
+
+
+def _empty_snapshot() -> Snapshot:
+    return Snapshot(
+        priority=pd.DataFrame(),
+        cycles=pd.DataFrame(),
+        events=pd.DataFrame(),
+        hotspots=pd.DataFrame(),
+        metrics={},
+        selection={},
+        errors={},
+    )
+
+
 @dataclass(frozen=True)
 class StorePaths:
     priority: Path = DEFAULT_PRIORITY_PATH
@@ -130,32 +156,128 @@ class StorePaths:
     logo: Path = LOGO_PATH
 
 
+@dataclass(frozen=True)
+class Snapshot:
+    """Geracao coerente dos artefatos, trocada de uma vez no reload.
+
+    Antes os seis atributos eram substituidos um a um: uma requisicao
+    concorrente podia ler `priority` da geracao nova e `cycles` da antiga,
+    reportando KPIs que misturavam dois estados do pipeline.
+    """
+
+    priority: pd.DataFrame
+    cycles: pd.DataFrame
+    events: pd.DataFrame
+    hotspots: pd.DataFrame
+    metrics: dict[str, Any]
+    selection: dict[str, Any]
+    errors: dict[str, str]
+
+
 class OperationalStore:
     """Carrega artefatos do pipeline e expoe consultas da interface operacional."""
 
     def __init__(self, paths: StorePaths | None = None) -> None:
         self.paths = paths or StorePaths()
-        self._priority = pd.DataFrame()
-        self._cycles = pd.DataFrame()
-        self._events = pd.DataFrame()
-        self._hotspots = pd.DataFrame()
-        self._metrics: dict[str, Any] = {}
-        self._selection: dict[str, Any] = {}
+        self._snapshot = _empty_snapshot()
+        self._worklog_lock = threading.Lock()
+        self._worklog_error: str | None = None
         self.reload()
 
+    # --- acesso a geracao corrente -------------------------------------
+    # Cada consulta liga uma referencia local, de modo que um reload
+    # concorrente nunca troca os dados no meio de uma requisicao.
+
+    @property
+    def _priority(self) -> pd.DataFrame:
+        return self._snapshot.priority
+
+    @property
+    def _cycles(self) -> pd.DataFrame:
+        return self._snapshot.cycles
+
+    @property
+    def _events(self) -> pd.DataFrame:
+        return self._snapshot.events
+
+    @property
+    def _hotspots(self) -> pd.DataFrame:
+        return self._snapshot.hotspots
+
+    @property
+    def _metrics(self) -> dict[str, Any]:
+        return self._snapshot.metrics
+
+    @property
+    def _selection(self) -> dict[str, Any]:
+        return self._snapshot.selection
+
+    def load_errors(self) -> dict[str, str]:
+        """Artefatos que falharam ao carregar, por nome logico."""
+        errors = dict(self._snapshot.errors)
+        if self._worklog_error:
+            errors["worklog"] = self._worklog_error
+        return errors
+
+    def health(self) -> dict[str, Any]:
+        """Estado dos artefatos, para que uma degradacao seja visivel."""
+        self._worklog()  # revalida o worklog, que nao entra no snapshot
+        errors = self.load_errors()
+        expected = {
+            "priority": self.paths.priority,
+            "cycles": self.paths.labeled,
+            "events": self.paths.events,
+            "hotspots": self.paths.hotspots,
+            "metrics": self.paths.metrics,
+            "selection": self.paths.selection,
+        }
+        sources = {
+            name: {
+                "path": str(path),
+                "exists": path.exists(),
+                "error": errors.get(name),
+            }
+            for name, path in expected.items()
+        }
+        degraded = [name for name, info in sources.items() if info["error"] or not info["exists"]]
+        return {
+            "status": "degraded" if degraded else "ok",
+            "degraded_sources": sorted(degraded),
+            "sources": sources,
+        }
+
     def reload(self) -> None:
-        self._priority = self._load_priority()
-        self._cycles = self._load_cycles()
-        self._events = self._load_events()
-        self._hotspots = _read_csv(self.paths.hotspots)
-        self._metrics = _read_json(self.paths.metrics)
-        self._selection = _read_json(self.paths.selection)
+        """Recarrega os artefatos e troca a geracao com uma unica atribuicao.
+
+        Cada artefato e carregado isoladamente: um arquivo corrompido degrada
+        apenas o painel que depende dele, em vez de derrubar o processo. Antes,
+        um parquet truncado levantava excecao dentro de `create_app()` no import
+        e o servidor nao subia.
+        """
+        errors: dict[str, str] = {}
+
+        def guarded(name: str, loader: Any, fallback: Any) -> Any:
+            try:
+                return loader()
+            except Exception as exc:  # noqa: BLE001 - degradar e reportar, nunca derrubar
+                errors[name] = f"{type(exc).__name__}: {exc}"
+                return fallback
+
+        self._snapshot = Snapshot(
+            priority=guarded("priority", self._load_priority, pd.DataFrame()),
+            cycles=guarded("cycles", self._load_cycles, pd.DataFrame()),
+            events=guarded("events", self._load_events, pd.DataFrame()),
+            hotspots=guarded("hotspots", lambda: _read_csv(self.paths.hotspots), pd.DataFrame()),
+            metrics=guarded("metrics", lambda: _read_json(self.paths.metrics), {}),
+            selection=guarded("selection", lambda: _read_json(self.paths.selection), {}),
+            errors=errors,
+        )
 
     def _load_priority(self) -> pd.DataFrame:
         frame = _read_csv(self.paths.priority)
         if frame.empty:
             return frame
-        frame["data"] = pd.to_datetime(frame["data"], errors="coerce").dt.date
+        frame["data"] = _date_key(pd.to_datetime(frame["data"], errors="coerce"))
         frame["score"] = pd.to_numeric(frame.get("score"), errors="coerce")
         frame["rank"] = pd.to_numeric(frame.get("rank"), errors="coerce")
         if "risco_segmento" in frame.columns:
@@ -170,7 +292,7 @@ class OperationalStore:
             return pd.DataFrame(columns=[*LABELED_COLUMNS, "data", "duracao_ciclo_min"])
         frame["Inicio"] = _to_utc(frame["Inicio"]) if "Inicio" in frame.columns else pd.NaT
         frame["Fim"] = _to_utc(frame["Fim"]) if "Fim" in frame.columns else pd.NaT
-        frame["data"] = frame["Fim"].dt.date
+        frame["data"] = _date_key(frame["Fim"])
         if "Inicio" in frame.columns and "Fim" in frame.columns:
             frame["duracao_ciclo_min"] = (frame["Fim"] - frame["Inicio"]).dt.total_seconds() / 60.0
         else:
@@ -190,52 +312,107 @@ class OperationalStore:
         frame = frame.rename(columns=rename)
         if "EVENT_TIME" in frame.columns:
             frame["EVENT_TIME"] = _to_utc(frame["EVENT_TIME"])
-            frame["data"] = frame["EVENT_TIME"].dt.date
+            frame["data"] = _date_key(frame["EVENT_TIME"])
         return frame
 
     def _worklog(self) -> dict[str, Any]:
-        payload = _read_json(self.paths.worklog)
-        items = payload.get("items", payload if isinstance(payload, dict) else {})
-        if not isinstance(items, dict):
+        """Le as tratativas registradas, tolerando arquivo ausente ou corrompido.
+
+        Um worklog malformado nao pode derrubar o painel inteiro: cada endpoint
+        que consulta tratativas passava a devolver 500. Aqui a leitura degrada
+        para vazio e o problema aparece em `/api/health`.
+        """
+        try:
+            payload = _read_json(self.paths.worklog)
+        except (json.JSONDecodeError, OSError) as exc:
+            self._worklog_error = f"{type(exc).__name__}: {exc}"
             return {}
-        return items
+        self._worklog_error = None
+        # O guard precisa vir ANTES do .get: um worklog gravado como lista
+        # levantava AttributeError na propria linha que deveria proteger.
+        if not isinstance(payload, dict):
+            return {}
+        items = payload.get("items", payload)
+        return items if isinstance(items, dict) else {}
 
     def save_worklog(self, items: dict[str, Any]) -> None:
-        self.paths.worklog.parent.mkdir(parents=True, exist_ok=True)
-        self.paths.worklog.write_text(
-            json.dumps({"items": items}, ensure_ascii=True, indent=2),
-            encoding="utf-8",
-        )
+        """Grava o worklog de forma atomica.
+
+        A escrita anterior truncava o arquivo e so entao escrevia: uma leitura
+        concorrente -- ou uma interrupcao no meio -- encontrava JSON parcial e
+        as tratativas registradas eram perdidas. Escrever num temporario e
+        trocar com `os.replace` torna a substituicao indivisivel.
+        """
+        target = self.paths.worklog
+        target.parent.mkdir(parents=True, exist_ok=True)
+        payload = json.dumps({"items": items}, ensure_ascii=True, indent=2)
+
+        with self._worklog_lock:
+            handle = tempfile.NamedTemporaryFile(
+                mode="w",
+                encoding="utf-8",
+                dir=target.parent,
+                prefix=f".{target.name}.",
+                suffix=".tmp",
+                delete=False,
+            )
+            try:
+                with handle:
+                    handle.write(payload)
+                    handle.flush()
+                    os.fsync(handle.fileno())
+                os.replace(handle.name, target)
+            except BaseException:
+                Path(handle.name).unlink(missing_ok=True)
+                raise
 
     def available_dates(self) -> list[str]:
-        dates = []
-        if not self._priority.empty:
-            dates.extend(self._priority["data"].dropna().tolist())
-        if not self._cycles.empty:
-            dates.extend(self._cycles["data"].dropna().tolist())
-        unique = sorted({str(item) for item in dates if item is not None}, reverse=True)
-        return unique
+        """Dias distintos presentes no ranking ou nos ciclos, do mais recente ao mais antigo.
+
+        Usa `Series.unique()` em vez de materializar a coluna inteira numa lista
+        Python: sao ~377 mil linhas de ciclos, e construir lista e set a cada
+        chamada dominava o custo de `/api/filters`.
+        """
+        unique: set[str] = set()
+        for frame in (self._priority, self._cycles):
+            if frame.empty or "data" not in frame.columns:
+                continue
+            unique.update(frame["data"].dropna().unique().tolist())
+        return sorted(unique, reverse=True)
 
     def latest_date(self) -> str | None:
         dates = self.available_dates()
         return dates[0] if dates else None
 
+    @staticmethod
+    def _distinct(*columns: pd.Series) -> list[str]:
+        """Valores distintos de uma ou mais colunas, ordenados.
+
+        `set(series.astype(str))` iterava as ~377 mil linhas de ciclos em Python
+        uma vez por filtro -- quatro varreduras por chamada de `/api/filters`.
+        `unique()` resolve no nivel do pandas antes de virar objeto Python.
+        """
+        values: set[str] = set()
+        for column in columns:
+            if column is None or column.empty:
+                continue
+            values.update(str(value) for value in column.dropna().unique())
+        return sorted(values)
+
     def filters(self) -> dict[str, Any]:
         cycles = self._cycles
         priority = self._priority
-        tags = sorted(
-            set(cycles.get("Tag", pd.Series(dtype=str)).dropna().astype(str))
-            | set(priority.get("Tag", pd.Series(dtype=str)).dropna().astype(str))
-        )
-        frotas = sorted(set(cycles.get("Frota", pd.Series(dtype=str)).dropna().astype(str)))
-        tipos = sorted(set(cycles.get("Tipo", pd.Series(dtype=str)).dropna().astype(str)))
-        classes = sorted(set(cycles.get("Classe", pd.Series(dtype=str)).dropna().astype(str)))
-        riscos = sorted(
-            set(priority.get("risco_segmento", pd.Series(dtype=str)).dropna().astype(str))
-        )
+        empty = pd.Series(dtype=str)
+        tags = self._distinct(cycles.get("Tag", empty), priority.get("Tag", empty))
+        frotas = self._distinct(cycles.get("Frota", empty))
+        tipos = self._distinct(cycles.get("Tipo", empty))
+        classes = self._distinct(cycles.get("Classe", empty))
+        riscos = self._distinct(priority.get("risco_segmento", empty))
+        # Uma unica varredura: `latest_date()` recalcularia a mesma lista.
+        dates = self.available_dates()
         return {
-            "dates": self.available_dates(),
-            "latest_date": self.latest_date(),
+            "dates": dates,
+            "latest_date": dates[0] if dates else None,
             "tags": tags,
             "frotas": frotas,
             "tipos": tipos,
@@ -250,7 +427,7 @@ class OperationalStore:
         target = selected_date or self.latest_date()
         if not target:
             return self._priority.iloc[0:0]
-        mask = self._priority["data"].astype(str) == str(target)
+        mask = self._priority["data"] == str(target)
         return self._priority.loc[mask].copy()
 
     def overview(self, selected_date: str | None = None) -> dict[str, Any]:
@@ -265,10 +442,10 @@ class OperationalStore:
 
         cycles_day = self._cycles
         if day and not cycles_day.empty:
-            cycles_day = cycles_day.loc[cycles_day["data"].astype(str) == str(day)]
+            cycles_day = cycles_day.loc[cycles_day["data"] == str(day)]
         events_day = self._events
         if day and not events_day.empty and "data" in events_day.columns:
-            events_day = events_day.loc[events_day["data"].astype(str) == str(day)]
+            events_day = events_day.loc[events_day["data"] == str(day)]
 
         positives = int(cycles_day["target_4h"].sum()) if "target_4h" in cycles_day.columns else 0
         cycle_count = int(len(cycles_day))
@@ -365,7 +542,7 @@ class OperationalStore:
     ) -> dict[str, Any]:
         frame = self._events.copy()
         if selected_date and "data" in frame.columns:
-            frame = frame.loc[frame["data"].astype(str) == str(selected_date)]
+            frame = frame.loc[frame["data"] == str(selected_date)]
         if tag and "Tag" in frame.columns:
             frame = frame.loc[frame["Tag"].astype(str) == tag]
         if not frame.empty and "EVENT_TIME" in frame.columns:
@@ -394,7 +571,7 @@ class OperationalStore:
     ) -> dict[str, Any]:
         frame = self._cycles.copy()
         if selected_date and "data" in frame.columns:
-            frame = frame.loc[frame["data"].astype(str) == str(selected_date)]
+            frame = frame.loc[frame["data"] == str(selected_date)]
         if tag and "Tag" in frame.columns:
             frame = frame.loc[frame["Tag"].astype(str) == tag]
         if frota and "Frota" in frame.columns:
@@ -416,7 +593,7 @@ class OperationalStore:
     def processing_summary(self, selected_date: str | None = None) -> dict[str, Any]:
         frame = self._cycles
         if selected_date and not frame.empty:
-            frame = frame.loc[frame["data"].astype(str) == str(selected_date)]
+            frame = frame.loc[frame["data"] == str(selected_date)]
         if frame.empty:
             return {
                 "by_fleet": [],

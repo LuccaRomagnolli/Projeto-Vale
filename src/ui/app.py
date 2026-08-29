@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any
 
@@ -37,24 +39,44 @@ class ActionRequest(BaseModel):
 
 
 def create_app(store: OperationalStore | None = None) -> FastAPI:
-    store = store or OperationalStore()
+    """Monta a aplicacao. O store injetado e usado direto; senao e criado no startup.
+
+    Construir o store aqui, no corpo do modulo, fazia com que **importar**
+    qualquer parte de `src.ui` carregasse ~130 MB de parquet -- inclusive nos
+    testes, que assim dependiam silenciosamente dos artefatos de producao. Com
+    o `lifespan`, a carga acontece quando o servidor sobe.
+    """
+    state: dict[str, OperationalStore | None] = {"store": store}
+
+    @asynccontextmanager
+    async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+        if state["store"] is None:
+            state["store"] = OperationalStore()
+        yield
+
     app = FastAPI(
         title="Vale · Engenharia de Minas",
         description="Console operacional de alertas criticos Don't Go e processamento da frota.",
         version="1.0.0",
+        lifespan=lifespan,
     )
 
+    def get_store() -> OperationalStore:
+        if state["store"] is None:
+            state["store"] = OperationalStore()
+        return state["store"]
+
     @app.get("/api/health")
-    def health() -> dict[str, str]:
-        return {"status": "ok"}
+    def health() -> dict[str, Any]:
+        return get_store().health()
 
     @app.get("/api/filters")
     def filters() -> dict[str, Any]:
-        return store.filters()
+        return get_store().filters()
 
     @app.get("/api/overview")
     def overview(date: str | None = Query(default=None)) -> dict[str, Any]:
-        return store.overview(selected_date=date)
+        return get_store().overview(selected_date=date)
 
     @app.get("/api/priority")
     def priority(
@@ -63,7 +85,7 @@ def create_app(store: OperationalStore | None = None) -> FastAPI:
         risco: str | None = Query(default=None),
         q: str | None = Query(default=None),
     ) -> dict[str, Any]:
-        return store.priority_board(selected_date=date, frota=frota, risco=risco, query=q)
+        return get_store().priority_board(selected_date=date, frota=frota, risco=risco, query=q)
 
     @app.get("/api/alerts")
     def alerts(
@@ -72,7 +94,7 @@ def create_app(store: OperationalStore | None = None) -> FastAPI:
         page: int = Query(default=1, ge=1),
         page_size: int = Query(default=50, ge=1, le=200),
     ) -> dict[str, Any]:
-        return store.alerts(selected_date=date, tag=tag, page=page, page_size=page_size)
+        return get_store().alerts(selected_date=date, tag=tag, page=page, page_size=page_size)
 
     @app.get("/api/cycles")
     def cycles(
@@ -84,7 +106,7 @@ def create_app(store: OperationalStore | None = None) -> FastAPI:
         page: int = Query(default=1, ge=1),
         page_size: int = Query(default=50, ge=1, le=200),
     ) -> dict[str, Any]:
-        return store.cycles(
+        return get_store().cycles(
             selected_date=date,
             tag=tag,
             frota=frota,
@@ -96,24 +118,24 @@ def create_app(store: OperationalStore | None = None) -> FastAPI:
 
     @app.get("/api/processing")
     def processing(date: str | None = Query(default=None)) -> dict[str, Any]:
-        return store.processing_summary(selected_date=date)
+        return get_store().processing_summary(selected_date=date)
 
     @app.get("/api/equipment/{tag}")
     def equipment(tag: str) -> dict[str, Any]:
-        return store.equipment(tag)
+        return get_store().equipment(tag)
 
     @app.get("/api/performance")
     def performance() -> dict[str, Any]:
-        return store.performance()
+        return get_store().performance()
 
     @app.get("/api/actions")
     def list_actions() -> dict[str, Any]:
-        return {"items": store.actions()}
+        return {"items": get_store().actions()}
 
     @app.post("/api/actions")
     def save_action(payload: ActionRequest) -> dict[str, Any]:
         try:
-            return store.upsert_action(
+            return get_store().upsert_action(
                 item_type=payload.item_type,
                 status=payload.status,
                 tag=payload.tag,
@@ -128,14 +150,14 @@ def create_app(store: OperationalStore | None = None) -> FastAPI:
 
     @app.post("/api/reload")
     def reload_store() -> dict[str, str]:
-        store.reload()
+        get_store().reload()
         return {"status": "reloaded"}
 
     @app.get("/brand/logo.png")
     def logo() -> FileResponse:
-        if not store.paths.logo.exists():
+        if not get_store().paths.logo.exists():
             raise HTTPException(status_code=404, detail="Logo nao encontrada")
-        return FileResponse(store.paths.logo)
+        return FileResponse(get_store().paths.logo)
 
     @app.get("/")
     def index() -> HTMLResponse:
@@ -144,7 +166,7 @@ def create_app(store: OperationalStore | None = None) -> FastAPI:
         return HTMLResponse(html, headers={"Cache-Control": "no-store, must-revalidate"})
 
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
-    app.state.store = store
+    app.state.get_store = get_store
     return app
 
 
