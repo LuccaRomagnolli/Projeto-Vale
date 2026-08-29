@@ -40,12 +40,17 @@ from src.models.validation import (
     compute_binary_metrics,
 )
 from src.utils.config import (
+    DEFAULT_RANDOM_STATE,
     FEATURES_DATASET_PATH,
     MODELS_DIR,
     REPORTS_MODEL_SELECTION_DIR,
     SPLIT_DIR,
 )
-from src.utils.metadata import build_execution_metadata, to_repo_relative_path
+from src.utils.metadata import (
+    build_artifact_provenance,
+    build_execution_metadata,
+    to_repo_relative_path,
+)
 
 OFFICIAL_CANDIDATE_NAMES = (
     "lightgbm_optuna",
@@ -76,7 +81,7 @@ def scale_pos_weight(y: pd.Series) -> float:
     return float(negatives / max(positives, 1))
 
 
-def build_baseline_model(random_state: int = 42) -> Pipeline:
+def build_baseline_model(random_state: int = DEFAULT_RANDOM_STATE) -> Pipeline:
     """Cria baseline linear diagnostico, fora da disputa oficial."""
     return Pipeline(
         steps=[
@@ -141,7 +146,7 @@ def suggest_candidate_params(
 def build_candidate_model(
     candidate_name: str,
     params: dict[str, Any],
-    random_state: int = 42,
+    random_state: int = DEFAULT_RANDOM_STATE,
 ) -> Any:
     """Instancia uma familia candidata oficial a partir de parametros fechados."""
     if candidate_name == "lightgbm_optuna":
@@ -306,7 +311,7 @@ def run_candidate_study(
     feature_columns: list[str],
     n_trials: int,
     min_recall: float,
-    random_state: int = 42,
+    random_state: int = DEFAULT_RANDOM_STATE,
 ) -> tuple[dict[str, Any], pd.DataFrame, Any, dict[str, np.ndarray], float]:
     """Executa tuning Optuna de uma familia e reavalia seu melhor trial."""
     try:
@@ -387,7 +392,7 @@ def evaluate_baseline(
     test: pd.DataFrame,
     feature_columns: list[str],
     min_recall: float,
-    random_state: int = 42,
+    random_state: int = DEFAULT_RANDOM_STATE,
 ) -> tuple[dict[str, Any], Any, dict[str, np.ndarray]]:
     """Treina baseline diagnostico fora da disputa oficial."""
     model = build_baseline_model(random_state=random_state)
@@ -615,6 +620,23 @@ def save_model_selection_outputs(
         "candidate_pool": list(OFFICIAL_CANDIDATE_NAMES),
         "diagnostic_baseline": BASELINE_MODEL_NAME,
         "leakage_columns": sorted(LEAKAGE_COLUMNS),
+        # Procedencia embutida: sem ela, um .joblib encontrado no disco nao
+        # revela com que codigo, dependencias ou dados foi treinado.
+        "provenance": build_artifact_provenance(
+            seed=DEFAULT_RANDOM_STATE,
+            training_period={
+                "train_start": str(train[TIME_COL].min()),
+                "train_end": str(train[TIME_COL].max()),
+                "test_start": str(test[TIME_COL].min()),
+                "test_end": str(test[TIME_COL].max()),
+            },
+            data_path=FEATURES_DATASET_PATH,
+            metrics={
+                key: float(value)
+                for key, value in selected_row.items()
+                if key.startswith(("test_top", "val_top")) and isinstance(value, int | float)
+            },
+        ),
     }
     joblib.dump(artifact, SELECTED_MODEL_PATH)
 

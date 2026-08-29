@@ -22,7 +22,12 @@ from src.models.validation import (
     choose_threshold_for_recall,
     compute_binary_metrics,
 )
-from src.utils.config import MODELS_DIR, REPORTS_LEGACY_MODEL_DIR, SPLIT_DIR
+from src.utils.config import (
+    DEFAULT_RANDOM_STATE,
+    MODELS_DIR,
+    REPORTS_LEGACY_MODEL_DIR,
+    SPLIT_DIR,
+)
 from src.utils.metadata import build_execution_metadata, to_repo_relative_path
 
 MODEL_ARTIFACT_PATH = MODELS_DIR / "legacy_supervised_model.joblib"
@@ -64,7 +69,9 @@ def prepare_model_matrix(df: pd.DataFrame, feature_columns: list[str]) -> pd.Dat
     return matrix.astype("float32")
 
 
-def build_estimator(y_train: pd.Series, random_state: int = 42) -> tuple[Any, str]:
+def build_estimator(
+    y_train: pd.Series, random_state: int = DEFAULT_RANDOM_STATE
+) -> tuple[Any, str]:
     """Cria LightGBM quando disponivel; caso contrario usa fallback sklearn."""
     scale_pos_weight = (len(y_train) - int(y_train.sum())) / max(int(y_train.sum()), 1)
     try:
@@ -170,7 +177,7 @@ def extract_feature_importance(
             .reset_index(drop=True)
         )
 
-    sample = reference_df.sample(min(len(reference_df), 5000), random_state=42)
+    sample = reference_df.sample(min(len(reference_df), 5000), random_state=DEFAULT_RANDOM_STATE)
     x_sample = prepare_model_matrix(sample, feature_columns)
     y_sample = sample[TARGET_COL].astype(int)
     result = permutation_importance(
@@ -179,7 +186,7 @@ def extract_feature_importance(
         y_sample,
         scoring="average_precision",
         n_repeats=3,
-        random_state=42,
+        random_state=DEFAULT_RANDOM_STATE,
         n_jobs=1,
     )
     values = result.importances_mean

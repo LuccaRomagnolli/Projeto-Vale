@@ -1,0 +1,48 @@
+{
+  "aprovado": true,
+  "model_name": "hist_gbdt_optuna",
+  "top_k": 15,
+  "criterios_reprovados": [],
+  "criterios": [
+    {
+      "criterio": "test_top15_precision_at_k",
+      "observado": 0.8177777777777778,
+      "limite": 0.6,
+      "comparacao": ">=",
+      "aprovado": true
+    },
+    {
+      "criterio": "test_top15_recall_at_k",
+      "observado": 0.8910411622276029,
+      "limite": 0.7,
+      "comparacao": ">=",
+      "aprovado": true
+    },
+    {
+      "criterio": "test_top15_lift_vs_random",
+      "observado": 2.5147161689534574,
+      "limite": 1.9,
+      "comparacao": ">=",
+      "aprovado": true
+    },
+    {
+      "criterio": "std_test_recall_at_k",
+      "observado": 0.006586957181194931,
+      "limite": 0.03,
+      "comparacao": "<=",
+      "aprovado": true
+    },
+    {
+      "criterio": "std_test_precision_at_k",
+      "observado": 0.0188954961014942,
+      "limite": 0.05,
+      "comparacao": "<=",
+      "aprovado": true
+    }
+  ],
+  "estabilidade": {
+    "folds": 3,
+    "metric_family": "Top15 Tag-dia"
+  },
+  "politica": "docs/politica_promocao_modelo.md"
+}

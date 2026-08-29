@@ -59,3 +59,8 @@ SPLIT_DIR = FEATURES_DIR / "splits"
 DATA_VERSION = "data_v1"
 FEATURES_VERSION = "features_v1"
 MODEL_VERSION = "model_v1"
+
+# Semente unica do projeto. Estava replicada como valor padrao em mais de dez
+# assinaturas, e `run_model_selection_pipeline` sequer aceitava o parametro:
+# variar a semente exigia editar codigo em varios arquivos.
+DEFAULT_RANDOM_STATE = int(os.getenv("RANDOM_STATE", "42"))
