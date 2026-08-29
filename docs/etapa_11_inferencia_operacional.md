@@ -57,8 +57,32 @@ O arquivo `.joblib` deve conter:
 | CSV | Arquivo tabular com features |
 | Parquet | Arquivo tabular com features |
 
-Durante a inferencia, o pipeline alinha o schema com `feature_columns`. Features
-ausentes sao preenchidas com `0.0`, preservando a ordem esperada pelo modelo.
+Durante a inferencia o pipeline valida o lote em duas camadas e so entao
+pontua:
+
+| Camada | Responsabilidade | Modulo |
+|---|---|---|
+| Valores | Nulos em campos de identidade, datas implausiveis e faixas numericas impossiveis | `src/inference_contract.py` |
+| Encoding | Aplica o encoder categorico ajustado no treino quando o lote traz `Tag`, `Classe`, `Frota` ou `Tipo` crus | `src/features/encoders.py` |
+| Estrutural | Confere as colunas contra `feature_columns` do artefato | `src/inference_contract.py` |
+
+> **Mudanca de 29/08/2026.** Ate esta data, features ausentes eram preenchidas
+> com `0.0` e o fato era apenas registrado em metadados: um lote com schema
+> alterado era pontuado normalmente e produzia um ranking de inspecao sem
+> sentido, sem erro visivel. O padrao agora e falhar. Preencher com zero
+> continua possivel, mas apenas como escolha explicita de quem chama
+> (`allow_missing_features=True`).
+
+## Lote diario
+
+`src/batch_inference.py` processa arquivos depositados em
+`data/interim/lotes/entrada`, executado por `make batch`:
+
+| Comportamento | Garantia |
+|---|---|
+| Isolamento de falha | Lote reprovado vai para `rejeitados/` com o motivo; os demais seguem |
+| Idempotencia | Reprocessar a mesma data sobrescreve a saida daquela data, sem duplicar |
+| Rastreabilidade | Cada execucao registra `reports/inference/lotes/batch_log.json` |
 
 ## Contrato de saida
 

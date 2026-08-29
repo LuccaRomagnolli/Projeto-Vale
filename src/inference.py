@@ -8,16 +8,20 @@ from typing import Any
 import joblib
 import pandas as pd
 
-from src.evaluation.operational_scorecard import decode_one_hot_prefix
+from src.evaluation.operational_scorecard import PRIMARY_TOP_K, decode_one_hot_prefix
+from src.features.encoders import load_encoder
+from src.inference_contract import check_feature_coverage, validate_batch_values
 from src.models.model_selection import SELECTED_MODEL_PATH
+from src.models.train_baseline import ENCODER_FILENAME
 from src.models.train_model import predict_scores, prepare_model_matrix
-from src.utils.config import REPORTS_DIR, REPORTS_INFERENCE_DIR
+from src.utils.config import REPORTS_DIR, REPORTS_INFERENCE_DIR, SPLIT_DIR
 
 DEFAULT_MODEL_PATH = SELECTED_MODEL_PATH
+DEFAULT_ENCODER_PATH = SPLIT_DIR / ENCODER_FILENAME
+DEFAULT_INPUT_PATH = SPLIT_DIR / "features_test.parquet"
 DEFAULT_OUTPUT_PATH = REPORTS_INFERENCE_DIR / "inference_scores.parquet"
-DEFAULT_PRIORITY_OUTPUT_PATH = REPORTS_DIR / "daily_priority_top15.csv"
-DEFAULT_OPERATIONAL_TOP_K = 15
-SUPPORTED_EXTENSIONS = {".parquet", ".csv"}
+DEFAULT_PRIORITY_OUTPUT_PATH = REPORTS_DIR / f"daily_priority_top{PRIMARY_TOP_K}.csv"
+DEFAULT_OPERATIONAL_TOP_K = PRIMARY_TOP_K
 
 
 def load_model_artifact(model_path: Path = DEFAULT_MODEL_PATH) -> dict[str, Any]:
@@ -47,20 +51,48 @@ def read_inference_input(input_path: Path) -> pd.DataFrame:
 def align_feature_schema(
     df: pd.DataFrame,
     feature_columns: list[str],
+    allow_missing: bool = False,
 ) -> tuple[pd.DataFrame, list[str], list[str]]:
-    """Alinha colunas para inferencia, preenchendo ausentes com zero."""
+    """Alinha colunas para inferencia.
+
+    Por padrao falha quando o lote nao traz alguma feature esperada. O
+    comportamento anterior -- preencher com `0.0` e apenas registrar em
+    metadados -- pontuava lotes com schema alterado sem qualquer sinal.
+    `allow_missing=True` mantem o preenchimento, mas como escolha explicita.
+    """
     out = df.copy()
-    missing_columns = [column for column in feature_columns if column not in out.columns]
+    coverage = check_feature_coverage(out, feature_columns, allow_missing=allow_missing)
+    missing_columns = coverage["missing_feature_columns"]
     for column in missing_columns:
         out[column] = 0.0
-    extra_columns = [column for column in out.columns if column not in feature_columns]
     aligned = out[feature_columns]
-    return aligned, missing_columns, extra_columns
+    return aligned, missing_columns, coverage["extra_columns_ignored"]
+
+
+def apply_categorical_encoder(
+    features_df: pd.DataFrame,
+    encoder_path: Path | None = DEFAULT_ENCODER_PATH,
+) -> tuple[pd.DataFrame, bool]:
+    """Aplica o encoder ajustado no treino, quando o lote traz categoricas cruas.
+
+    Sem este passo, um lote com `Tag`/`Classe`/`Frota` crus chegaria ao modelo
+    sem `Tag_freq`, `Classe_target_enc` e os indicadores one-hot -- exatamente
+    as colunas que o preenchimento silencioso com zero mascarava.
+    """
+    needs_encoding = (
+        any(column in features_df.columns for column in ("Frota", "Tipo"))
+        or "Tag_freq" not in features_df.columns
+    )
+    if not needs_encoding or encoder_path is None:
+        return features_df, False
+    encoder = load_encoder(encoder_path)
+    return encoder.transform(features_df), True
 
 
 def score_features(
     features_df: pd.DataFrame,
     artifact: dict[str, Any],
+    allow_missing_features: bool = False,
 ) -> tuple[pd.DataFrame, dict[str, Any]]:
     """Gera score e predicao a partir de um dataframe de features."""
     feature_columns = list(artifact["feature_columns"])
@@ -69,6 +101,7 @@ def score_features(
     aligned_features, missing_columns, extra_columns = align_feature_schema(
         features_df,
         feature_columns,
+        allow_missing=allow_missing_features,
     )
     model_matrix = prepare_model_matrix(aligned_features, feature_columns)
     scores = predict_scores(artifact["model"], model_matrix)
@@ -232,11 +265,25 @@ def run_inference(
     output_path: Path = DEFAULT_OUTPUT_PATH,
     priority_output_path: Path = DEFAULT_PRIORITY_OUTPUT_PATH,
     top_k: int = DEFAULT_OPERATIONAL_TOP_K,
+    encoder_path: Path | None = DEFAULT_ENCODER_PATH,
+    validate_values: bool = True,
+    allow_missing_features: bool = False,
 ) -> dict[str, Any]:
     """Executa inferencia ponta a ponta usando artefato e dataset de entrada."""
     artifact = load_model_artifact(model_path=model_path)
     features_df = read_inference_input(input_path)
-    scored_df, metadata = score_features(features_df, artifact)
+
+    if validate_values:
+        features_df = validate_batch_values(features_df)
+    features_df, encoder_applied = apply_categorical_encoder(features_df, encoder_path)
+
+    scored_df, metadata = score_features(
+        features_df,
+        artifact,
+        allow_missing_features=allow_missing_features,
+    )
+    metadata["encoder_applied"] = encoder_applied
+    metadata["values_validated"] = validate_values
     output = save_inference_output(scored_df, output_path=output_path)
     priority_df = build_daily_priority_ranking(features_df, scored_df, top_k=top_k)
     priority_output = save_daily_priority_ranking(priority_df, priority_output_path)
@@ -254,8 +301,7 @@ def run_inference(
 
 
 def main() -> None:
-    input_path = Path("data/processed/features/splits/features_test.parquet")
-    result = run_inference(input_path=input_path)
+    result = run_inference(input_path=DEFAULT_INPUT_PATH)
     print(f"[OK] Input inferencia: {result['input_path']}")
     print(f"[OK] Artefato: {result['model_path']}")
     print(f"[OK] Saida: {result['output_path']}")
@@ -268,7 +314,8 @@ def main() -> None:
         f"linhas={result['priority_rows']}"
     )
     print(f"[OK] Threshold aplicado: {result['threshold']:.6f}")
-    print(f"[OK] Features ausentes preenchidas: {len(result['missing_feature_columns'])}")
+    print(f"[OK] Encoder categorico aplicado: {result['encoder_applied']}")
+    print(f"[OK] Features ausentes: {len(result['missing_feature_columns'])}")
 
 
 if __name__ == "__main__":

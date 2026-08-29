@@ -53,6 +53,7 @@ COMMANDS: dict[str, list[list[str]]] = {
     "evaluate-segments": [[PYTHON, "-m", "src.evaluation.segment_analysis"]],
     "leakage-ablation": [[PYTHON, "-m", "src.evaluation.leakage_ablation"]],
     "infer": [[PYTHON, "-m", "src.inference"]],
+    "batch": [[PYTHON, "-m", "src.batch_inference"]],
     "notebook": [
         [
             PYTHON,
@@ -104,6 +105,7 @@ DESCRIPTIONS = {
     "evaluate-segments": "avalia segmentos operacionais",
     "leakage-ablation": "mede o custo da correcao de vazamento temporal",
     "infer": "gera inferencia com artefato promovido",
+    "batch": "processa lotes diarios do diretorio de entrada",
     "notebook": "executa notebooks/main.ipynb",
     "smoke": "executa validacao rapida",
     "run-all": "executa o fluxo completo oficial",

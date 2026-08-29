@@ -3,7 +3,9 @@ from pathlib import Path
 import joblib
 import numpy as np
 import pandas as pd
+import pytest
 from src.inference import align_feature_schema, build_daily_priority_ranking, run_inference
+from src.inference_contract import InferenceContractError
 
 
 class _FakeModel:
@@ -13,9 +15,18 @@ class _FakeModel:
         return np.column_stack([1.0 - scores, scores])
 
 
-def test_align_feature_schema_adds_missing_columns() -> None:
+def test_align_feature_schema_rejects_missing_columns_by_default() -> None:
+    """Preencher feature ausente com zero deixou de ser o padrao."""
     df = pd.DataFrame({"feature_a": [0.2, 0.8], "other": [1, 2]})
-    aligned, missing, extra = align_feature_schema(df, ["feature_a", "feature_b"])
+    with pytest.raises(InferenceContractError, match="feature_b"):
+        align_feature_schema(df, ["feature_a", "feature_b"])
+
+
+def test_align_feature_schema_fills_only_when_explicitly_allowed() -> None:
+    df = pd.DataFrame({"feature_a": [0.2, 0.8], "other": [1, 2]})
+    aligned, missing, extra = align_feature_schema(
+        df, ["feature_a", "feature_b"], allow_missing=True
+    )
 
     assert missing == ["feature_b"]
     assert "other" in extra
@@ -45,6 +56,7 @@ def test_run_inference_scores_and_writes_output(tmp_path: Path) -> None:
             "Fim": pd.to_datetime(["2026-01-01", "2026-01-02"], utc=True),
             "turno": ["manha", "tarde"],
             "feature_a": [0.3, 0.9],
+            "feature_b": [0.1, 0.2],
             "Frota_X": [True, False],
             "Frota_Y": [False, True],
             "Tipo_Caminhao": [True, True],
@@ -56,13 +68,14 @@ def test_run_inference_scores_and_writes_output(tmp_path: Path) -> None:
         model_path=artifact_path,
         output_path=output_path,
         priority_output_path=priority_output_path,
+        encoder_path=None,
     )
 
     scored = pd.read_parquet(output_path)
     priority = pd.read_csv(priority_output_path)
     assert result["rows"] == 2
     assert result["priority_rows"] == 2
-    assert result["missing_feature_columns"] == ["feature_b"]
+    assert result["missing_feature_columns"] == []
     assert list(scored["prediction"]) == [0, 1]
     assert list(priority["Tag"]) == ["A", "B"]
     assert set(

@@ -394,6 +394,7 @@ instalado, os comandos `make ...` são atalhos equivalentes.
 | Avaliar segmentos | `python tasks.py evaluate-segments` | `make evaluate-segments` |
 | Medir custo do fix de vazamento | `python tasks.py leakage-ablation` | `make leakage-ablation` |
 | Gerar inferência | `python tasks.py infer` | `make infer` |
+| Processar lotes diários | `python tasks.py batch` | `make batch` |
 | Validação rápida | `python tasks.py smoke` | `make smoke` |
 | Fluxo completo | `python tasks.py run-all` | `make run-all` |
 | Limpar caches locais | `python tasks.py clean` | `make clean` |
@@ -409,9 +410,12 @@ sistemas operacionais quando `make` estiver disponível.
 
 1. Carrega o artefato promovido em `models/model_selected.joblib`.
 2. Valida a presença de `model`, `feature_columns` e `threshold`.
-3. Alinha as colunas de entrada com `feature_columns`.
-4. Preenche variáveis ausentes com `0.0`.
-5. Gera `score` e `prediction`.
+3. Valida os **valores** do lote com `src/inference_contract.py` (nulos em campos
+   de identidade, datas implausíveis, faixas numéricas impossíveis).
+4. Aplica o encoder categórico ajustado no treino, quando o lote traz colunas
+   categóricas cruas.
+5. Alinha as colunas com `feature_columns` e **falha** se alguma estiver ausente.
+6. Gera `score` e `prediction`.
 6. Salva a saída em `reports/inference/inference_scores.parquet`.
 7. Consolida o ranking diário `Top15 Tag-dia` em `reports/daily_priority_top15.csv`.
 

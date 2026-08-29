@@ -209,7 +209,8 @@ def test_inference_main_runs(capsys, monkeypatch) -> None:
             "priority_days": 1,
             "priority_top_k": 15,
             "threshold": 0.3,
-            "missing_feature_columns": ["feature_x"],
+            "missing_feature_columns": [],
+            "encoder_applied": True,
         },
     )
     inference.main()

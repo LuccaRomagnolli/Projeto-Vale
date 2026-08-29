@@ -28,5 +28,8 @@ uvicorn==0.52.4
 httpx==0.28.1
 pydantic==2.13.4
 
+# Contrato de dados na inferencia
+pandera==0.32.1
+
 # Configuracao
 python-dotenv==1.2.3
