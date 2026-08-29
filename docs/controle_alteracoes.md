@@ -286,6 +286,54 @@ temporal, pois todo lote futuro tera meses ineditos. O impacto atual e nulo:
 a importancia da feature no modelo promovido e `0.00000`. Fica registrado como
 defeito de desenho a espera de um modelo que a utilize.
 
+## Alteracao 07 - Reducao do conjunto de features
+
+Data: 29/08/2026
+
+### 7.1 Features removidas da matriz
+
+O monitoramento de drift acusava `mes` com PSI acima de `9`. A investigacao
+partiu dele e alcancou uma classe maior de problema.
+
+| Coluna | Motivo | Importancia no modelo anterior |
+|---|---|---:|
+| `mes` | Treino cobre os meses `1` a `5` e teste, `6` e `7`: sobreposicao zero | `0.000000` |
+| `hora` | Copia exata de `hora_do_dia` | `0.000000` |
+| `dia_semana` | Copia exata de `dia_da_semana` | `0.000000` |
+| `n_precondicoes_satisfeitas_4h` | Copia exata de `n_alertas_4h` | `0.000000` |
+
+`mes` nao pode generalizar num modelo temporal: o periodo cobre sete meses e
+nunca completa um ciclo anual, entao todo lote futuro tera meses ineditos. Ao
+conferir as demais features temporais ficou claro que ele e o unico caso --
+`hora_do_dia`, `dia_da_semana` e `is_fim_de_semana` sao ciclos reais, com `100%`
+de sobreposicao entre treino e teste.
+
+As tres duplicatas foram descobertas no mesmo exame e confirmadas com
+`Series.equals`. As colunas permanecem no dataset, porque testes e o notebook as
+referenciam; apenas nao entram na matriz do modelo. `NON_MODELABLE_COLUMNS`, em
+`src/models/train_model.py`, registra cada exclusao com sua justificativa, e o
+artefato promovido passa a carregar essa relacao.
+
+### 7.2 Impacto medido
+
+| Metrica | `48` features | `44` features | Delta |
+|---|---:|---:|---:|
+| `test_top15_precision_at_k` | `0.8156` | `0.8133` | `-0.0022` |
+| `test_top15_recall_at_k` | `0.8886` | `0.8862` | `-0.0024` |
+| `test_top15_lift_vs_random` | `2.5079` | `2.5010` | `-0.0068` |
+| `test_auc_pr` | `0.5745` | `0.5753` | `+0.0008` |
+
+Variacao desprezivel, coerente com o fato de as quatro colunas terem importancia
+nula. O residuo vem da trajetoria de busca do Optuna, que explora de forma
+diferente num espaco com menos dimensoes, e nao de sinal perdido.
+
+### 7.3 Estado do monitoramento
+
+O relatorio de drift passou a reportar **zero** features com drift significativo.
+Cada reducao veio de corrigir um problema real -- primeiro o train/serve skew do
+target encoding, depois o binning inadequado para features discretas, agora a
+remocao da feature que nao generaliza -- e nunca de afrouxar criterio.
+
 ## Decisao
 
 Status: `VIGENTE`. A metrica executiva oficial permanece `TopK Tag-dia`, com

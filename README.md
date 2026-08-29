@@ -60,7 +60,7 @@ O resultado é um artefato operacional promovido em `models/model_selected.jobli
 | Eventos críticos finais | `107.002` |
 | Positivos em `target_4h` | `70.811` (`18,74%`) |
 | Variáveis totais | `57` colunas |
-| Variáveis modeláveis | `48` |
+| Variáveis modeláveis | `44` |
 
 O alvo principal é `target_4h`: vale `1` quando há um evento crítico em até 4 horas após o ciclo observado, e `0` caso contrário. Essa janela foi adotada por ser curta o suficiente para apoiar ação operacional e longa o bastante para permitir antecipação.
 
@@ -203,11 +203,11 @@ A promoção depende de evidências versionadas em `reports/`, política explíc
 
 | Métrica | Valor |
 |---|---:|
-| `precision@15` | **0.8156** |
-| `recall@15` | **0.8886** |
-| `lift@15` | **2.5079** |
+| `precision@15` | **0.8133** |
+| `recall@15` | **0.8862** |
+| `lift@15` | **2.5010** |
 
-No teste temporal, a lista diária de 15 equipamentos atingiu precisão de ~81,6%, recuperou ~88,9% dos casos críticos cobertos pelo critério operacional e foi ~2,51× melhor que uma priorização aleatória.
+No teste temporal, a lista diária de 15 equipamentos atingiu precisão de ~81,3%, recuperou ~88,6% dos casos críticos cobertos pelo critério operacional e foi ~2,50× melhor que uma priorização aleatória.
 
 > **Revisão de 29/08/2026.** Estes números substituem os anteriores
 > (`precision@15 = 0.6756`), que foram produzidos sobre um dataset de features

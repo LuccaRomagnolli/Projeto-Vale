@@ -2,11 +2,6 @@
   "rows": 56689,
   "features": [
     {
-      "feature": "mes",
-      "psi": 14.976731343425289,
-      "faixa": "significativo"
-    },
-    {
       "feature": "n_ciclos_24h",
       "psi": 0.14847651733689907,
       "faixa": "moderado"
@@ -78,11 +73,6 @@
     },
     {
       "feature": "alertas_por_hora_4h",
-      "psi": 0.031557676650495636,
-      "faixa": "estavel"
-    },
-    {
-      "feature": "n_precondicoes_satisfeitas_4h",
       "psi": 0.031557676650495636,
       "faixa": "estavel"
     },
@@ -182,22 +172,12 @@
       "faixa": "estavel"
     },
     {
-      "feature": "dia_semana",
-      "psi": 0.001123409734391037,
-      "faixa": "estavel"
-    },
-    {
       "feature": "freq_classe_atividade_4h",
       "psi": 0.0010046982385960015,
       "faixa": "estavel"
     },
     {
       "feature": "hora_do_dia",
-      "psi": 0.0009154548131868894,
-      "faixa": "estavel"
-    },
-    {
-      "feature": "hora",
       "psi": 0.0009154548131868894,
       "faixa": "estavel"
     },
@@ -227,15 +207,13 @@
       "faixa": "estavel"
     }
   ],
-  "features_com_drift_significativo": [
-    "mes"
-  ],
-  "score_psi": 0.09378573728337168,
+  "features_com_drift_significativo": [],
+  "score_psi": 0.06826718194136111,
   "score_faixa": "estavel",
   "volume_de_alertas": {
-    "esperado": 0.5116772904144019,
-    "observado": 0.4182116459983418,
-    "variacao_relativa": 0.18266521920557247,
+    "esperado": 0.46734143867246053,
+    "observado": 0.4068161371694685,
+    "variacao_relativa": 0.12950981123120903,
     "fora_da_tolerancia": false
   },
   "segmentos": {
@@ -244,7 +222,7 @@
       "categorias_ausentes": []
     }
   },
-  "feature_count": 48,
+  "feature_count": 44,
   "retreinar": false,
   "motivos": []
 }
