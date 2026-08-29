@@ -48,6 +48,7 @@ REPORTS_LEGACY_MODEL_DIR = REPORTS_DIR / "modeling_legacy"
 REPORTS_MODEL_SELECTION_DIR = REPORTS_DIR / "model_selection"
 REPORTS_OPERATIONAL_DIR = REPORTS_DIR / "operational"
 REPORTS_SEGMENT_DIR = REPORTS_DIR / "segments"
+REPORTS_MONITORING_DIR = REPORTS_DIR / "monitoring"
 FIGURES_DIR = REPORTS_EDA_DIR / "figures"
 MODELS_DIR = _resolve_path(os.getenv("MODEL_DIR"), BASE_DIR / "models")
 LABELED_DATASET_PATH = LABELED_DIR / "apontamentos_labeled.parquet"

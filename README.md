@@ -395,6 +395,8 @@ instalado, os comandos `make ...` são atalhos equivalentes.
 | Medir custo do fix de vazamento | `python tasks.py leakage-ablation` | `make leakage-ablation` |
 | Gerar inferência | `python tasks.py infer` | `make infer` |
 | Processar lotes diários | `python tasks.py batch` | `make batch` |
+| Congelar referência de drift | `python tasks.py monitor-baseline` | `make monitor-baseline` |
+| Verificar drift | `python tasks.py monitor` | `make monitor` |
 | Validação rápida | `python tasks.py smoke` | `make smoke` |
 | Fluxo completo | `python tasks.py run-all` | `make run-all` |
 | Limpar caches locais | `python tasks.py clean` | `make clean` |

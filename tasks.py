@@ -55,6 +55,8 @@ COMMANDS: dict[str, list[list[str]]] = {
     "leakage-ablation": [[PYTHON, "-m", "src.evaluation.leakage_ablation"]],
     "infer": [[PYTHON, "-m", "src.inference"]],
     "batch": [[PYTHON, "-m", "src.batch_inference"]],
+    "monitor-baseline": [[PYTHON, "-m", "src.monitoring", "baseline"]],
+    "monitor": [[PYTHON, "-m", "src.monitoring", "check"]],
     "notebook": [
         [
             PYTHON,
@@ -109,6 +111,8 @@ DESCRIPTIONS = {
     "leakage-ablation": "mede o custo da correcao de vazamento temporal",
     "infer": "gera inferencia com artefato promovido",
     "batch": "processa lotes diarios do diretorio de entrada",
+    "monitor-baseline": "congela o perfil de referencia do modelo promovido",
+    "monitor": "verifica drift do lote mais recente",
     "notebook": "executa notebooks/main.ipynb",
     "smoke": "executa validacao rapida",
     "run-all": "executa o fluxo completo oficial",

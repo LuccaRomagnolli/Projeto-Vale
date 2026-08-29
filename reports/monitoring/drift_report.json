@@ -1,0 +1,266 @@
+{
+  "rows": 56689,
+  "features": [
+    {
+      "feature": "mes",
+      "psi": 9.782826971252748,
+      "faixa": "significativo"
+    },
+    {
+      "feature": "Classe_target_enc",
+      "psi": 7.713261508851859,
+      "faixa": "significativo"
+    },
+    {
+      "feature": "n_ciclos_24h",
+      "psi": 0.14847651733689907,
+      "faixa": "moderado"
+    },
+    {
+      "feature": "duracao_media_ciclo_24h",
+      "psi": 0.14521954529551234,
+      "faixa": "moderado"
+    },
+    {
+      "feature": "dias_desde_ultimo_alerta",
+      "psi": 0.11092341362157054,
+      "faixa": "moderado"
+    },
+    {
+      "feature": "n_alertas_24h",
+      "psi": 0.07241343904242897,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "alertas_por_hora_24h",
+      "psi": 0.07241343904242897,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "n_ciclos_8h",
+      "psi": 0.06746273514767039,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "duracao_media_ciclo_8h",
+      "psi": 0.06585202184718694,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "delta_alertas_por_hora_4h_24h",
+      "psi": 0.05598694697654516,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "n_alertas_8h",
+      "psi": 0.04461164162446069,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "alertas_por_hora_8h",
+      "psi": 0.04461164162446069,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "n_ciclos_4h",
+      "psi": 0.04115099280357596,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "duracao_media_ciclo_4h",
+      "psi": 0.037695586692692476,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "duracao_std_ciclo_24h",
+      "psi": 0.03505409900606478,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "n_alertas_4h",
+      "psi": 0.031557676650495636,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "alertas_por_hora_4h",
+      "psi": 0.031557676650495636,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "n_precondicoes_satisfeitas_4h",
+      "psi": 0.031557676650495636,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "duracao_std_ciclo_8h",
+      "psi": 0.025528544820865445,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "delta_n_ciclos_4h_24h_norm",
+      "psi": 0.020505627098642516,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "ratio_alertas_4h_24h",
+      "psi": 0.01962458808340537,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "Tag_freq",
+      "psi": 0.014702812834889778,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "freq_classe_atividade_24h",
+      "psi": 0.012611708260146442,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "duracao_std_ciclo_4h",
+      "psi": 0.010306685854611811,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "ratio_duracao_ciclo_4h_24h",
+      "psi": 0.005555239441349169,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "duracao_ciclo_min",
+      "psi": 0.00469574731013311,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "freq_classe_atividade_8h",
+      "psi": 0.003294688668476568,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "delta_freq_classe_4h_24h",
+      "psi": 0.002610088719048007,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "delta_duracao_ciclo_4h_24h",
+      "psi": 0.0023311629816182024,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "n_classes_distintas_24h",
+      "psi": 0.0010550563558667666,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "dia_da_semana",
+      "psi": 0.0010421328029269722,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "dia_semana",
+      "psi": 0.0010421328029269722,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "freq_classe_atividade_4h",
+      "psi": 0.0010046982385960015,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "hora_do_dia",
+      "psi": 0.0004988297754355331,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "hora",
+      "psi": 0.0004988297754355331,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "n_classes_distintas_8h",
+      "psi": 0.0003486778755814016,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "n_classes_distintas_4h",
+      "psi": 0.0002009161151243471,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "delta_classes_distintas_4h_24h",
+      "psi": 0.00016893742483531151,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "is_fim_de_semana",
+      "psi": 0.0,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "nivel_maximo_evento_recente",
+      "psi": 0.0,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "Operador_freq",
+      "psi": 0.0,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "Frota_793-D 2S",
+      "psi": 0.0,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "Frota_793-D 3S",
+      "psi": 0.0,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "Frota_793-D 4S",
+      "psi": 0.0,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "Frota_793-D 5S",
+      "psi": 0.0,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "Frota_LeTourneau L 1850",
+      "psi": 0.0,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "Tipo_Caminhao",
+      "psi": 0.0,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "Tipo_Escavadeira",
+      "psi": 0.0,
+      "faixa": "estavel"
+    }
+  ],
+  "features_com_drift_significativo": [
+    "mes",
+    "Classe_target_enc"
+  ],
+  "score_psi": 0.09018192842502627,
+  "score_faixa": "estavel",
+  "volume_de_alertas": {
+    "esperado": 0.5094251063636501,
+    "observado": 0.4157773112949602,
+    "variacao_relativa": 0.18383034895386563,
+    "fora_da_tolerancia": false
+  },
+  "segmentos": {
+    "turno": {
+      "categorias_novas": [],
+      "categorias_ausentes": []
+    }
+  },
+  "feature_count": 48,
+  "retreinar": false,
+  "motivos": []
+}

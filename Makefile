@@ -1,7 +1,7 @@
 PYTHON ?= python
 TASKS := $(PYTHON) tasks.py
 
-.PHONY: help install format lint test label eda dashboard features train train-baseline model-selection gate-stability gate-promotion evaluate evaluate-segments leakage-ablation infer batch notebook smoke run-all clean
+.PHONY: help install format lint test label eda dashboard features train train-baseline model-selection gate-stability gate-promotion evaluate evaluate-segments leakage-ablation infer batch monitor-baseline monitor notebook smoke run-all clean
 .SILENT:
 
 help:
@@ -60,6 +60,12 @@ infer:
 
 batch:
 	$(TASKS) batch
+
+monitor-baseline:
+	$(TASKS) monitor-baseline
+
+monitor:
+	$(TASKS) monitor
 
 notebook:
 	$(TASKS) notebook
