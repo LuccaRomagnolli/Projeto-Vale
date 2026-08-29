@@ -203,11 +203,11 @@ A promoção depende de evidências versionadas em `reports/`, política explíc
 
 | Métrica | Valor |
 |---|---:|
-| `precision@15` | **0.8311** |
-| `recall@15` | **0.9056** |
-| `lift@15` | **2.5557** |
+| `precision@15` | **0.8156** |
+| `recall@15` | **0.8886** |
+| `lift@15` | **2.5079** |
 
-No teste temporal, a lista diária de 15 equipamentos atingiu precisão de ~83,1%, recuperou ~90,6% dos casos críticos cobertos pelo critério operacional e foi ~2,56× melhor que uma priorização aleatória.
+No teste temporal, a lista diária de 15 equipamentos atingiu precisão de ~81,6%, recuperou ~88,9% dos casos críticos cobertos pelo critério operacional e foi ~2,51× melhor que uma priorização aleatória.
 
 > **Revisão de 29/08/2026.** Estes números substituem os anteriores
 > (`precision@15 = 0.6756`), que foram produzidos sobre um dataset de features

@@ -66,9 +66,9 @@ make infer
 | Modelo | `hist_gbdt_optuna`, definido em `reports/model_selection/model_selection_report.json` |
 | Artefato | `models/model_selected.joblib` |
 | Threshold | calibrado na validacao e persistido no artefato |
-| Test Precision@15 | `0.8311` |
-| Test Recall@15 | `0.9056` |
-| Test Lift@15 | `2.5557` |
+| Test Precision@15 | `0.8156` |
+| Test Recall@15 | `0.8886` |
+| Test Lift@15 | `2.5079` |
 
 > Valores atualizados em 29/08/2026 apos a correcao de vazamento temporal e o
 > reparo das features de historico de alertas. Ver `docs/controle_alteracoes.md`,

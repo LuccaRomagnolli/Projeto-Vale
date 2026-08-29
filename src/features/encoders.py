@@ -25,6 +25,11 @@ TARGET_COL = "target_4h"
 TIME_COL = "Fim"
 ONE_HOT_COLUMNS = ("Frota", "Tipo")
 
+# Blocos cronologicos usados no target encoding out-of-fold do treino. Mais
+# blocos aproximam a media do historico completo; menos blocos reduzem o numero
+# de valores distintos, aproximando a estrutura da inferencia.
+DEFAULT_ENCODING_BLOCKS = 5
+
 
 class CategoricalEncoder:
     """Aprende estatisticas categoricas no treino e as aplica sem vazamento."""
@@ -106,43 +111,59 @@ class CategoricalEncoder:
 
         return out
 
-    def fit_transform_train(self, train_df: pd.DataFrame) -> pd.DataFrame:
-        """Ajusta no treino e devolve o treino codificado de forma causal.
+    def fit_transform_train(
+        self,
+        train_df: pd.DataFrame,
+        n_blocks: int = DEFAULT_ENCODING_BLOCKS,
+    ) -> pd.DataFrame:
+        """Ajusta no treino e devolve o treino com target encoding out-of-fold temporal.
 
-        Para as linhas de treino, `Classe_target_enc` usa media expansiva que
-        exclui o proprio rotulo -- caso contrario cada linha enxergaria o
-        proprio alvo. Validacao, teste e lotes novos usam `transform()`, que
-        aplica a media final aprendida aqui.
+        O treino e dividido em `n_blocks` blocos cronologicos. Cada bloco recebe
+        a media por Classe calculada apenas nos blocos ANTERIORES, o que atende
+        duas exigencias ao mesmo tempo:
+
+        1. Causalidade -- nenhuma linha enxerga o proprio rotulo nem qualquer
+           informacao futura.
+        2. Mesma estrutura da inferencia -- o valor e uma media por classe, e
+           nao um numero diferente por linha.
+
+        A versao anterior usava media expansiva linha a linha. Era causal, mas
+        produzia 258174 valores distintos no treino contra 4 na inferencia: o
+        modelo treinava numa distribuicao e recebia outra em producao. O
+        monitoramento de drift flagrou essa divergencia com PSI 7.71.
+
+        O primeiro bloco nao tem historico anterior e recebe `0.0`, valor que
+        nao carrega informacao alguma sobre o alvo. A alternativa aparentemente
+        inofensiva -- usar a media global do treino, que e o que `transform()`
+        aplica a classe desconhecida -- vaza: quando o alvo muda de regime ao
+        longo do periodo, essa media resume tambem o futuro, e as linhas do
+        primeiro bloco passam a carrega-lo. O custo e um nivel a mais na
+        distribuicao do treino, contra a integridade da causalidade.
         """
         self.fit(train_df)
         out = self.transform(train_df)
 
         if self.target_col not in train_df.columns or "Classe" not in train_df.columns:
             return out
+        if train_df.empty:
+            return out
 
         temporal = train_df.sort_values(self.time_col)
-        target = temporal[self.target_col].astype(float)
-        grouped = temporal.groupby("Classe", dropna=False)[self.target_col]
+        blocks = np.array_split(np.arange(len(temporal)), min(n_blocks, len(temporal)))
+        encoded = pd.Series(0.0, index=temporal.index, dtype=float)
 
-        prior_sum = grouped.cumsum() - target
-        prior_count = grouped.cumcount()
-        global_prior_sum = target.cumsum() - target
-        global_prior_count = np.arange(len(temporal))
+        for position, block in enumerate(blocks):
+            if position == 0 or len(block) == 0:
+                continue  # primeiro bloco fica em 0.0: nao ha historico anterior
+            history = temporal.iloc[: int(block[0])]
+            means = history.groupby("Classe", dropna=False)[self.target_col].mean()
+            history_prior = float(history[self.target_col].mean())
+            block_index = temporal.index[block]
+            encoded.loc[block_index] = (
+                temporal.loc[block_index, "Classe"].map(means).fillna(history_prior).astype(float)
+            )
 
-        global_prior = np.divide(
-            global_prior_sum,
-            global_prior_count,
-            out=np.zeros(len(temporal), dtype=float),
-            where=global_prior_count > 0,
-        )
-        classe_prior = np.divide(
-            prior_sum,
-            prior_count,
-            out=np.full(len(temporal), np.nan, dtype=float),
-            where=prior_count > 0,
-        )
-        causal = np.where(prior_count > 0, np.nan_to_num(classe_prior, nan=0.0), global_prior)
-        out["Classe_target_enc"] = pd.Series(causal, index=temporal.index).reindex(out.index)
+        out["Classe_target_enc"] = encoded.reindex(out.index)
         return out
 
     def to_payload(self) -> dict[str, Any]:

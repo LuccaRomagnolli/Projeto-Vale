@@ -219,6 +219,73 @@ promocao nesse caso. O modelo vigente registra `alert_rate = 0.400`.
 Modelo selecionado permanece `hist_gbdt_optuna`. Todos os criterios da politica
 seguem atendidos.
 
+## Alteracao 06 - Monitoramento de drift e correcao de train/serve skew
+
+Data: 29/08/2026
+
+### 6.1 Monitoramento implementado
+
+A politica de promocao condicionava o piloto a "monitoramento continuo de drift,
+volume de alertas e segmentos raros", sem contrapartida em codigo. `src/monitoring/`
+compara cada lote contra um perfil de referencia congelado na promocao, com PSI
+por feature, PSI do score, volume de alertas e cobertura por segmento. O gatilho
+de retreino nomeia cada motivo, em vez de devolver um veredito unico.
+
+### 6.2 Achado: train/serve skew no target encoding
+
+Na primeira execucao o monitor acusou `Classe_target_enc` com PSI `7.71` -- a
+quarta feature em importancia. A causa era divergencia estrutural introduzida na
+alteracao 04:
+
+| Conjunto | Metodo | Valores distintos |
+|---|---|---:|
+| Treino | Media expansiva causal, linha a linha | `258174` |
+| Inferencia | Media final por Classe | `4` |
+
+O modelo treinava numa distribuicao e recebia outra em producao.
+
+**Correcao:** target encoding out-of-fold em blocos cronologicos. O treino e
+dividido em cinco blocos e cada um recebe a media por Classe calculada apenas
+nos blocos anteriores. Preserva a causalidade e aproxima a estrutura da
+inferencia: `258174` valores distintos passaram a `17`.
+
+O primeiro bloco nao tem historico anterior e recebe `0.0`. Usar a media global
+do treino ali parece inofensivo, mas vaza: quando o alvo muda de regime ao longo
+do periodo, essa media resume tambem o futuro. O teste de causalidade detectou
+exatamente esse caso.
+
+### 6.3 Impacto medido da correcao
+
+| Metrica | Com skew | Out-of-fold | Delta |
+|---|---:|---:|---:|
+| `test_top15_precision_at_k` | `0.8311` | `0.8156` | `-0.0156` |
+| `test_top15_recall_at_k` | `0.9056` | `0.8886` | `-0.0169` |
+| `test_top15_lift_vs_random` | `2.5557` | `2.5079` | `-0.0478` |
+| `test_auc_pr` | `0.5762` | `0.5745` | `-0.0017` |
+
+A queda e esperada e e a leitura honesta: a media expansiva carregava mais
+informacao por linha do que a inferencia jamais forneceria. Todos os pisos da
+politica seguem atendidos com folga.
+
+### 6.4 Correcao no proprio monitor
+
+O PSI usava bins por quantil, inadequados para features discretas: as bordas
+colapsam e o indice dispara sem deslocamento real. `mes` e `Classe_target_enc`
+seriam acusadas em toda execucao, e um alarme permanente e ignorado como ruido.
+
+| Ajuste | Efeito |
+|---|---|
+| Bins por valor quando a cardinalidade e baixa | Feature discreta estavel deixa de gerar falso alarme |
+| Encodings derivados fora do PSI de features | Comparar `Classe_target_enc` entre treino e inferencia e apples-to-oranges por construcao; o sinal util e a distribuicao da categoria de origem, ja coberta pela cobertura por segmento |
+
+### 6.5 Alarme remanescente, verdadeiro
+
+`mes` permanece com PSI alto porque treino e teste cobrem meses disjuntos --
+`1` a `5` contra `6` e `7`. Uma feature de mes nunca generaliza num modelo
+temporal, pois todo lote futuro tera meses ineditos. O impacto atual e nulo:
+a importancia da feature no modelo promovido e `0.00000`. Fica registrado como
+defeito de desenho a espera de um modelo que a utilize.
+
 ## Decisao
 
 Status: `VIGENTE`. A metrica executiva oficial permanece `TopK Tag-dia`, com

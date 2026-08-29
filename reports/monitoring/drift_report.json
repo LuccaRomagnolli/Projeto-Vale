@@ -3,12 +3,7 @@
   "features": [
     {
       "feature": "mes",
-      "psi": 9.782826971252748,
-      "faixa": "significativo"
-    },
-    {
-      "feature": "Classe_target_enc",
-      "psi": 7.713261508851859,
+      "psi": 14.976731343425289,
       "faixa": "significativo"
     },
     {
@@ -107,13 +102,18 @@
       "faixa": "estavel"
     },
     {
-      "feature": "Tag_freq",
-      "psi": 0.014702812834889778,
+      "feature": "nivel_maximo_evento_recente",
+      "psi": 0.018864042121084515,
       "faixa": "estavel"
     },
     {
       "feature": "freq_classe_atividade_24h",
       "psi": 0.012611708260146442,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "Frota_793-D 3S",
+      "psi": 0.011268449127435475,
       "faixa": "estavel"
     },
     {
@@ -127,8 +127,18 @@
       "faixa": "estavel"
     },
     {
+      "feature": "Frota_793-D 2S",
+      "psi": 0.0049519866678699575,
+      "faixa": "estavel"
+    },
+    {
       "feature": "duracao_ciclo_min",
       "psi": 0.00469574731013311,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "n_classes_distintas_24h",
+      "psi": 0.003383801821223523,
       "faixa": "estavel"
     },
     {
@@ -142,23 +152,38 @@
       "faixa": "estavel"
     },
     {
+      "feature": "Frota_LeTourneau L 1850",
+      "psi": 0.0024903965269125502,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "Tipo_Caminhao",
+      "psi": 0.0024903965269125502,
+      "faixa": "estavel"
+    },
+    {
+      "feature": "Tipo_Escavadeira",
+      "psi": 0.0024903965269125502,
+      "faixa": "estavel"
+    },
+    {
       "feature": "delta_duracao_ciclo_4h_24h",
       "psi": 0.0023311629816182024,
       "faixa": "estavel"
     },
     {
-      "feature": "n_classes_distintas_24h",
-      "psi": 0.0010550563558667666,
+      "feature": "n_classes_distintas_8h",
+      "psi": 0.0016402311550908128,
       "faixa": "estavel"
     },
     {
       "feature": "dia_da_semana",
-      "psi": 0.0010421328029269722,
+      "psi": 0.001123409734391037,
       "faixa": "estavel"
     },
     {
       "feature": "dia_semana",
-      "psi": 0.0010421328029269722,
+      "psi": 0.001123409734391037,
       "faixa": "estavel"
     },
     {
@@ -168,90 +193,49 @@
     },
     {
       "feature": "hora_do_dia",
-      "psi": 0.0004988297754355331,
+      "psi": 0.0009154548131868894,
       "faixa": "estavel"
     },
     {
       "feature": "hora",
-      "psi": 0.0004988297754355331,
-      "faixa": "estavel"
-    },
-    {
-      "feature": "n_classes_distintas_8h",
-      "psi": 0.0003486778755814016,
+      "psi": 0.0009154548131868894,
       "faixa": "estavel"
     },
     {
       "feature": "n_classes_distintas_4h",
-      "psi": 0.0002009161151243471,
+      "psi": 0.00084915425609748,
       "faixa": "estavel"
     },
     {
       "feature": "delta_classes_distintas_4h_24h",
-      "psi": 0.00016893742483531151,
-      "faixa": "estavel"
-    },
-    {
-      "feature": "is_fim_de_semana",
-      "psi": 0.0,
-      "faixa": "estavel"
-    },
-    {
-      "feature": "nivel_maximo_evento_recente",
-      "psi": 0.0,
-      "faixa": "estavel"
-    },
-    {
-      "feature": "Operador_freq",
-      "psi": 0.0,
-      "faixa": "estavel"
-    },
-    {
-      "feature": "Frota_793-D 2S",
-      "psi": 0.0,
-      "faixa": "estavel"
-    },
-    {
-      "feature": "Frota_793-D 3S",
-      "psi": 0.0,
-      "faixa": "estavel"
-    },
-    {
-      "feature": "Frota_793-D 4S",
-      "psi": 0.0,
+      "psi": 0.0007489897266156778,
       "faixa": "estavel"
     },
     {
       "feature": "Frota_793-D 5S",
-      "psi": 0.0,
+      "psi": 0.0006751834699063389,
       "faixa": "estavel"
     },
     {
-      "feature": "Frota_LeTourneau L 1850",
-      "psi": 0.0,
+      "feature": "is_fim_de_semana",
+      "psi": 0.00021317513525307002,
       "faixa": "estavel"
     },
     {
-      "feature": "Tipo_Caminhao",
-      "psi": 0.0,
-      "faixa": "estavel"
-    },
-    {
-      "feature": "Tipo_Escavadeira",
-      "psi": 0.0,
+      "feature": "Frota_793-D 4S",
+      "psi": 6.250124476655947e-06,
       "faixa": "estavel"
     }
   ],
   "features_com_drift_significativo": [
-    "mes",
-    "Classe_target_enc"
+    "mes"
   ],
-  "score_psi": 0.09018192842502627,
+  "score_psi": 0.09378573728337168,
   "score_faixa": "estavel",
   "volume_de_alertas": {
-    "esperado": 0.5094251063636501,
-    "observado": 0.4157773112949602,
-    "variacao_relativa": 0.18383034895386563,
+    "esperado": 0.5116772904144019,
+    "observado": 0.4182116459983418,
+    "variacao_relativa": 0.18266521920557247,
     "fora_da_tolerancia": false
   },
   "segmentos": {

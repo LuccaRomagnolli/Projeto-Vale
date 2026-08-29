@@ -6,35 +6,35 @@
   "criterios": [
     {
       "criterio": "test_top15_precision_at_k",
-      "observado": 0.8311111111111111,
+      "observado": 0.8155555555555556,
       "limite": 0.6,
       "comparacao": ">=",
       "aprovado": true
     },
     {
       "criterio": "test_top15_recall_at_k",
-      "observado": 0.9055690072639225,
+      "observado": 0.8886198547215496,
       "limite": 0.7,
       "comparacao": ">=",
       "aprovado": true
     },
     {
       "criterio": "test_top15_lift_vs_random",
-      "observado": 2.5557169760559595,
+      "observado": 2.5078827011030405,
       "limite": 1.9,
       "comparacao": ">=",
       "aprovado": true
     },
     {
       "criterio": "std_test_recall_at_k",
-      "observado": 0.006586957181194931,
+      "observado": 0.0038176513656956144,
       "limite": 0.03,
       "comparacao": "<=",
       "aprovado": true
     },
     {
       "criterio": "std_test_precision_at_k",
-      "observado": 0.0188954961014942,
+      "observado": 0.021150034584576084,
       "limite": 0.05,
       "comparacao": "<=",
       "aprovado": true

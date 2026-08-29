@@ -49,13 +49,39 @@ EPSILON = 1e-6
 
 SEGMENT_COLUMNS = ("Frota", "Tipo", "turno")
 
+# Abaixo desta cardinalidade a feature e tratada como discreta: cada valor vira
+# um bin. Bins por quantil sobre poucos valores distintos colapsam e inflam o
+# PSI artificialmente.
+DISCRETE_MAX_CARDINALITY = 25
+
+# Features derivadas do proprio alvo ou da composicao do treino. Comparar seus
+# VALORES entre treino e inferencia e apples-to-oranges por construcao: no
+# treino elas vem de historico parcial (encoding out-of-fold) e na inferencia
+# das estatisticas finais. O sinal util para elas e a distribuicao da categoria
+# de origem, ja coberta pela cobertura por segmento.
+DERIVED_ENCODING_COLUMNS = ("Classe_target_enc", "Tag_freq", "Operador_freq")
+
 
 def _quantile_edges(values: np.ndarray, n_bins: int) -> list[float]:
-    """Bordas de bin por quantil da referencia, deduplicadas."""
+    """Bordas de bin para a referencia.
+
+    Features com poucos valores distintos recebem um bin por valor. Com bins
+    por quantil, uma feature discreta faz as bordas colapsarem e o PSI dispara
+    sem que exista deslocamento real -- o monitor passaria a acusar drift em
+    toda execucao, e um alarme permanente e ignorado como se fosse ruido.
+    """
+    distinct = np.unique(values)
+    if len(distinct) < 2:
+        # Serie constante: um unico bin degenerado, tratado explicitamente.
+        return [float(distinct[0]), float(distinct[0]) + EPSILON]
+
+    if len(distinct) <= DISCRETE_MAX_CARDINALITY:
+        midpoints = (distinct[:-1] + distinct[1:]) / 2.0
+        return [-np.inf, *[float(m) for m in midpoints], np.inf]
+
     quantiles = np.linspace(0.0, 1.0, n_bins + 1)
     edges = np.unique(np.quantile(values, quantiles))
     if len(edges) < 2:
-        # Serie constante: um unico bin degenerado, tratado explicitamente.
         return [float(edges[0]), float(edges[0]) + EPSILON]
     edges[0] = -np.inf
     edges[-1] = np.inf
@@ -153,7 +179,7 @@ def build_reference_profile(
     profile = ReferenceProfile(rows=int(len(reference_df)), alert_rate=float(alert_rate))
 
     for column in feature_columns:
-        if column not in reference_df.columns:
+        if column not in reference_df.columns or column in DERIVED_ENCODING_COLUMNS:
             continue
         values = pd.to_numeric(reference_df[column], errors="coerce").to_numpy(dtype=float)
         values = values[~np.isnan(values)]

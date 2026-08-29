@@ -52,10 +52,10 @@ Tags devem receber trilha dedicada antes de ampliacao operacional.
 
 | Segmento | Valor | Precision@15 | Recall@15 | Lift | Status |
 |---|---|---:|---:|---:|---|
-| `turno` | `manha` | `0.5381` | `0.9536` | `2.6905` | `ok` |
-| `turno` | `tarde` | `0.5103` | `0.9061` | `2.5559` | `ok` |
-| `turno` | `noite` | `0.6311` | `0.8847` | `2.4910` | `ok` |
-| `Tipo` | `Caminhao` | `0.8156` | `0.8929` | `1.9823` | `ok` |
+| `turno` | `manha` | `0.5357` | `0.9494` | `2.6786` | `ok` |
+| `turno` | `tarde` | `0.5126` | `0.9102` | `2.5674` | `ok` |
+| `turno` | `noite` | `0.6289` | `0.8816` | `2.4822` | `ok` |
+| `Tipo` | `Caminhao` | `0.8133` | `0.8905` | `1.9769` | `ok` |
 | `Classe` | `Parado` | `0.7467` | `0.8984` | `1.5652` | `ok` |
 | `Classe` | `Hibernando` | `0.0000` | `0.0000` | `0.0000` | `inconclusivo_baixa_prevalencia` |
 | `Tipo` | `Escavadeira` | `0.0074` | `1.0000` | `1.0000` | `inconclusivo_baixa_prevalencia` |

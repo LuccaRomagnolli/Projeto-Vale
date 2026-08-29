@@ -48,9 +48,9 @@ segmentada, promocao e inferencia.
 | Artefato promovido | `models/model_selected.joblib` |
 | Relatorio de seleção | `reports/model_selection/model_selection_report.json` |
 | Ranking operacional | `reports/daily_priority_top15.csv` |
-| Test `Precision@Top15 Tag-dia` | `0.8311` |
-| Test `Recall@Top15 Tag-dia` | `0.9056` |
-| Test `Lift@Top15 Tag-dia` | `2.5557` |
+| Test `Precision@Top15 Tag-dia` | `0.8156` |
+| Test `Recall@Top15 Tag-dia` | `0.8886` |
+| Test `Lift@Top15 Tag-dia` | `2.5079` |
 
 > Metricas atualizadas em 29/08/2026. Ver `docs/controle_alteracoes.md`,
 > alteracao 04, para a decomposicao entre o reparo das features de alerta e a

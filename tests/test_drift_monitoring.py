@@ -197,3 +197,49 @@ def test_empty_profile_does_not_crash_the_check() -> None:
     drift = compute_drift(_frame(), ReferenceProfile())
     assert drift["features"] == []
     assert should_retrain(drift)["retreinar"] is False
+
+
+# --- binning ciente de cardinalidade --------------------------------------
+
+
+def test_discrete_feature_does_not_produce_a_false_alarm() -> None:
+    """Bins por quantil colapsam em features discretas e inflam o PSI.
+
+    Um monitor que acusa drift em toda execucao vira ruido e para de ser lido.
+    """
+    rng = np.random.default_rng(5)
+    reference = rng.integers(0, 5, 3000).astype(float)
+    same_distribution = rng.integers(0, 5, 3000).astype(float)
+
+    psi = population_stability_index(reference, same_distribution)
+
+    assert psi < 0.05, f"feature discreta estavel acusou drift (PSI={psi:.4f})"
+
+
+def test_genuinely_disjoint_discrete_values_are_still_flagged() -> None:
+    """O tratamento discreto nao pode mascarar deslocamento real.
+
+    E o caso de `mes`: treino cobre os meses 1 a 5 e teste, 6 e 7.
+    """
+    reference = np.repeat([1.0, 2.0, 3.0, 4.0, 5.0], 400)
+    disjoint = np.repeat([6.0, 7.0], 1000)
+
+    assert population_stability_index(reference, disjoint) > PSI_SIGNIFICANT
+
+
+def test_derived_encodings_are_left_out_of_feature_psi() -> None:
+    """Comparar valores de target encoding entre treino e inferencia nao informa.
+
+    No treino eles vem de historico parcial (out-of-fold); na inferencia, das
+    estatisticas finais. O sinal util e a distribuicao da categoria de origem,
+    coberta pela cobertura por segmento.
+    """
+    frame = _frame(500)
+    frame["Classe_target_enc"] = np.linspace(0, 0.3, 500)
+    frame["Tag_freq"] = 0.1
+
+    profile = build_reference_profile(frame, [*FEATURES, "Classe_target_enc", "Tag_freq"])
+
+    assert "Classe_target_enc" not in profile.feature_reference
+    assert "Tag_freq" not in profile.feature_reference
+    assert set(FEATURES).issubset(profile.feature_reference)

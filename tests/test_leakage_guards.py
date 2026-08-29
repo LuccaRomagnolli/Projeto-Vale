@@ -97,7 +97,7 @@ def test_encoder_is_invariant_to_the_rows_being_transformed() -> None:
     )
 
 
-def test_causal_target_encoding_excludes_own_label() -> None:
+def test_target_encoding_excludes_own_label() -> None:
     """A primeira linha de treino nao pode carregar informacao do proprio alvo."""
     train = _frame(100)
     encoded = CategoricalEncoder().fit_transform_train(train)
@@ -135,3 +135,52 @@ def test_backtest_folds_also_respect_the_embargo() -> None:
     for train, val, test in folds:
         assert val["Fim"].min() - train["Fim"].max() >= horizon
         assert test["Fim"].min() - val["Fim"].max() >= horizon
+
+
+def test_train_encoding_matches_inference_structure() -> None:
+    """Train/serve skew: o treino nao pode ter distribuicao estranha a inferencia.
+
+    A media expansiva linha a linha produzia um valor distinto por linha no
+    treino (258 mil no dataset real) contra poucos valores por classe na
+    inferencia. O encoding out-of-fold em blocos temporais mantem os dois lados
+    na mesma escala estrutural.
+    """
+    train = _frame(500)
+    encoder = CategoricalEncoder()
+    encoded_train = encoder.fit_transform_train(train)
+    encoded_later = encoder.transform(_frame(100, start="2026-06-01"))
+
+    distintos_treino = encoded_train["Classe_target_enc"].nunique()
+    distintos_inferencia = encoded_later["Classe_target_enc"].nunique()
+
+    # com 5 blocos e poucas classes, o treino fica na mesma ordem de grandeza
+    assert distintos_treino <= 5 * max(distintos_inferencia, 1) + 1
+    assert distintos_treino < len(train) / 10, "um valor por linha indica skew"
+
+
+def test_out_of_fold_encoding_stays_causal() -> None:
+    """Nenhum bloco pode enxergar rotulo do proprio bloco nem do futuro."""
+    n = 400
+    train = _frame(n)
+    # alvo muda de regime na metade: se houvesse vazamento, a primeira metade
+    # ja refletiria o comportamento da segunda
+    train["target_4h"] = [False] * (n // 2) + [True] * (n // 2)
+
+    encoded = CategoricalEncoder().fit_transform_train(train).sort_values("Fim")
+    primeira_metade = encoded["Classe_target_enc"].iloc[: n // 2]
+
+    # a primeira metade so pode ver historico de alvo zero
+    assert primeira_metade.max() < 0.5, "encoding da primeira metade viu o futuro"
+
+
+def test_first_block_carries_no_target_information() -> None:
+    """Sem historico anterior, o primeiro bloco fica neutro.
+
+    Usar a media global do treino aqui pareceria inofensivo, mas vaza: se o
+    alvo muda de regime ao longo do periodo, essa media resume tambem o futuro.
+    """
+    train = _frame(300)
+    encoded = CategoricalEncoder().fit_transform_train(train).sort_values("Fim")
+    primeiro_bloco = encoded["Classe_target_enc"].iloc[:60]
+    assert primeiro_bloco.nunique() == 1
+    assert float(primeiro_bloco.iloc[0]) == 0.0
