@@ -1,12 +1,25 @@
 {
   "rows_total": 377907,
-  "rows_train": 264534,
-  "rows_val": 56686,
-  "rows_test": 56687,
+  "rows_train": 264188,
+  "rows_val": 56331,
+  "rows_test": 56689,
+  "embargo_hours": 4.0,
+  "rows_dropped_embargo_train": 337,
+  "rows_dropped_embargo_val": 362,
   "train_start": "2025-01-01 03:03:43+00:00",
-  "train_end": "2025-05-06 06:00:00+00:00",
+  "train_end": "2025-05-06 01:56:23+00:00",
   "val_start": "2025-05-06 06:00:00+00:00",
-  "val_end": "2025-06-02 15:00:00+00:00",
+  "val_end": "2025-06-02 10:50:39+00:00",
   "test_start": "2025-06-02 15:00:00+00:00",
-  "test_end": "2025-07-01 03:00:00+00:00"
+  "test_end": "2025-07-01 03:00:00+00:00",
+  "categorical_encoder": {
+    "tag_categories": 46,
+    "operador_categories": 0,
+    "classe_categories": 4,
+    "global_target_mean": 0.20835919875240358,
+    "one_hot_columns": {
+      "Frota": 5,
+      "Tipo": 2
+    }
+  }
 }

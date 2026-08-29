@@ -110,9 +110,13 @@ def test_build_feature_dataset_adds_model_ready_columns() -> None:
         "dias_desde_ultimo_alerta",
         "delta_duracao_ciclo_4h_24h",
         "ratio_alertas_4h_24h",
-        "Tag_freq",
-        "Operador_freq",
-        "Classe_target_enc",
     }
     assert expected_columns.issubset(set(features.columns))
     assert int(features["target_4h"].sum()) == 2
+
+    # Os encodings categoricos saem do build e passam a ser ajustados no treino
+    # depois do split (src/features/encoders.py). As colunas cruas precisam
+    # sobreviver para que o encoder possa aprender com elas.
+    encoded_columns = {"Tag_freq", "Operador_freq", "Classe_target_enc"}
+    assert not encoded_columns & set(features.columns)
+    assert {"Tag", "Classe", "Frota", "Tipo"}.issubset(set(features.columns))

@@ -34,6 +34,21 @@ def _selection_df(n_rows: int = 96) -> pd.DataFrame:
     )
 
 
+def _raw_features_df(n_rows: int = 96) -> pd.DataFrame:
+    """Dataset de features antes dos encodings categoricos.
+
+    O backtest recorta folds daqui e ajusta um encoder por fold, entao as
+    colunas categoricas precisam estar cruas -- e nao ja codificadas como nos
+    parquets de split.
+    """
+    frame = _selection_df(n_rows).drop(
+        columns=["Tag_freq", "Classe_target_enc", "Frota_X", "Tipo_Caminhao"]
+    )
+    frame["Frota"] = "X"
+    frame["Tipo"] = "Caminhao"
+    return frame
+
+
 def test_official_candidates_exclude_diagnostic_baseline() -> None:
     assert OFFICIAL_CANDIDATE_NAMES == (
         "lightgbm_optuna",
@@ -110,9 +125,12 @@ def test_run_model_selection_pipeline_writes_neutral_outputs(tmp_path: Path, mon
         tmp_path / "reports" / "model_selected_feature_importance.csv",
     )
 
+    features_path = tmp_path / "features_dataset.parquet"
+    _raw_features_df().to_parquet(features_path, index=False)
+
     result = run_model_selection_pipeline(
         split_dir=split_dir,
-        features_path=tmp_path / "missing_features.parquet",
+        features_path=features_path,
         n_trials=1,
         n_backtest_folds=2,
     )

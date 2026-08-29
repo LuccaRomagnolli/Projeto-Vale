@@ -3,41 +3,54 @@
   "score_definition": "n_alertas_24h / 24, clipped to [0, 1]",
   "split_metadata": {
     "rows_total": 377907,
-    "rows_train": 264534,
-    "rows_val": 56686,
-    "rows_test": 56687,
+    "rows_train": 264188,
+    "rows_val": 56331,
+    "rows_test": 56689,
+    "embargo_hours": 4.0,
+    "rows_dropped_embargo_train": 337,
+    "rows_dropped_embargo_val": 362,
     "train_start": "2025-01-01 03:03:43+00:00",
-    "train_end": "2025-05-06 06:00:00+00:00",
+    "train_end": "2025-05-06 01:56:23+00:00",
     "val_start": "2025-05-06 06:00:00+00:00",
-    "val_end": "2025-06-02 15:00:00+00:00",
+    "val_end": "2025-06-02 10:50:39+00:00",
     "test_start": "2025-06-02 15:00:00+00:00",
-    "test_end": "2025-07-01 03:00:00+00:00"
+    "test_end": "2025-07-01 03:00:00+00:00",
+    "categorical_encoder": {
+      "tag_categories": 46,
+      "operador_categories": 0,
+      "classe_categories": 4,
+      "global_target_mean": 0.20835919875240358,
+      "one_hot_columns": {
+        "Frota": 5,
+        "Tipo": 2
+      }
+    }
   },
   "metrics": {
     "threshold": 0.0,
     "train": {
       "threshold": 0.0,
       "recall": 1.0,
-      "precision": 0.20813959642238805,
-      "f1": 0.3445621632446166,
-      "auc_pr": 0.20813959642238805,
-      "auc_roc": 0.5
+      "precision": 0.20835919875240358,
+      "f1": 0.344863015844177,
+      "auc_pr": 0.5176247969447125,
+      "auc_roc": 0.8108932289364454
     },
     "val": {
       "threshold": 0.0,
       "recall": 1.0,
-      "precision": 0.12809159228028086,
-      "f1": 0.22709431247752046,
-      "auc_pr": 0.12809159228028086,
-      "auc_roc": 0.5
+      "precision": 0.12804672382879764,
+      "f1": 0.2270237945360695,
+      "auc_pr": 0.31522810849669014,
+      "auc_roc": 0.7526229667629794
     },
     "test": {
       "threshold": 0.0,
       "recall": 1.0,
-      "precision": 0.14976978848766032,
-      "f1": 0.2605213495558249,
-      "auc_pr": 0.14976978848766032,
-      "auc_roc": 0.5
+      "precision": 0.14976450457760765,
+      "f1": 0.2605133555286212,
+      "auc_pr": 0.427414450835648,
+      "auc_roc": 0.7889440436025057
     }
   }
 }

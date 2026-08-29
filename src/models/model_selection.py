@@ -23,6 +23,7 @@ from src.evaluation.operational_scorecard import (
     build_scored_frame,
     compute_split_topk_metrics,
 )
+from src.features.encoders import CategoricalEncoder
 from src.models.train_model import (
     LEAKAGE_COLUMNS,
     extract_feature_importance,
@@ -32,6 +33,7 @@ from src.models.train_model import (
     select_feature_columns,
 )
 from src.models.validation import (
+    LABEL_HORIZON_HOURS,
     TARGET_COL,
     TIME_COL,
     choose_threshold_for_recall,
@@ -446,8 +448,14 @@ def make_backtest_folds(
     train_start_frac: float = 0.50,
     val_frac: float = 0.10,
     test_frac: float = 0.10,
+    embargo_hours: float = LABEL_HORIZON_HOURS,
 ) -> list[tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]]:
-    """Cria folds temporais expansivos para medir estabilidade do selecionado."""
+    """Cria folds temporais expansivos para medir estabilidade do selecionado.
+
+    Aplica o mesmo embargo do split principal nas fronteiras treino/validacao e
+    validacao/teste de cada fold: sem ele, as ultimas horas de cada bloco tem
+    rotulo determinado por eventos do bloco seguinte.
+    """
     ordered = df.copy()
     ordered[TIME_COL] = pd.to_datetime(ordered[TIME_COL], errors="coerce", utc=True)
     ordered = ordered.dropna(subset=[TIME_COL]).sort_values(TIME_COL).reset_index(drop=True)
@@ -455,6 +463,8 @@ def make_backtest_folds(
         raise ValueError("Dados insuficientes para backtesting temporal.")
 
     n_rows = len(ordered)
+    times = ordered[TIME_COL]
+    embargo = pd.Timedelta(hours=embargo_hours)
     val_size = max(int(n_rows * val_frac), 1)
     test_size = max(int(n_rows * test_frac), 1)
     available = 1.0 - train_start_frac - val_frac - test_frac
@@ -465,9 +475,18 @@ def make_backtest_folds(
         train_end = int(n_rows * train_frac)
         val_end = min(train_end + val_size, n_rows - test_size)
         test_end = min(val_end + test_size, n_rows)
-        train = ordered.iloc[:train_end].copy()
-        val = ordered.iloc[train_end:val_end].copy()
+        if not (0 < train_end < val_end < test_end <= n_rows):
+            continue
+
+        val_start_time = times.iloc[train_end]
+        test_start_time = times.iloc[val_end]
+
+        train = ordered.iloc[:train_end]
+        train = train.loc[train[TIME_COL] < val_start_time - embargo].copy()
+        val = ordered.iloc[train_end:val_end]
+        val = val.loc[val[TIME_COL] < test_start_time - embargo].copy()
         test = ordered.iloc[val_end:test_end].copy()
+
         if len(train) and len(val) and len(test):
             folds.append((train, val, test))
     if not folds:
@@ -483,12 +502,22 @@ def run_backtest(
     min_recall: float,
     n_folds: int = DEFAULT_BACKTEST_FOLDS,
 ) -> pd.DataFrame:
-    """Executa backtesting temporal da familia selecionada."""
+    """Executa backtesting temporal da familia selecionada.
+
+    Cada fold ajusta o proprio encoder categorico no seu treino. Reaproveitar o
+    encoder do split principal contaminaria os folds com estatisticas de linhas
+    que caem na validacao/teste deles.
+    """
     rows = []
     for fold_idx, (train, val, test) in enumerate(
         make_backtest_folds(features_df, n_folds=n_folds),
         start=1,
     ):
+        fold_encoder = CategoricalEncoder()
+        train = fold_encoder.fit_transform_train(train)
+        val = fold_encoder.transform(val)
+        test = fold_encoder.transform(test)
+
         model = build_candidate_model(selected_model_name, selected_params)
         fitted, fit_seconds = _fit_candidate(
             model,
@@ -722,11 +751,16 @@ def run_model_selection_pipeline(
         feature_columns,
         val,
     )
-    features_df = (
-        pd.read_parquet(features_path)
-        if features_path.exists()
-        else pd.concat([train, val, test], ignore_index=True)
-    )
+    # O backtest precisa do dataset com as colunas categoricas cruas, para que
+    # cada fold ajuste o proprio encoder. Concatenar os splits ja codificados
+    # daria um dataset semanticamente diferente, sem `Frota`/`Tipo` e com as
+    # estatisticas do split principal embutidas -- por isso falha alto.
+    if not features_path.exists():
+        raise FileNotFoundError(
+            f"Dataset de features nao encontrado: {features_path}. "
+            "Execute `python tasks.py features` antes da selecao de modelos."
+        )
+    features_df = pd.read_parquet(features_path)
     backtest = run_backtest(
         features_df,
         selected_model_name,

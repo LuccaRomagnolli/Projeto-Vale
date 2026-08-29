@@ -16,12 +16,28 @@ def test_temporal_train_val_test_split_preserves_time_order() -> None:
 
     train, val, test, metadata = temporal_train_val_test_split(df)
 
-    assert len(train) == 70
-    assert len(val) == 15
+    # Com dados horarios e embargo de 4h, treino e validacao perdem as 4 linhas
+    # finais de cada bloco; o teste nao sofre embargo por nao ter bloco seguinte.
+    assert len(train) == 66
+    assert len(val) == 11
     assert len(test) == 15
     assert train["Fim"].max() < val["Fim"].min()
     assert val["Fim"].max() < test["Fim"].min()
     assert metadata["rows_total"] == 100
+
+
+def test_temporal_split_without_embargo_keeps_all_rows() -> None:
+    """Sem embargo o split volta a ser 70/15/15 exato."""
+    df = pd.DataFrame(
+        {
+            "Fim": pd.date_range("2026-01-01", periods=100, freq="h", tz="UTC"),
+            "target_4h": [0, 1] * 50,
+        }
+    )
+
+    train, val, test, _ = temporal_train_val_test_split(df, embargo_hours=0)
+
+    assert (len(train), len(val), len(test)) == (70, 15, 15)
 
 
 def test_compute_binary_metrics_handles_basic_case() -> None:

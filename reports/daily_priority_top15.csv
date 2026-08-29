@@ -1,451 +1,451 @@
 data,rank,Tag,score,Frota,Tipo,turno,motivo_principal,risco_segmento,acao_recomendada
-2025-06-02,1,CA65933,0.804301,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-02,2,CA65927,0.796659,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-02,3,CA65928,0.715427,793-D 5S,Caminhao,noite,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-02,4,CA65930,0.703389,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-02,5,CA65929,0.526012,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-02,6,CA65934,0.496402,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-02,7,CA65792,0.493672,793-D 2S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-02,8,CA65936,0.476173,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-02,9,CA5927,0.472403,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-02,10,CA65931,0.393284,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-02,11,CA65909,0.359985,793-D 3S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-02,12,CA65935,0.329686,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-02,13,CA65925,0.19729,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-02,14,CA65924,0.180817,793-D 4S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-02,15,CA5926,0.176124,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-03,1,CA65927,0.785055,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-03,2,CA65933,0.74671,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-03,3,CA65928,0.715326,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-03,4,CA65930,0.695108,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-03,5,CA5927,0.665026,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-03,6,CA65929,0.66067,793-D 5S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-03,7,CA65936,0.565813,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-03,8,CA65934,0.554185,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-03,9,CA65792,0.465042,793-D 2S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-03,10,CA65909,0.372197,793-D 3S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-03,11,CA65924,0.306897,793-D 4S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-03,12,CA65935,0.30245,793-D 5S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-03,13,CA65926,0.281085,793-D 4S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-03,14,CA65925,0.236756,793-D 4S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-03,15,CA65931,0.202012,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-04,1,CA65927,0.819761,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-04,2,CA65930,0.728515,793-D 5S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-04,3,CA65928,0.692825,793-D 5S,Caminhao,noite,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-04,4,CA5927,0.663757,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-04,5,CA65933,0.643139,793-D 5S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-04,6,CA65929,0.612083,793-D 5S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-04,7,CA65936,0.576069,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-04,8,CA65792,0.504659,793-D 2S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-04,9,CA65934,0.448446,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-04,10,CA65925,0.442792,793-D 4S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-04,11,CA65926,0.439053,793-D 4S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-04,12,CA65931,0.420124,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-04,13,CA65935,0.334055,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-04,14,CA65924,0.321443,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-04,15,CA65909,0.315508,793-D 3S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-05,1,CA65927,0.814976,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-05,2,CA65928,0.7253,793-D 5S,Caminhao,tarde,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-05,3,CA65931,0.689929,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-05,4,CA5927,0.684773,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-05,5,CA65933,0.62885,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-05,6,CA65936,0.627083,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-05,7,CA65935,0.601287,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-05,8,CA65930,0.547447,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-05,9,CA65926,0.546561,793-D 4S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-05,10,CA65934,0.477341,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-05,11,CA65925,0.449346,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-05,12,CA65792,0.391412,793-D 2S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-05,13,CA65932,0.336038,793-D 5S,Caminhao,tarde,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-05,14,CA65924,0.292429,793-D 4S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-05,15,CA5926,0.232917,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-06,1,CA65927,0.761418,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-06,2,CA65930,0.73683,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-06,3,CA65933,0.715221,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-06,4,CA65928,0.705693,793-D 5S,Caminhao,tarde,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-06,5,CA5927,0.662274,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-06,6,CA65931,0.650798,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-06,7,CA65792,0.648497,793-D 2S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-06,8,CA65936,0.616751,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-06,9,CA65934,0.520847,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-06,10,CA65935,0.516003,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-06,11,CA65926,0.4758,793-D 4S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-06,12,CA65932,0.40609,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-06,13,CA65924,0.381257,793-D 4S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-06,14,CA5926,0.262996,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-06,15,CA65925,0.229784,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-07,1,CA65927,0.803946,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-07,2,CA65933,0.756936,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-07,3,CA65928,0.751612,793-D 5S,Caminhao,tarde,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-07,4,CA65930,0.73019,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-07,5,CA65792,0.689294,793-D 2S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-07,6,CA65926,0.64485,793-D 4S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-07,7,CA65931,0.643925,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-07,8,CA65936,0.514249,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-07,9,CA65932,0.486467,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-07,10,CA65934,0.478962,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-07,11,CA65935,0.357601,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-07,12,CA65924,0.291044,793-D 4S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-07,13,CA5926,0.250125,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-07,14,CA65921,0.223418,793-D 4S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-07,15,CA65915,0.21171,793-D 4S,Caminhao,tarde,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-08,1,CA65927,0.84069,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-08,2,CA65934,0.814338,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-08,3,CA65933,0.738995,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-08,4,CA65928,0.737962,793-D 5S,Caminhao,noite,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-08,5,CA65930,0.683438,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-08,6,CA65792,0.592264,793-D 2S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-08,7,CA65936,0.576532,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-08,8,CA65926,0.546304,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-08,9,CA65931,0.546125,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-08,10,CA5927,0.545731,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-08,11,CA65932,0.463872,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-08,12,CA65935,0.307269,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-08,13,CA65924,0.287965,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-08,14,CA65915,0.264541,793-D 4S,Caminhao,tarde,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-08,15,CA5926,0.251025,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-09,1,CA65934,0.819563,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-09,2,CA65927,0.784355,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-09,3,CA65933,0.744729,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-09,4,CA65931,0.743639,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-09,5,CA65928,0.713919,793-D 5S,Caminhao,noite,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-09,6,CA5927,0.708502,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-09,7,CA65926,0.542876,793-D 4S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-09,8,CA65936,0.541279,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-09,9,CA65930,0.496736,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-09,10,CA65792,0.418227,793-D 2S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-09,11,CA65932,0.360455,793-D 5S,Caminhao,tarde,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-09,12,CA65935,0.292304,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-09,13,CA5926,0.244681,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-09,14,CA65921,0.193413,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-09,15,CA65915,0.167947,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-10,1,CA65927,0.763128,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-10,2,CA65931,0.72976,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-10,3,CA65933,0.686597,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-10,4,CA65928,0.682492,793-D 5S,Caminhao,noite,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-10,5,CA65936,0.649701,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-10,6,CA5927,0.638985,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-10,7,CA65930,0.632984,793-D 5S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-10,8,CA65934,0.551655,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-10,9,CA65792,0.492493,793-D 2S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-10,10,CA65926,0.40916,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-10,11,CA65932,0.368091,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-10,12,CA65925,0.32112,793-D 4S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-10,13,CA65924,0.277329,793-D 4S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-10,14,CA5926,0.247745,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-10,15,CA65921,0.234905,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-11,1,CA65933,0.738154,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-11,2,CA65928,0.727178,793-D 5S,Caminhao,tarde,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-11,3,CA65936,0.638263,793-D 5S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-11,4,CA65927,0.612066,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-11,5,CA65929,0.611131,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-11,6,CA5927,0.60907,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-11,7,CA65934,0.554161,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-11,8,CA65792,0.518822,793-D 2S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-11,9,CA65930,0.500198,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-11,10,CA65925,0.466846,793-D 4S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-11,11,CA65926,0.456973,793-D 4S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-11,12,CA65932,0.375418,793-D 5S,Caminhao,tarde,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-11,13,CA65924,0.260255,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-11,14,CA5926,0.214367,793-D 5S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-11,15,CA65931,0.200699,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-12,1,CA65933,0.785822,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-12,2,CA5927,0.676542,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-12,3,CA65928,0.672339,793-D 5S,Caminhao,noite,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-12,4,CA65925,0.667321,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-12,5,CA65930,0.66102,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-12,6,CA65927,0.625282,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-12,7,CA65929,0.604016,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-12,8,CA65936,0.499804,793-D 5S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-12,9,CA65792,0.487708,793-D 2S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-12,10,CA65926,0.482538,793-D 4S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-12,11,CA65934,0.473965,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-12,12,CA65932,0.449643,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-12,13,CA65924,0.397401,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-12,14,CA65931,0.369389,793-D 5S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-12,15,CA5926,0.248438,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-13,1,CA65933,0.787474,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-13,2,CA65931,0.752216,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-13,3,CA65934,0.711618,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-13,4,CA5927,0.67864,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-13,5,CA65925,0.645841,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-13,6,CA65929,0.641983,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-13,7,CA65928,0.629795,793-D 5S,Caminhao,manha,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-13,8,CA65936,0.534485,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-13,9,CA65792,0.520482,793-D 2S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-13,10,CA65927,0.463692,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-13,11,CA65932,0.448085,793-D 5S,Caminhao,noite,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-13,12,CA65926,0.446716,793-D 4S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-13,13,CA65930,0.397259,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-13,14,CA65924,0.349087,793-D 4S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-13,15,CA65935,0.321618,793-D 5S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-14,1,CA65931,0.727437,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-14,2,CA65928,0.725053,793-D 5S,Caminhao,noite,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-14,3,CA65933,0.676625,793-D 5S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-14,4,CA5927,0.67054,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-14,5,CA65934,0.64914,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-14,6,CA65929,0.647718,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-14,7,CA65925,0.637257,793-D 4S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-14,8,CA65926,0.53356,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-14,9,CA65792,0.523823,793-D 2S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-14,10,CA65936,0.522824,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-14,11,CA65930,0.456405,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-14,12,CA65932,0.442576,793-D 5S,Caminhao,noite,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-14,13,CA65935,0.384865,793-D 5S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-14,14,CA65924,0.272566,793-D 4S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-14,15,CA65909,0.267115,793-D 3S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-15,1,CA65931,0.734896,793-D 5S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-15,2,CA65929,0.727353,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-15,3,CA65928,0.722795,793-D 5S,Caminhao,noite,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-15,4,CA65930,0.676226,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-15,5,CA65925,0.667245,793-D 4S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-15,6,CA65933,0.647634,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-15,7,CA65936,0.564042,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-15,8,CA5927,0.547745,793-D 5S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-15,9,CA65926,0.491119,793-D 4S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-15,10,CA65934,0.481124,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-15,11,CA65792,0.473067,793-D 2S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-15,12,CA65932,0.388663,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-15,13,CA65935,0.375631,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-15,14,CA65909,0.332054,793-D 3S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-15,15,CA65915,0.322218,793-D 4S,Caminhao,noite,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-16,1,CA65931,0.729565,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-16,2,CA65928,0.715747,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-16,3,CA65933,0.6965,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-16,4,CA65930,0.689843,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-16,5,CA65929,0.661373,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-16,6,CA65936,0.632587,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-16,7,CA65927,0.624179,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-16,8,CA5927,0.601288,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-16,9,CA65925,0.558627,793-D 4S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-16,10,CA65792,0.520801,793-D 2S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-16,11,CA65926,0.519655,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-16,12,CA65934,0.492878,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-16,13,CA65932,0.366375,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-16,14,CA65935,0.345307,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-16,15,CA65915,0.337586,793-D 4S,Caminhao,noite,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-17,1,CA65927,0.823304,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-17,2,CA65931,0.802944,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-17,3,CA65933,0.774261,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-17,4,CA65930,0.755225,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-17,5,CA65928,0.708202,793-D 5S,Caminhao,tarde,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-17,6,CA65929,0.652061,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-17,7,CA65934,0.631176,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-17,8,CA5927,0.596473,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-17,9,CA65936,0.545971,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-17,10,CA65925,0.523447,793-D 4S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-17,11,CA65792,0.470561,793-D 2S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-17,12,CA65926,0.404567,793-D 4S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-17,13,CA65932,0.366556,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-17,14,CA65909,0.362505,793-D 3S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-17,15,CA65924,0.307729,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-18,1,CA65931,0.803299,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-18,2,CA65927,0.799071,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-18,3,CA65933,0.789963,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-18,4,CA65930,0.75394,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-18,5,CA65934,0.626644,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-18,6,CA5927,0.617568,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-18,7,CA65929,0.600953,793-D 5S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-18,8,CA65936,0.523755,793-D 5S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-18,9,CA65928,0.519355,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-18,10,CA65792,0.504746,793-D 2S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-18,11,CA65926,0.426079,793-D 4S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-18,12,CA65909,0.385552,793-D 3S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-18,13,CA65932,0.372315,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-18,14,CA65924,0.35852,793-D 4S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-18,15,CA65935,0.309216,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-19,1,CA65927,0.790364,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-19,2,CA65931,0.767148,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-19,3,CA65930,0.74114,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-19,4,CA65933,0.720172,793-D 5S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-19,5,CA65792,0.705918,793-D 2S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-19,6,CA65929,0.685325,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-19,7,CA65926,0.6694,793-D 4S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-19,8,CA65934,0.594932,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-19,9,CA65936,0.574269,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-19,10,CA5927,0.563766,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-19,11,CA65925,0.478281,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-19,12,CA65932,0.383035,793-D 5S,Caminhao,tarde,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-19,13,CA65924,0.340895,793-D 4S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-19,14,CA65935,0.321478,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-19,15,CA65909,0.312363,793-D 3S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-20,1,CA65927,0.787961,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-20,2,CA65933,0.779399,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-20,3,CA65931,0.757804,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-20,4,CA65930,0.737527,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-20,5,CA65792,0.673447,793-D 2S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-20,6,CA65929,0.665754,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-20,7,CA65926,0.625256,793-D 4S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-20,8,CA5927,0.607498,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-20,9,CA65936,0.586206,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-20,10,CA65932,0.450872,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-20,11,CA65935,0.414443,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-20,12,CA65934,0.408226,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-20,13,CA65909,0.352914,793-D 3S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-20,14,CA65924,0.336511,793-D 4S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-20,15,CA65925,0.263631,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-21,1,CA65927,0.813503,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-21,2,CA65933,0.786875,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-21,3,CA65930,0.739028,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-21,4,CA65928,0.628751,793-D 5S,Caminhao,tarde,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-21,5,CA65936,0.597752,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-21,6,CA5927,0.574612,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-21,7,CA65931,0.504807,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-21,8,CA65932,0.470418,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-21,9,CA65909,0.469655,793-D 3S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-21,10,CA65934,0.459791,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-21,11,CA65792,0.432139,793-D 2S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-21,12,CA65935,0.420926,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-21,13,CA65929,0.378601,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-21,14,CA65926,0.357416,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-21,15,CA65924,0.328345,793-D 4S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-22,1,CA65927,0.823351,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-22,2,CA65933,0.777486,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-22,3,CA65928,0.7373,793-D 5S,Caminhao,noite,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-22,4,CA65929,0.696207,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-22,5,CA5927,0.630729,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-22,6,CA65792,0.617539,793-D 2S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-22,7,CA65936,0.598359,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-22,8,CA65931,0.553339,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-22,9,CA65925,0.512739,793-D 4S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-22,10,CA65926,0.480263,793-D 4S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-22,11,CA65930,0.462013,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-22,12,CA65932,0.448704,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-22,13,CA65934,0.423784,793-D 5S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-22,14,CA65935,0.423363,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-22,15,CA65924,0.332674,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-23,1,CA65927,0.821252,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-23,2,CA65933,0.782053,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-23,3,CA65930,0.761823,793-D 5S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-23,4,CA65928,0.695941,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-23,5,CA65929,0.621098,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-23,6,CA5927,0.574145,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-23,7,CA65931,0.562059,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-23,8,CA65792,0.537627,793-D 2S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-23,9,CA65934,0.530597,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-23,10,CA65925,0.510221,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-23,11,CA65926,0.48954,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-23,12,CA65936,0.454478,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-23,13,CA65932,0.427406,793-D 5S,Caminhao,noite,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-23,14,CA65935,0.3169,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-23,15,CA5926,0.250353,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-24,1,CA65933,0.763638,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-24,2,CA65930,0.747165,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-24,3,CA65927,0.746096,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-24,4,CA65931,0.742096,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-24,5,CA65928,0.73746,793-D 5S,Caminhao,noite,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-24,6,CA65792,0.733068,793-D 2S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-24,7,CA5927,0.708841,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-24,8,CA65929,0.652884,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-24,9,CA65936,0.608283,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-24,10,CA65926,0.53239,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-24,11,CA65925,0.500323,793-D 4S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-24,12,CA65934,0.439553,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-24,13,CA65932,0.390605,793-D 5S,Caminhao,tarde,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-24,14,CA65935,0.388023,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-24,15,CA65909,0.306327,793-D 3S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-25,1,CA65933,0.779956,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-25,2,CA65930,0.755473,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-25,3,CA65792,0.735399,793-D 2S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-25,4,CA65928,0.728848,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-25,5,CA65931,0.727758,793-D 5S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-25,6,CA65929,0.720673,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-25,7,CA65927,0.707294,793-D 5S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-25,8,CA65936,0.624399,793-D 5S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-25,9,CA5927,0.616574,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-25,10,CA65934,0.616496,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-25,11,CA65926,0.447409,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-25,12,CA65935,0.43487,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-25,13,CA65932,0.401585,793-D 5S,Caminhao,tarde,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-25,14,CA65909,0.379109,793-D 3S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-25,15,CA65925,0.258955,793-D 4S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-26,1,CA65928,0.732577,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-26,2,CA65929,0.726932,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-26,3,CA65933,0.7186,793-D 5S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-26,4,CA65931,0.691771,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-26,5,CA5927,0.617563,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-26,6,CA65792,0.589838,793-D 2S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-26,7,CA65936,0.528763,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-26,8,CA65934,0.520059,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-26,9,CA65932,0.41889,793-D 5S,Caminhao,tarde,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-26,10,CA65925,0.412164,793-D 4S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-26,11,CA65935,0.384459,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-26,12,CA65926,0.333002,793-D 4S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-26,13,CA65927,0.322693,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-26,14,CA65930,0.286474,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-26,15,CA65909,0.266042,793-D 3S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-27,1,CA65928,0.695147,793-D 5S,Caminhao,tarde,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-27,2,CA65792,0.693403,793-D 2S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-27,3,CA65933,0.655497,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-27,4,CA65934,0.643076,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-27,5,CA5927,0.61256,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-27,6,CA65929,0.608102,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-27,7,CA65931,0.585376,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-27,8,CA65926,0.468281,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-27,9,CA65932,0.466731,793-D 5S,Caminhao,tarde,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-27,10,CA65935,0.447082,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-27,11,CA65925,0.29941,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-27,12,CA65909,0.272013,793-D 3S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-27,13,CA5926,0.259047,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-27,14,CA65927,0.194399,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-27,15,CA65921,0.16903,793-D 4S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-28,1,CA65929,0.783748,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-28,2,CA65931,0.747327,793-D 5S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-28,3,CA65933,0.729987,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-28,4,CA65928,0.720323,793-D 5S,Caminhao,noite,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-28,5,CA65792,0.656686,793-D 2S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-28,6,CA65934,0.612533,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-28,7,CA5927,0.598109,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-28,8,CA65926,0.567292,793-D 4S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-28,9,CA65927,0.562633,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-28,10,CA65932,0.450588,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-28,11,CA65925,0.443085,793-D 4S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-28,12,CA65935,0.430748,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-28,13,CA65930,0.417772,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-28,14,CA65909,0.342228,793-D 3S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-28,15,CA5926,0.311368,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-29,1,CA65927,0.801135,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-29,2,CA65934,0.755324,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-29,3,CA65930,0.738653,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-29,4,CA65933,0.728026,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-29,5,CA65925,0.723517,793-D 4S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-29,6,CA65931,0.719156,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-29,7,CA65928,0.715041,793-D 5S,Caminhao,noite,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-29,8,CA65792,0.641491,793-D 2S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-29,9,CA65936,0.524816,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-29,10,CA5927,0.496867,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-29,11,CA65932,0.46896,793-D 5S,Caminhao,tarde,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-29,12,CA65929,0.429998,793-D 5S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-29,13,CA65926,0.41534,793-D 4S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-29,14,CA65935,0.325261,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-29,15,CA5926,0.297828,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-30,1,CA65927,0.79965,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-30,2,CA65934,0.738227,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-30,3,CA65925,0.730791,793-D 4S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-30,4,CA65928,0.708648,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-30,5,CA65930,0.692779,793-D 5S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-30,6,CA65931,0.649121,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-30,7,CA65936,0.617963,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-30,8,CA65929,0.609346,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-30,9,CA5927,0.594665,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-30,10,CA65926,0.448751,793-D 4S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-30,11,CA65792,0.448044,793-D 2S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-30,12,CA65909,0.39157,793-D 3S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-30,13,CA65932,0.351944,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-30,14,CA65935,0.330254,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-06-30,15,CA5926,0.252281,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-07-01,1,CA65927,0.698739,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-07-01,2,CA65930,0.680023,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-07-01,3,CA65929,0.617921,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-07-01,4,CA65931,0.608651,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-07-01,5,CA65936,0.595635,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-07-01,6,CA5927,0.563782,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-07-01,7,CA65926,0.439156,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-07-01,8,CA65928,0.39591,793-D 5S,Caminhao,noite,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-07-01,9,CA65792,0.357623,793-D 2S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-07-01,10,CA65935,0.304914,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-07-01,11,CA65925,0.288023,793-D 4S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-07-01,12,CA65932,0.276588,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-07-01,13,CA65924,0.274933,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-07-01,14,CA65909,0.247912,793-D 3S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
-2025-07-01,15,CA65934,0.194363,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-02,1,CA65935,0.962169,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-02,2,CA65936,0.884097,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-02,3,CA65792,0.857069,793-D 2S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-02,4,CA65927,0.84261,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-02,5,CA65930,0.835435,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-02,6,CA65931,0.814623,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-02,7,CA65924,0.772484,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-02,8,CA5927,0.760697,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-02,9,PE3797,0.515268,LeTourneau L 1850,Escavadeira,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-02,10,CA65934,0.478091,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-02,11,CA65909,0.448057,793-D 3S,Caminhao,tarde,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-02,12,CA65921,0.441265,793-D 4S,Caminhao,tarde,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-02,13,CA65933,0.440787,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-02,14,CA65929,0.427823,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-02,15,CA65925,0.418595,793-D 4S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-03,1,CA65935,0.962169,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-03,2,CA65915,0.95003,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-03,3,CA65926,0.914609,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-03,4,CA65927,0.88859,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-03,5,CA65930,0.88846,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-03,6,CA65792,0.882721,793-D 2S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-03,7,CA65928,0.816293,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-03,8,CA65936,0.767358,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-03,9,CA65924,0.753553,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-03,10,CA65925,0.752658,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-03,11,CA65909,0.745471,793-D 3S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-03,12,CA65929,0.731481,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-03,13,CA65921,0.71101,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-03,14,CA5927,0.583683,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-03,15,CA65934,0.476393,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-04,1,CA65933,0.962169,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-04,2,CA65935,0.962169,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-04,3,CA65927,0.962169,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-04,4,CA65915,0.960777,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-04,5,CA65924,0.864183,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-04,6,CA65921,0.854866,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-04,7,CA65930,0.845122,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-04,8,CA65936,0.828339,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-04,9,CA65909,0.800153,793-D 3S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-04,10,CA65926,0.758075,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-04,11,CA65792,0.738939,793-D 2S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-04,12,CA65928,0.679085,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-04,13,CA65929,0.506139,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-04,14,CA5927,0.497531,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-04,15,CA65931,0.43843,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-05,1,CA65921,0.962169,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-05,2,CA65933,0.962169,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-05,3,CA65935,0.962169,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-05,4,CA65932,0.953333,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-05,5,CA65924,0.898463,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-05,6,CA65937,0.825142,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-05,7,CA5927,0.813024,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-05,8,CA65792,0.778918,793-D 2S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-05,9,CA65936,0.753827,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-05,10,CA65926,0.751857,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-05,11,CA65931,0.733276,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-05,12,CA65789,0.659388,793-D 2S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-05,13,CA65927,0.641103,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-05,14,CA65915,0.513376,793-D 4S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-05,15,CA65928,0.505089,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-06,1,CA65935,0.962169,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-06,2,CA65932,0.962169,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-06,3,CA65921,0.962169,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-06,4,CA65924,0.897387,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-06,5,CA65933,0.859569,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-06,6,CA5927,0.845886,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-06,7,CA65927,0.829699,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-06,8,CA65936,0.813427,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-06,9,CA65930,0.800248,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-06,10,CA65937,0.775947,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-06,11,CA65926,0.775427,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-06,12,CA65792,0.743372,793-D 2S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-06,13,CA5926,0.723761,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-06,14,CA65934,0.715548,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-06,15,CA65916,0.578547,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-07,1,CA65932,0.960444,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-07,2,CA65935,0.945229,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-07,3,CA65927,0.871502,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-07,4,CA65936,0.869962,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-07,5,CA65931,0.827551,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-07,6,CA65926,0.762808,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-07,7,CA65937,0.756409,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-07,8,CA65934,0.748014,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-07,9,CA65792,0.74716,793-D 2S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-07,10,CA65921,0.736994,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-07,11,CA65789,0.669913,793-D 2S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-07,12,CA65930,0.63756,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-07,13,CA65924,0.540874,793-D 4S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-07,14,CA65933,0.534084,793-D 5S,Caminhao,manha,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-07,15,CA5927,0.440469,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-08,1,CA65927,0.962169,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-08,2,CA65926,0.962169,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-08,3,CA65792,0.839892,793-D 2S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-08,4,CA65935,0.825627,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-08,5,CA65936,0.798336,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-08,6,CA65937,0.755127,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-08,7,CA65928,0.726951,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-08,8,CA65921,0.722893,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-08,9,CA65934,0.519941,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-08,10,CA65932,0.512275,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-08,11,CA5927,0.511194,793-D 5S,Caminhao,manha,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-08,12,CA65931,0.507143,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-08,13,CA65933,0.501553,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-08,14,CA65930,0.461836,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-08,15,CA65924,0.42884,793-D 4S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-09,1,CA65927,0.962169,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-09,2,CA65926,0.961278,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-09,3,CA65792,0.946535,793-D 2S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-09,4,CA65921,0.886397,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-09,5,CA65932,0.85816,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-09,6,CA65934,0.854354,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-09,7,CA65936,0.840094,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-09,8,CA65933,0.827901,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-09,9,CA65930,0.821413,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-09,10,CA65928,0.693217,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-09,11,CA65937,0.579028,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-09,12,CA65793,0.518289,793-D 2S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-09,13,CA65931,0.479163,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-09,14,CA65935,0.474247,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-09,15,CA65916,0.468745,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-10,1,CA65927,0.962169,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-10,2,CA65921,0.962169,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-10,3,CA65932,0.958836,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-10,4,CA65926,0.949053,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-10,5,CA65792,0.929186,793-D 2S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-10,6,CA65930,0.858532,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-10,7,CA65936,0.838071,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-10,8,CA65924,0.82904,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-10,9,CA65937,0.821413,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-10,10,CA65934,0.797348,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-10,11,CA5927,0.773967,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-10,12,CA65925,0.768179,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-10,13,CA5926,0.708803,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-10,14,CA65928,0.690017,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-10,15,CA65789,0.554495,793-D 2S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-11,1,CA65926,0.962169,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-11,2,CA65932,0.930483,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-11,3,CA65925,0.901663,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-11,4,CA65924,0.885166,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-11,5,CA65792,0.877619,793-D 2S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-11,6,CA65921,0.867529,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-11,7,CA65937,0.863853,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-11,8,CA65933,0.855728,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-11,9,CA65930,0.846273,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-11,10,CA65936,0.825744,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-11,11,CA5927,0.823214,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-11,12,CA65927,0.687607,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-11,13,CA65793,0.518289,793-D 2S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-11,14,CA65928,0.510593,793-D 5S,Caminhao,tarde,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-11,15,CA65934,0.499765,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-12,1,CA65926,0.960777,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-12,2,CA65936,0.906963,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-12,3,CA65924,0.872209,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-12,4,CA65930,0.844671,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-12,5,CA65937,0.793367,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-12,6,CA65925,0.765731,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-12,7,CA5926,0.743916,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-12,8,CA65934,0.737627,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-12,9,CA65921,0.726484,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-12,10,CA65928,0.724743,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-12,11,CA65927,0.66473,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-12,12,CA5927,0.606372,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-12,13,CA65933,0.550347,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-12,14,CA65932,0.448206,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-12,15,CA65792,0.43062,793-D 2S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-13,1,CA65926,0.962169,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-13,2,CA65935,0.960485,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-13,3,CA65921,0.934729,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-13,4,CA65936,0.916551,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-13,5,CA65924,0.881873,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-13,6,CA65929,0.815436,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-13,7,CA65932,0.789416,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-13,8,CA65933,0.777466,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-13,9,CA5927,0.767456,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-13,10,CA65931,0.7478,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-13,11,CA65925,0.682013,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-13,12,CA65790,0.669903,793-D 2S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-13,13,CA65927,0.620376,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-13,14,CA65934,0.533499,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-13,15,CA65928,0.497183,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-14,1,CA65926,0.962169,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-14,2,CA65928,0.962169,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-14,3,CA65924,0.960485,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-14,4,CA65921,0.95904,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-14,5,CA65936,0.906963,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-14,6,CA65935,0.903542,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-14,7,CA65932,0.883704,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-14,8,CA5927,0.857355,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-14,9,CA65792,0.856712,793-D 2S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-14,10,CA65909,0.817277,793-D 3S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-14,11,CA65933,0.757202,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-14,12,CA65937,0.75486,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-14,13,CA65934,0.694519,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-14,14,CA65931,0.5146,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-14,15,CA65929,0.503694,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-15,1,CA65924,0.96138,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-15,2,CA65926,0.96138,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-15,3,CA65928,0.948824,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-15,4,CA65932,0.929881,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-15,5,CA65936,0.89341,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-15,6,CA65931,0.827551,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-15,7,CA65921,0.825907,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-15,8,CA65909,0.781904,793-D 3S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-15,9,CA5927,0.750894,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-15,10,CA65935,0.748643,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-15,11,CA65792,0.732432,793-D 2S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-15,12,CA65933,0.533312,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-15,13,CA65789,0.505623,793-D 2S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-15,14,CA65929,0.502113,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-15,15,CA65934,0.486728,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-16,1,CA65926,0.942801,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-16,2,CA65792,0.918286,793-D 2S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-16,3,CA5926,0.900482,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-16,4,CA65909,0.881648,793-D 3S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-16,5,CA65931,0.880777,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-16,6,CA65921,0.83477,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-16,7,CA65925,0.826915,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-16,8,CA65936,0.796684,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-16,9,CA5927,0.774812,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-16,10,CA65933,0.751976,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-16,11,CA65932,0.747782,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-16,12,CA65915,0.738933,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-16,13,CA65927,0.690921,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-16,14,CA65924,0.63951,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-16,15,CA65928,0.567872,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-17,1,CA5926,0.904934,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-17,2,CA65921,0.88338,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-17,3,CA65909,0.877868,793-D 3S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-17,4,CA65936,0.835805,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-17,5,CA65933,0.826867,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-17,6,CA65928,0.812544,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-17,7,CA65937,0.780372,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-17,8,CA65925,0.779744,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-17,9,CA65927,0.776081,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-17,10,CA65930,0.769904,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-17,11,CA65926,0.760543,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-17,12,CA65929,0.744437,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-17,13,CA65931,0.731759,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-17,14,CA5927,0.632442,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-17,15,CA65793,0.580124,793-D 2S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-18,1,CA5926,0.943833,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-18,2,CA65930,0.884296,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-18,3,CA65925,0.879517,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-18,4,CA65933,0.853208,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-18,5,CA65909,0.837771,793-D 3S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-18,6,CA65921,0.826701,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-18,7,CA65792,0.824145,793-D 2S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-18,8,CA65926,0.8004,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-18,9,CA65935,0.793289,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-18,10,CA65927,0.761224,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-18,11,CA65936,0.740591,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-18,12,CA65929,0.592621,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-18,13,CA5927,0.582129,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-18,14,CA65793,0.580124,793-D 2S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-18,15,CA65789,0.545107,793-D 2S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-19,1,CA65933,0.960485,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-19,2,CA65909,0.960485,793-D 3S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-19,3,CA5926,0.943805,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-19,4,CA65925,0.91797,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-19,5,CA65927,0.886064,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-19,6,CA65937,0.849475,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-19,7,CA65936,0.828339,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-19,8,CA5927,0.827901,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-19,9,CA65792,0.8124,793-D 2S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-19,10,CA65926,0.8004,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-19,11,CA65924,0.76893,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-19,12,CA65915,0.668561,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-19,13,CA65930,0.586875,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-19,14,CA65935,0.515389,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-19,15,CA65929,0.487646,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-20,1,CA5926,0.930187,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-20,2,CA65933,0.904267,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-20,3,CA65909,0.894123,793-D 3S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-20,4,CA65927,0.892851,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-20,5,CA65926,0.873587,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-20,6,CA65935,0.83468,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-20,7,CA65932,0.826,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-20,8,CA5927,0.806696,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-20,9,CA65924,0.801175,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-20,10,CA65934,0.756412,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-20,11,CA65931,0.751422,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-20,12,CA65936,0.645463,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-20,13,CA65921,0.633699,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-20,14,CA65925,0.574617,793-D 4S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-20,15,CA65792,0.515043,793-D 2S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-21,1,CA65927,0.952294,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-21,2,CA65909,0.92126,793-D 3S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-21,3,CA65933,0.904013,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-21,4,CA65926,0.854252,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-21,5,CA65935,0.819432,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-21,6,CA65924,0.819057,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-21,7,CA5926,0.807374,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-21,8,CA65932,0.786866,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-21,9,CA5927,0.777466,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-21,10,CA65792,0.773538,793-D 2S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-21,11,CA65936,0.77182,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-21,12,CA65934,0.752706,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-21,13,CA65925,0.746599,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-21,14,CA65928,0.634566,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-21,15,CA65931,0.505444,793-D 5S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-22,1,CA65926,0.962169,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-22,2,CA5926,0.962169,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-22,3,CA65927,0.962169,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-22,4,CA65933,0.956373,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-22,5,CA65909,0.927807,793-D 3S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-22,6,CA65924,0.862483,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-22,7,CA65792,0.835458,793-D 2S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-22,8,CA65934,0.824145,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-22,9,CA65935,0.807686,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-22,10,CA65930,0.783194,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-22,11,CA65932,0.760464,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-22,12,CA65936,0.756839,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-22,13,CA65929,0.735581,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-22,14,CA65921,0.643839,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-22,15,CA5927,0.526511,793-D 5S,Caminhao,tarde,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-23,1,CA65926,0.962169,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-23,2,CA65927,0.960777,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-23,3,CA5926,0.956327,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-23,4,CA65933,0.948162,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-23,5,CA65935,0.881648,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-23,6,CA5927,0.859662,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-23,7,CA65936,0.857847,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-23,8,CA65931,0.788242,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-23,9,CA65929,0.773138,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-23,10,CA65932,0.760464,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-23,11,CA65930,0.744415,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-23,12,CA65921,0.724431,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-23,13,CA65928,0.716571,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-23,14,CA65909,0.656617,793-D 3S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-23,15,CA65924,0.594054,793-D 4S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-24,1,CA65926,0.962169,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-24,2,CA65933,0.960485,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-24,3,CA65909,0.956093,793-D 3S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-24,4,CA5926,0.946247,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-24,5,CA65792,0.889739,793-D 2S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-24,6,CA65931,0.882642,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-24,7,CA65936,0.8539,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-24,8,CA5927,0.845248,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-24,9,CA65930,0.825142,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-24,10,CA65928,0.815159,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-24,11,CA65921,0.794965,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-24,12,CA65927,0.749959,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-24,13,CA65790,0.67073,793-D 2S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-24,14,CA65935,0.545243,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-24,15,CA65929,0.483394,793-D 5S,Caminhao,manha,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-25,1,CA65926,0.962169,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-25,2,CA65927,0.960485,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-25,3,CA65909,0.945229,793-D 3S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-25,4,CA65933,0.898461,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-25,5,CA65936,0.8539,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-25,6,CA65931,0.838704,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-25,7,CA65792,0.811766,793-D 2S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-25,8,CA65929,0.776645,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-25,9,CA5927,0.773967,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-25,10,CA5926,0.745134,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-25,11,CA65930,0.672133,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-25,12,CA65928,0.505089,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-25,13,CA65934,0.440124,793-D 5S,Caminhao,tarde,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-25,14,CA65935,0.398482,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-25,15,CA65921,0.376818,793-D 4S,Caminhao,noite,historico recente de alertas em 24h,monitorar_por_ranking,monitorar no painel e reavaliar no proximo ciclo
+2025-06-26,1,CA65909,0.962169,793-D 3S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-26,2,CA65926,0.962169,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-26,3,CA65932,0.958991,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-26,4,CA5927,0.908,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-26,5,CA65931,0.82587,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-26,6,CA65935,0.821413,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-26,7,CA65933,0.778589,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-26,8,CA65921,0.757222,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-26,9,CA65929,0.75505,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-26,10,CA65925,0.751418,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-26,11,CA65928,0.729745,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-26,12,CA65936,0.677185,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-26,13,CA65915,0.674121,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-26,14,CA65789,0.669913,793-D 2S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-26,15,CA65790,0.669903,793-D 2S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-27,1,CA65926,0.962169,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-27,2,CA65909,0.960628,793-D 3S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-27,3,CA65932,0.944764,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-27,4,CA65933,0.91797,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-27,5,CA65935,0.892521,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-27,6,CA65925,0.881648,793-D 4S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-27,7,CA65937,0.858085,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-27,8,CA5927,0.850865,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-27,9,CA65792,0.767934,793-D 2S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-27,10,CA65921,0.740738,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-27,11,CA65931,0.521387,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-27,12,CA65929,0.506139,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-27,13,CA65928,0.481196,793-D 5S,Caminhao,manha,Tag com alta recorrencia operacional,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-27,14,PE3795,0.470169,LeTourneau L 1850,Escavadeira,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-27,15,CA65915,0.421114,793-D 4S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-28,1,CA65926,0.962169,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-28,2,CA65927,0.953047,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-28,3,CA5927,0.929297,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-28,4,CA5926,0.906179,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-28,5,CA65909,0.904871,793-D 3S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-28,6,CA65935,0.880625,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-28,7,CA65937,0.769493,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-28,8,CA65930,0.736588,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-28,9,CA65925,0.734619,793-D 4S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-28,10,CA65934,0.717936,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-28,11,CA65933,0.594058,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-28,12,CA65792,0.522201,793-D 2S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-28,13,CA65916,0.490459,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-28,14,CA65929,0.477092,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-28,15,CA65931,0.467526,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-29,1,CA65926,0.962169,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-29,2,CA5927,0.960485,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-29,3,CA5926,0.955422,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-29,4,CA65909,0.954607,793-D 3S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-29,5,CA65927,0.950081,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-29,6,CA65915,0.851063,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-29,7,CA65937,0.827194,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-29,8,CA65932,0.798927,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-29,9,CA65792,0.76741,793-D 2S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-29,10,CA65921,0.757797,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-29,11,CA65935,0.747318,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-29,12,CA65928,0.721748,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-29,13,CA65790,0.584425,793-D 2S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-29,14,CA65934,0.550059,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-29,15,CA65789,0.520642,793-D 2S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-30,1,CA65927,0.962169,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-30,2,CA65926,0.962169,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-30,3,CA5927,0.960381,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-30,4,CA65909,0.933121,793-D 3S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-30,5,CA65934,0.888845,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-30,6,CA5926,0.826669,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-30,7,CA65930,0.825142,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-30,8,CA65928,0.818065,793-D 5S,Caminhao,tarde,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-30,9,CA65929,0.753022,793-D 5S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-30,10,CA65792,0.732432,793-D 2S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-30,11,CA65793,0.654812,793-D 2S,Caminhao,manha,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-30,12,CA65915,0.489371,793-D 4S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-30,13,CA65937,0.471642,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-30,14,CA65925,0.442567,793-D 4S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-06-30,15,CA65921,0.435543,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-07-01,1,CA65926,0.962169,793-D 4S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-07-01,2,CA5927,0.960485,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-07-01,3,CA65927,0.959611,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-07-01,4,CA65935,0.821413,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-07-01,5,CA65909,0.572654,793-D 3S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-07-01,6,CA65790,0.548963,793-D 2S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-07-01,7,CA65930,0.531304,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-07-01,8,CA65928,0.509215,793-D 5S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-07-01,9,CA65789,0.498759,793-D 2S,Caminhao,noite,alertas recentes na janela de 4h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-07-01,10,CA65792,0.487326,793-D 2S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-07-01,11,CA65929,0.446287,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-07-01,12,CA5926,0.398927,793-D 5S,Caminhao,noite,historico recente de alertas em 24h,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-07-01,13,CA65937,0.394181,793-D 5S,Caminhao,noite,maior score diario do modelo,alto_acima_threshold,inspecionar primeiro e registrar achado operacional
+2025-07-01,14,CA65931,0.378424,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,monitorar_por_ranking,monitorar no painel e reavaliar no proximo ciclo
+2025-07-01,15,CA65936,0.372352,793-D 5S,Caminhao,noite,aumento recente na duracao do ciclo,monitorar_por_ranking,monitorar no painel e reavaliar no proximo ciclo

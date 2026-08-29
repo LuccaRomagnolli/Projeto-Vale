@@ -1,49 +1,49 @@
-feature,importance
-dias_desde_ultimo_alerta,6763
-Tag_freq,5670
-duracao_std_ciclo_24h,1496
-dia_da_semana,1201
-hora_do_dia,1085
-duracao_media_ciclo_24h,952
-n_ciclos_24h,904
-Classe_target_enc,787
-duracao_std_ciclo_8h,631
-freq_classe_atividade_24h,613
-duracao_media_ciclo_8h,418
-delta_n_ciclos_4h_24h_norm,392
-n_classes_distintas_24h,324
-n_classes_distintas_8h,302
-Frota_LeTourneau L 1850,284
-n_ciclos_8h,273
-delta_duracao_ciclo_4h_24h,271
-Frota_793-D 5S,270
-duracao_std_ciclo_4h,268
-Frota_793-D 2S,243
-freq_classe_atividade_8h,216
-duracao_media_ciclo_4h,201
-delta_freq_classe_4h_24h,189
-Frota_793-D 4S,187
-ratio_duracao_ciclo_4h_24h,159
-mes,156
-delta_classes_distintas_4h_24h,153
-n_ciclos_4h,139
-hora,103
-freq_classe_atividade_4h,103
-duracao_ciclo_min,96
-Frota_793-D 3S,80
-dia_semana,64
-n_classes_distintas_4h,56
-is_fim_de_semana,19
-Tipo_Caminhao,17
-Operador_freq,0
-n_alertas_8h,0
-ratio_alertas_4h_24h,0
-delta_alertas_por_hora_4h_24h,0
-nivel_maximo_evento_recente,0
-n_precondicoes_satisfeitas_4h,0
-alertas_por_hora_24h,0
-n_alertas_24h,0
-alertas_por_hora_8h,0
-alertas_por_hora_4h,0
-n_alertas_4h,0
-Tipo_Escavadeira,0
+feature,importance,importance_std
+dias_desde_ultimo_alerta,0.2360309839906339,0.0037303279610666385
+n_alertas_24h,0.03646554323621123,0.00423330699065041
+Tag_freq,0.022765207725530645,0.005725813305171465
+Classe_target_enc,0.017602422411537255,0.00024651114351845915
+n_classes_distintas_4h,0.009061711767296662,0.0024071041616136567
+Frota_LeTourneau L 1850,0.008513485939602808,0.002056257272718968
+n_alertas_4h,0.003469207025526296,0.0027956068834679875
+n_classes_distintas_8h,0.002033622259510759,0.0008638203154757931
+freq_classe_atividade_8h,0.0017677490527532498,0.0008829477233092443
+freq_classe_atividade_24h,0.0009571420266484091,0.00026814764123345424
+ratio_alertas_4h_24h,0.0006630212795949627,0.00025838167994926206
+duracao_ciclo_min,0.0006243847002052975,3.276232878311046e-05
+hora_do_dia,0.0005725630690555464,0.0003280106272522665
+n_classes_distintas_24h,0.0005347370994058983,0.00014956880558674192
+n_ciclos_8h,0.0005329935906405551,0.00046878237513722445
+duracao_std_ciclo_24h,0.00047648337588316697,6.93835245366081e-05
+duracao_media_ciclo_24h,0.00039062107064139856,0.00020733083142208768
+duracao_std_ciclo_8h,0.00032289632575225696,0.00015779892814611832
+delta_alertas_por_hora_4h_24h,0.00020782594509631083,8.477881840279732e-05
+Frota_793-D 2S,0.00014738974576576172,0.00014855207202809834
+Frota_793-D 4S,3.896877959145654e-05,0.0003103657559905115
+duracao_media_ciclo_8h,2.216292215199515e-05,0.0002968204651268844
+alertas_por_hora_24h,0.0,0.0
+delta_freq_classe_4h_24h,0.0,0.0
+Operador_freq,0.0,0.0
+nivel_maximo_evento_recente,0.0,0.0
+n_precondicoes_satisfeitas_4h,0.0,0.0
+Tipo_Escavadeira,0.0,0.0
+alertas_por_hora_8h,0.0,0.0
+dia_semana,0.0,0.0
+alertas_por_hora_4h,0.0,0.0
+mes,0.0,0.0
+is_fim_de_semana,0.0,0.0
+hora,0.0,0.0
+duracao_media_ciclo_4h,-4.619682745972871e-07,4.721316498038688e-07
+n_ciclos_4h,-4.68478536438018e-06,1.8187313137793262e-06
+delta_n_ciclos_4h_24h_norm,-1.6854725762590245e-05,3.0460732149476672e-05
+ratio_duracao_ciclo_4h_24h,-2.3378907307599246e-05,5.503404267286896e-05
+freq_classe_atividade_4h,-2.893617467536469e-05,0.00013880794739017416
+duracao_std_ciclo_4h,-2.8977809880333567e-05,4.5099973732009035e-05
+n_alertas_8h,-9.495396733422146e-05,0.00011388082198267388
+Frota_793-D 5S,-0.0001164345429546058,0.0004148233419482147
+delta_classes_distintas_4h_24h,-0.00015006282937585214,5.213564611921256e-05
+n_ciclos_24h,-0.0001665221752580326,0.00016162539873072572
+delta_duracao_ciclo_4h_24h,-0.00018179999173221587,6.522893024814412e-05
+dia_da_semana,-0.00021018507912608694,6.806886494208158e-05
+Tipo_Caminhao,-0.0003145250603394471,0.0004892572525957032
+Frota_793-D 3S,-0.0004431177759176748,7.546057836629396e-05

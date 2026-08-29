@@ -252,12 +252,18 @@ def build_feature_dataset(
     labeled_df: pd.DataFrame,
     critical_events_df: pd.DataFrame,
 ) -> pd.DataFrame:
-    """Executa o pipeline completo de feature engineering."""
+    """Executa o pipeline de feature engineering independente de split.
+
+    Os encodings categoricos NAO sao aplicados aqui. Eles dependem de
+    estatisticas que precisam ser aprendidas apenas no treino e por isso vivem
+    em `src/features/encoders.py`, aplicados depois do split temporal. Este
+    dataset preserva as colunas categoricas cruas (`Tag`, `Classe`, `Frota`,
+    `Tipo`) para que o encoder possa ajusta-las sem vazamento.
+    """
     features = create_temporal_features(labeled_df, dt_col="Inicio")
     features = add_cycle_rolling_features(features)
     features = add_alert_history_features(features, critical_events_df)
     features = add_degradation_features(features)
-    features = add_categorical_encodings(features)
     return features
 
 

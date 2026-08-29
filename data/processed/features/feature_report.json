@@ -1,6 +1,6 @@
 {
   "rows": 377907,
-  "columns": 57,
+  "columns": 49,
   "target_4h_positives": 70811,
   "target_4h_positive_rate_pct": 18.737679,
   "feature_columns": [
@@ -8,6 +8,8 @@
     "Inicio",
     "Fim",
     "Tag",
+    "Frota",
+    "Tipo",
     "Classe",
     "next_critical_event_time",
     "tte_horas",
@@ -50,28 +52,18 @@
     "ratio_alertas_4h_24h",
     "delta_n_ciclos_4h_24h_norm",
     "delta_freq_classe_4h_24h",
-    "delta_classes_distintas_4h_24h",
-    "Tag_freq",
-    "Operador_freq",
-    "Classe_target_enc",
-    "Frota_793-D 2S",
-    "Frota_793-D 3S",
-    "Frota_793-D 4S",
-    "Frota_793-D 5S",
-    "Frota_LeTourneau L 1850",
-    "Tipo_Caminhao",
-    "Tipo_Escavadeira"
+    "delta_classes_distintas_4h_24h"
   ],
   "null_pct_top10": {
     "next_critical_event_time": 19.316128,
     "tte_horas": 19.316128,
-    "dias_desde_ultimo_alerta": 10.323175,
+    "dias_desde_ultimo_alerta": 17.657784,
     "duracao_std_ciclo_8h": 0.0344,
     "duracao_std_ciclo_4h": 0.0344,
     "duracao_std_ciclo_24h": 0.031225,
-    "duracao_media_ciclo_4h": 0.0172,
     "duracao_media_ciclo_8h": 0.0172,
     "n_ciclos_8h": 0.0172,
+    "duracao_media_ciclo_4h": 0.0172,
     "n_ciclos_4h": 0.0172
   }
 }

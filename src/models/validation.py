@@ -18,34 +18,73 @@ from sklearn.metrics import (
 TARGET_COL = "target_4h"
 TIME_COL = "Fim"
 
+# O alvo `target_4h` olha 4 horas para frente. Sem um intervalo de guarda, as
+# ultimas horas do treino tem rotulo determinado por eventos que caem dentro da
+# validacao -- e o mesmo ocorre na fronteira validacao/teste.
+LABEL_HORIZON_HOURS = 4.0
+
 
 def temporal_train_val_test_split(
     df: pd.DataFrame,
     time_col: str = TIME_COL,
     train_frac: float = 0.70,
     val_frac: float = 0.15,
+    embargo_hours: float = LABEL_HORIZON_HOURS,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, dict[str, Any]]:
-    """Divide dados por ordem temporal em treino, validacao e teste."""
+    """Divide dados por ordem temporal, com corte por calendario e embargo.
+
+    O corte usa o timestamp da fronteira, e nao a posicao da linha, para que
+    ciclos com o mesmo `Fim` nunca fiquem dos dois lados da divisao. Em seguida
+    aplica um embargo de `embargo_hours` no fim do treino e da validacao,
+    descartando as linhas cujo horizonte de rotulo invade o bloco seguinte.
+    """
     if not 0 < train_frac < 1 or not 0 < val_frac < 1 or train_frac + val_frac >= 1:
         raise ValueError("Frações inválidas para split temporal.")
+    if embargo_hours < 0:
+        raise ValueError("embargo_hours nao pode ser negativo.")
 
     ordered = df.copy()
     ordered[time_col] = pd.to_datetime(ordered[time_col], errors="coerce", utc=True)
     ordered = ordered.dropna(subset=[time_col]).sort_values(time_col).reset_index(drop=True)
 
     n_rows = len(ordered)
-    train_end = int(n_rows * train_frac)
-    val_end = int(n_rows * (train_frac + val_frac))
+    if n_rows == 0:
+        raise ValueError("Nenhuma linha com timestamp valido para dividir.")
 
-    train = ordered.iloc[:train_end].copy()
-    val = ordered.iloc[train_end:val_end].copy()
-    test = ordered.iloc[val_end:].copy()
+    times = ordered[time_col]
+    train_boundary = times.iloc[min(int(n_rows * train_frac), n_rows - 1)]
+    val_boundary = times.iloc[min(int(n_rows * (train_frac + val_frac)), n_rows - 1)]
+
+    embargo = pd.Timedelta(hours=embargo_hours)
+
+    # Corte por timestamp: empates ficam inteiramente do lado direito.
+    train_all = times < train_boundary
+    val_all = (times >= train_boundary) & (times < val_boundary)
+    test_mask = times >= val_boundary
+
+    # Embargo: remove a cauda cujo rotulo depende do bloco seguinte.
+    train_mask = train_all & (times < train_boundary - embargo)
+    val_mask = val_all & (times < val_boundary - embargo)
+
+    train = ordered.loc[train_mask].copy()
+    val = ordered.loc[val_mask].copy()
+    test = ordered.loc[test_mask].copy()
+
+    for name, frame in (("treino", train), ("validacao", val), ("teste", test)):
+        if frame.empty:
+            raise ValueError(
+                f"Split temporal produziu {name} vazio "
+                f"(embargo_hours={embargo_hours}). Reduza o embargo ou use mais dados."
+            )
 
     metadata = {
         "rows_total": int(n_rows),
         "rows_train": int(len(train)),
         "rows_val": int(len(val)),
         "rows_test": int(len(test)),
+        "embargo_hours": float(embargo_hours),
+        "rows_dropped_embargo_train": int(train_all.sum() - len(train)),
+        "rows_dropped_embargo_val": int(val_all.sum() - len(val)),
         "train_start": str(train[time_col].min()),
         "train_end": str(train[time_col].max()),
         "val_start": str(val[time_col].min()),

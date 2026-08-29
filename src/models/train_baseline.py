@@ -9,6 +9,7 @@ from typing import Any
 import joblib
 import pandas as pd
 
+from src.features.encoders import CategoricalEncoder, save_encoder
 from src.models.validation import (
     TARGET_COL,
     choose_threshold_for_recall,
@@ -18,6 +19,7 @@ from src.models.validation import (
 )
 from src.utils.config import FEATURES_DATASET_PATH, MODELS_DIR, REPORTS_BASELINE_DIR, SPLIT_DIR
 
+ENCODER_FILENAME = "categorical_encoder.joblib"
 BASELINE_ARTIFACT_PATH = MODELS_DIR / "baseline_heuristico.joblib"
 BASELINE_REPORT_PATH = REPORTS_BASELINE_DIR / "baseline_report.json"
 BASELINE_SCORES_PATH = REPORTS_BASELINE_DIR / "baseline_scores.parquet"
@@ -110,6 +112,17 @@ def run_baseline_pipeline(
 
     features = pd.read_parquet(features_path)
     train, val, test, split_metadata = temporal_train_val_test_split(features)
+
+    # Encodings categoricos ajustados exclusivamente no treino. O treino recebe
+    # a versao causal do target encoding; validacao e teste recebem as
+    # estatisticas finais aprendidas no treino.
+    encoder = CategoricalEncoder()
+    train = encoder.fit_transform_train(train)
+    val = encoder.transform(val)
+    test = encoder.transform(test)
+    encoder_path = save_encoder(encoder, split_dir / ENCODER_FILENAME)
+    split_metadata["categorical_encoder"] = encoder.to_payload()
+
     split_paths = save_split_datasets(train, val, test, split_dir)
     metrics = evaluate_baseline(train, val, test)
     output_paths = save_baseline_outputs(train, val, test, metrics, split_metadata)
@@ -118,6 +131,7 @@ def run_baseline_pipeline(
         "rows": int(len(features)),
         "split_paths": split_paths,
         "split_metadata": split_metadata,
+        "encoder_path": str(encoder_path),
         "metrics": metrics,
         **output_paths,
     }
