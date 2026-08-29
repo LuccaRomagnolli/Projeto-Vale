@@ -245,6 +245,13 @@ def flatten_metrics(
         "threshold": metrics["threshold"],
         "eligible_for_selection": bool(eligible_for_selection),
     }
+    # Diagnosticos da calibracao vivem no nivel superior de `metrics`, e nao
+    # dentro de um split. Sem copia-los explicitamente, a marca de threshold
+    # degenerado nunca chegava ao relatorio -- e o criterio correspondente no
+    # gate de promocao ficava sem dado para avaliar.
+    for key, value in metrics.items():
+        if key.startswith("threshold_"):
+            row[key] = value
     for split_name in ("train", "val", "test"):
         # Um split pode nao ter sido avaliado (o teste fica de fora durante a
         # busca), e nesse caso simplesmente nao gera colunas.

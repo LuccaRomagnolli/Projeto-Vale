@@ -191,3 +191,26 @@ def test_threshold_diagnostics_reach_the_metrics() -> None:
     assert metrics["threshold_degenerate"] is True
     assert metrics["threshold_alert_rate"] == 1.0
     assert metrics["threshold_target_recall"] == 0.99
+
+
+def test_threshold_diagnostics_reach_the_report_row() -> None:
+    """Sem isto, o criterio de threshold degenerado no gate fica sem dado.
+
+    Os diagnosticos ficam no nivel superior de `metrics`, nao dentro de um
+    split, entao `flatten_metrics` precisa copia-los explicitamente.
+    """
+    train, val, test = _frame(), _frame(), _frame()
+    metrics, _ = evaluate_fitted_model(
+        _ScoreModel(np.full(len(train), 0.5)),
+        train=train,
+        val=val,
+        test=test,
+        feature_columns=["feature_a"],
+        min_recall=0.99,
+        splits=("train", "val"),
+    )
+    row = flatten_metrics("m", "official_candidate", object(), metrics, 1.0, True)
+
+    assert row["threshold_degenerate"] is True
+    assert row["threshold_alert_rate"] == 1.0
+    assert row["threshold_target_met"] is True
