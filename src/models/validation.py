@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
@@ -139,22 +140,100 @@ def compute_binary_metrics(
     return metrics
 
 
+# Acima desta fracao de positivos preditos, o threshold deixou de discriminar:
+# a lista vira "inspecionar tudo" e nao apoia decisao nenhuma.
+DEGENERATE_ALERT_RATE = 0.99
+
+
+@dataclass(frozen=True)
+class ThresholdChoice:
+    """Threshold calibrado e o diagnostico de como ele foi obtido."""
+
+    threshold: float
+    target_recall: float
+    achieved_recall: float
+    achieved_precision: float
+    alert_rate: float
+    target_met: bool
+
+    @property
+    def degenerate(self) -> bool:
+        """Verdadeiro quando o threshold marca praticamente tudo como positivo.
+
+        Este e o modo de falha que realmente ocorreu: o baseline heuristico foi
+        publicado com threshold `0.0` e recall `1.0`. O alvo de recall estava
+        formalmente atendido -- alertar sobre tudo garante recall perfeito --
+        mas a decisao resultante e inutil. `target_met` sozinho nao denuncia
+        esse caso, por isso a taxa de alerta e avaliada separadamente.
+        """
+        return self.alert_rate >= DEGENERATE_ALERT_RATE
+
+    def as_dict(self) -> dict[str, float | bool]:
+        return {
+            "threshold": self.threshold,
+            "target_recall": self.target_recall,
+            "achieved_recall": self.achieved_recall,
+            "achieved_precision": self.achieved_precision,
+            "alert_rate": self.alert_rate,
+            "target_met": self.target_met,
+            "degenerate": self.degenerate,
+        }
+
+
+def calibrate_threshold(
+    y_true: pd.Series | np.ndarray,
+    y_score: pd.Series | np.ndarray,
+    min_recall: float = 0.80,
+) -> ThresholdChoice:
+    """Escolhe o threshold de maior precisao entre os que atingem o recall minimo.
+
+    Quando nenhum candidato alcanca `min_recall`, a versao anterior devolvia
+    silenciosamente o menor threshold -- ou seja, "alertar sobre tudo" -- sem
+    aviso e sem marca nos relatorios. Isso aconteceu de fato com o baseline
+    heuristico, que foi publicado com threshold `0.0` e recall `1.0`.
+
+    Agora o fallback continua existindo (abortar no meio de uma busca de 90
+    trials seria pior), mas escolhe o candidato de MAIOR recall e marca
+    `target_met=False`, de modo que a condicao fique visivel a quem consome.
+    """
+    y_true_arr = np.asarray(y_true).astype(int)
+    y_score_arr = np.asarray(y_score).astype(float)
+    if y_score_arr.size == 0:
+        raise ValueError("Nao ha scores para calibrar o threshold.")
+
+    candidates = np.unique(np.quantile(y_score_arr, np.linspace(0, 1, 101)))
+    best: ThresholdChoice | None = None
+    fallback: ThresholdChoice | None = None
+
+    for threshold in candidates:
+        metrics = compute_binary_metrics(y_true_arr, y_score_arr, float(threshold))
+        recall = float(metrics["recall"])
+        precision = float(metrics["precision"])
+        choice = ThresholdChoice(
+            threshold=float(threshold),
+            target_recall=float(min_recall),
+            achieved_recall=recall,
+            achieved_precision=precision,
+            alert_rate=float((y_score_arr >= threshold).mean()),
+            target_met=recall >= min_recall,
+        )
+        if choice.target_met:
+            if best is None or precision > best.achieved_precision:
+                best = choice
+        elif fallback is None or recall > fallback.achieved_recall:
+            fallback = choice
+
+    if best is not None:
+        return best
+    if fallback is not None:
+        return fallback
+    raise ValueError("Nenhum threshold candidato pode ser avaliado.")
+
+
 def choose_threshold_for_recall(
     y_true: pd.Series | np.ndarray,
     y_score: pd.Series | np.ndarray,
     min_recall: float = 0.80,
 ) -> float:
-    """Seleciona threshold de maior precisao entre candidatos que atingem recall minimo."""
-    y_true_arr = np.asarray(y_true).astype(int)
-    y_score_arr = np.asarray(y_score).astype(float)
-    candidates = np.unique(np.quantile(y_score_arr, np.linspace(0, 1, 101)))
-    best_threshold = float(candidates.min()) if len(candidates) else 0.0
-    best_precision = -1.0
-
-    for threshold in candidates:
-        metrics = compute_binary_metrics(y_true_arr, y_score_arr, float(threshold))
-        if metrics["recall"] >= min_recall and metrics["precision"] > best_precision:
-            best_precision = metrics["precision"]
-            best_threshold = float(threshold)
-
-    return best_threshold
+    """Atalho que devolve apenas o valor do threshold calibrado."""
+    return calibrate_threshold(y_true, y_score, min_recall=min_recall).threshold

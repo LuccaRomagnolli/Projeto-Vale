@@ -36,7 +36,7 @@ from src.models.validation import (
     LABEL_HORIZON_HOURS,
     TARGET_COL,
     TIME_COL,
-    choose_threshold_for_recall,
+    calibrate_threshold,
     compute_binary_metrics,
 )
 from src.utils.config import (
@@ -114,6 +114,10 @@ def suggest_candidate_params(
             "num_leaves": trial.suggest_int("num_leaves", 15, 63),
             "min_child_samples": trial.suggest_int("min_child_samples", 30, 180),
             "subsample": trial.suggest_float("subsample", 0.70, 1.0),
+            # O LightGBM ignora `subsample` enquanto `subsample_freq` for 0, que
+            # e o padrao. A dimensao era sugerida a cada trial e nao produzia
+            # efeito algum: 30 trials buscando num eixo inerte.
+            "subsample_freq": 1,
             "colsample_bytree": trial.suggest_float("colsample_bytree", 0.70, 1.0),
             "reg_alpha": trial.suggest_float("reg_alpha", 0.0, 3.0),
             "reg_lambda": trial.suggest_float("reg_lambda", 0.1, 8.0, log=True),
@@ -188,27 +192,37 @@ def evaluate_fitted_model(
     test: pd.DataFrame,
     feature_columns: list[str],
     min_recall: float,
+    splits: tuple[str, ...] = ("train", "val", "test"),
 ) -> tuple[dict[str, Any], dict[str, np.ndarray]]:
-    """Avalia modelo com threshold calibrado apenas na validacao."""
-    matrices = {
-        "train": prepare_model_matrix(train, feature_columns),
-        "val": prepare_model_matrix(val, feature_columns),
-        "test": prepare_model_matrix(test, feature_columns),
-    }
+    """Avalia modelo com threshold calibrado apenas na validacao.
+
+    `splits` limita quais conjuntos sao pontuados. Durante a busca do Optuna o
+    teste fica de fora: o objetivo le apenas metricas de validacao, mas o teste
+    era pontuado nos 90 trials e suas metricas iam para o CSV de trials. Nao
+    havia vazamento mecanico -- estava a uma ordenacao de haver -- e o custo
+    era cerca de um terco da avaliacao, desperdicado.
+    """
+    available = {"train": train, "val": val, "test": test}
+    if "val" not in splits:
+        raise ValueError("A validacao e obrigatoria: e nela que o threshold e calibrado.")
+    matrices = {name: prepare_model_matrix(available[name], feature_columns) for name in splits}
     scores = {split: predict_scores(model, matrix) for split, matrix in matrices.items()}
-    threshold = choose_threshold_for_recall(val[TARGET_COL], scores["val"], min_recall=min_recall)
+    calibration = calibrate_threshold(val[TARGET_COL], scores["val"], min_recall=min_recall)
+    threshold = calibration.threshold
     metrics = {
         "threshold": float(threshold),
-        "train": compute_binary_metrics(train[TARGET_COL], scores["train"], threshold),
-        "val": compute_binary_metrics(val[TARGET_COL], scores["val"], threshold),
-        "test": compute_binary_metrics(test[TARGET_COL], scores["test"], threshold),
+        # Fica explicito quando o recall minimo nao foi alcancavel: sem isso o
+        # threshold degenerado passava por calibracao normal nos relatorios.
+        "threshold_target_met": calibration.target_met,
+        "threshold_target_recall": calibration.target_recall,
+        "threshold_achieved_recall": calibration.achieved_recall,
+        "threshold_alert_rate": calibration.alert_rate,
+        "threshold_degenerate": calibration.degenerate,
     }
+    for name in splits:
+        metrics[name] = compute_binary_metrics(available[name][TARGET_COL], scores[name], threshold)
     scored = pd.concat(
-        [
-            build_scored_frame(train, scores["train"], threshold, "train"),
-            build_scored_frame(val, scores["val"], threshold, "val"),
-            build_scored_frame(test, scores["test"], threshold, "test"),
-        ],
+        [build_scored_frame(available[name], scores[name], threshold, name) for name in splits],
         ignore_index=True,
     )
     return attach_operational_metrics(metrics, scored), scores
@@ -232,7 +246,9 @@ def flatten_metrics(
         "eligible_for_selection": bool(eligible_for_selection),
     }
     for split_name in ("train", "val", "test"):
-        for metric_name, value in metrics[split_name].items():
+        # Um split pode nao ter sido avaliado (o teste fica de fora durante a
+        # busca), e nesse caso simplesmente nao gera colunas.
+        for metric_name, value in metrics.get(split_name, {}).items():
             row[f"{split_name}_{metric_name}"] = value
     return row
 
@@ -292,6 +308,10 @@ def _trial_objective(
         test=test,
         feature_columns=feature_columns,
         min_recall=min_recall,
+        # O objetivo le apenas metricas de validacao: pontuar o teste aqui
+        # gastaria um terco da avaliacao e gravaria metricas de teste no CSV
+        # de trials, a uma ordenacao de virar vazamento.
+        splits=("train", "val"),
     )
     row = flatten_metrics(candidate_name, "official_candidate", fitted, metrics, fit_seconds, True)
     score = selection_score(row)
@@ -354,9 +374,14 @@ def run_candidate_study(
         trial_rows.append(row)
     trials_df = pd.DataFrame(trial_rows)
 
+    # `study.best_params` traz apenas o que foi sugerido pelo trial. Parametros
+    # fixados fora da busca precisam ser reinjetados aqui, senao o refit final
+    # roda com uma configuracao diferente da que foi avaliada.
     best_params = dict(study.best_params)
     if candidate_name in {"lightgbm_optuna", "xgboost_optuna"}:
         best_params["scale_pos_weight"] = scale_pos_weight(train[TARGET_COL].astype(int))
+    if candidate_name == "lightgbm_optuna":
+        best_params["subsample_freq"] = 1
     if candidate_name == "hist_gbdt_optuna":
         best_params["class_weight"] = "balanced"
     model = build_candidate_model(candidate_name, best_params, random_state=random_state)

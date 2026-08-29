@@ -23,6 +23,7 @@ from typing import Any
 
 from src.evaluation.operational_scorecard import PRIMARY_TOP_K
 from src.models.stability_gate import BACKTEST_REPORT_CSV, run_stability_gate
+from src.models.validation import DEGENERATE_ALERT_RATE
 from src.utils.config import REPORTS_MODEL_SELECTION_DIR
 
 SELECTION_REPORT_JSON = REPORTS_MODEL_SELECTION_DIR / "model_selection_report.json"
@@ -100,6 +101,20 @@ def run_promotion_gate(
     """Avalia a politica completa e persiste o veredito."""
     selected = load_selected_metrics(report_path)
     criteria = evaluate_performance_criteria(selected)
+
+    # Um threshold que marca praticamente tudo como positivo atende qualquer
+    # alvo de recall e nao apoia decisao nenhuma. Sem esta verificacao, o
+    # diagnostico existiria nos relatorios sem barrar nada.
+    if selected.get("threshold_degenerate"):
+        criteria.append(
+            Criterion(
+                name="threshold_nao_degenerado",
+                observed=float(selected.get("threshold_alert_rate", 1.0)),
+                limit=DEGENERATE_ALERT_RATE,
+                comparison="<",
+                passed=False,
+            )
+        )
 
     stability = run_stability_gate(backtest_path=backtest_path)
     criteria.append(

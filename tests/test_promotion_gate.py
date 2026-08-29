@@ -144,3 +144,30 @@ def test_verdict_is_persisted_for_audit(tmp_path: Path) -> None:
     saved = json.loads((tmp_path / "promotion.json").read_text(encoding="utf-8"))
     assert saved["aprovado"] == verdict["aprovado"]
     assert saved["politica"] == "docs/politica_promocao_modelo.md"
+
+
+def test_degenerate_threshold_blocks_promotion(tmp_path: Path) -> None:
+    """Alertar sobre tudo atende qualquer alvo de recall e nao decide nada."""
+    path = tmp_path / "selection.json"
+    path.write_text(
+        json.dumps(
+            {
+                "selected_model": {
+                    "model_name": "m",
+                    "test_top15_precision_at_k": 0.81,
+                    "test_top15_recall_at_k": 0.89,
+                    "test_top15_lift_vs_random": 2.51,
+                    "threshold_degenerate": True,
+                    "threshold_alert_rate": 1.0,
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+    verdict = run_promotion_gate(
+        report_path=path,
+        backtest_path=_backtest(tmp_path / "backtest.csv"),
+        output_path=tmp_path / "promotion.json",
+    )
+    assert verdict["aprovado"] is False
+    assert "threshold_nao_degenerado" in verdict["criterios_reprovados"]
