@@ -49,10 +49,30 @@ LEAKAGE_COLUMNS = {
     TARGET_COL,
 }
 
+# Colunas presentes no dataset mas fora da modelagem por motivo que NAO e
+# vazamento. Continuam disponiveis para EDA, relatorios e para o notebook, que
+# as referencia -- so nao entram na matriz do modelo.
+NON_MODELABLE_COLUMNS = {
+    # O periodo dos dados cobre sete meses e nunca completa um ciclo anual:
+    # treino ficou com os meses 1 a 5 e teste com 6 e 7, sem sobreposicao
+    # alguma. Todo lote futuro tera meses ineditos, entao a feature nao pode
+    # generalizar. Foi o unico alarme verdadeiro do monitoramento de drift,
+    # com PSI acima de 9. As demais features temporais (`hora_do_dia`,
+    # `dia_da_semana`, `is_fim_de_semana`) sao ciclos reais e permanecem.
+    "mes": "nao generaliza: meses de treino e teste sao disjuntos",
+    # Copias exatas de outra coluna, verificadas com `Series.equals`. Foram
+    # criadas para compatibilidade com notebooks iniciais e apenas duplicam
+    # sinal na matriz.
+    "hora": "duplicata exata de hora_do_dia",
+    "dia_semana": "duplicata exata de dia_da_semana",
+    "n_precondicoes_satisfeitas_4h": "duplicata exata de n_alertas_4h",
+}
+
 
 def select_feature_columns(df: pd.DataFrame) -> list[str]:
-    """Seleciona apenas features numericas/booleanas sem colunas de vazamento."""
-    candidate_columns = [column for column in df.columns if column not in LEAKAGE_COLUMNS]
+    """Seleciona features numericas/booleanas, sem vazamento e generalizaveis."""
+    excluded = LEAKAGE_COLUMNS | set(NON_MODELABLE_COLUMNS)
+    candidate_columns = [column for column in df.columns if column not in excluded]
     feature_columns = [
         column
         for column in candidate_columns

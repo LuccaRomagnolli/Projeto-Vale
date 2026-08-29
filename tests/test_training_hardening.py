@@ -214,3 +214,35 @@ def test_threshold_diagnostics_reach_the_report_row() -> None:
     assert row["threshold_degenerate"] is True
     assert row["threshold_alert_rate"] == 1.0
     assert row["threshold_target_met"] is True
+
+
+# --- selecao de features --------------------------------------------------
+
+
+def test_non_generalizing_and_duplicate_features_are_excluded() -> None:
+    """`mes` nao generaliza; as demais sao copias exatas de outra coluna."""
+    from src.models.train_model import NON_MODELABLE_COLUMNS, select_feature_columns
+
+    frame = _frame(20)
+    frame["mes"] = 3
+    frame["hora"] = frame["hora_do_dia"] = 10
+    frame["dia_semana"] = frame["dia_da_semana"] = 2
+    frame["n_alertas_4h"] = frame["n_precondicoes_satisfeitas_4h"] = 1.0
+
+    selected = select_feature_columns(frame)
+
+    for column in NON_MODELABLE_COLUMNS:
+        assert column not in selected, f"{column} deveria estar fora da matriz"
+    # as versoes que generalizam permanecem
+    assert "hora_do_dia" in selected
+    assert "dia_da_semana" in selected
+    assert "n_alertas_4h" in selected
+
+
+def test_every_exclusion_carries_a_reason() -> None:
+    """A exclusao precisa dizer por que, senao vira decisao sem rastro."""
+    from src.models.train_model import NON_MODELABLE_COLUMNS
+
+    assert NON_MODELABLE_COLUMNS
+    for column, reason in NON_MODELABLE_COLUMNS.items():
+        assert reason and len(reason) > 15, f"{column} sem justificativa util"

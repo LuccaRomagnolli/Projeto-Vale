@@ -26,6 +26,7 @@ from src.evaluation.operational_scorecard import (
 from src.features.encoders import CategoricalEncoder
 from src.models.train_model import (
     LEAKAGE_COLUMNS,
+    NON_MODELABLE_COLUMNS,
     extract_feature_importance,
     load_splits,
     predict_scores,
@@ -677,6 +678,7 @@ def save_model_selection_outputs(
         "candidate_pool": list(OFFICIAL_CANDIDATE_NAMES),
         "diagnostic_baseline": BASELINE_MODEL_NAME,
         "leakage_columns": sorted(LEAKAGE_COLUMNS),
+        "non_modelable_columns": dict(sorted(NON_MODELABLE_COLUMNS.items())),
         # Procedencia embutida: sem ela, um .joblib encontrado no disco nao
         # revela com que codigo, dependencias ou dados foi treinado.
         "provenance": build_artifact_provenance(
@@ -730,6 +732,7 @@ def save_model_selection_outputs(
         "feature_count": len(feature_columns),
         "feature_columns": feature_columns,
         "leakage_columns": sorted(LEAKAGE_COLUMNS),
+        "non_modelable_columns": dict(sorted(NON_MODELABLE_COLUMNS.items())),
         "models": ordered_summary.to_dict(orient="records"),
         "operational_topk": operational_topk,
         "backtest_summary": {

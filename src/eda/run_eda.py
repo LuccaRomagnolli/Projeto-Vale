@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal, cast
 
 import matplotlib
 import matplotlib.colors as mcolors
@@ -58,15 +59,15 @@ CMAP_BLUE = mcolors.LinearSegmentedColormap.from_list("blue", ["#0d1117", "#58a6
 CMAP_CM = mcolors.LinearSegmentedColormap.from_list("cm", ["#0d1117", "#1f6feb"])
 CMAP_CORR = mcolors.LinearSegmentedColormap.from_list("corr", ["#f85149", "#161b22", "#58a6ff"])
 
-FONT_TITLE = {
+FONT_TITLE: dict[str, Any] = {
     "fontsize": 13,
     "fontweight": "bold",
     "color": PALETTE["text"],
     "fontfamily": "monospace",
 }
-FONT_LABEL = {"fontsize": 10, "color": PALETTE["muted"], "fontfamily": "monospace"}
-FONT_TICK = {"labelsize": 9, "colors": PALETTE["muted"]}
-FONT_ANNOT = {"fontsize": 8, "color": PALETTE["muted"], "fontfamily": "monospace"}
+FONT_LABEL: dict[str, Any] = {"fontsize": 10, "color": PALETTE["muted"], "fontfamily": "monospace"}
+FONT_TICK: dict[str, Any] = {"labelsize": 9, "colors": PALETTE["muted"]}
+FONT_ANNOT: dict[str, Any] = {"fontsize": 8, "color": PALETTE["muted"], "fontfamily": "monospace"}
 
 
 def _apply_theme(fig: plt.Figure, axes: list[plt.Axes]) -> None:
@@ -194,7 +195,7 @@ def _pct_fmt(value, _):
     return f"{value:.0%}"
 
 
-def _plain_fmt(ax: plt.Axes, axis: str = "y") -> None:
+def _plain_fmt(ax: plt.Axes, axis: Literal["x", "y", "both"] = "y") -> None:
     ax.ticklabel_format(axis=axis, style="plain")
 
 
@@ -213,7 +214,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
     colors = [PALETTE["blue"], PALETTE["red"]]
     bars = ax.bar(
         [f"Classe {int(k)}" for k in counts.index],
-        counts.values,
+        counts.to_numpy(),
         color=colors,
         edgecolor=PALETTE["border"],
         linewidth=0.8,
@@ -258,7 +259,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
     bar_colors = [CMAP_TEAL(norm(v)) for v in hour_counts.values]
     ax.bar(
         hour_counts.index,
-        hour_counts.values,
+        hour_counts.to_numpy(),
         color=bar_colors,
         edgecolor=PALETTE["border"],
         linewidth=0.5,
@@ -287,7 +288,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
     bar_colors = [CMAP_BLUE(norm(v)) for v in top_frotas.values]
     ax.barh(
         top_frotas.index.astype(str),
-        top_frotas.values,
+        top_frotas.to_numpy(),
         color=bar_colors,
         edgecolor=PALETTE["border"],
         linewidth=0.5,
@@ -317,11 +318,15 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
     if len(sample) > 50_000:
         sample = sample.sample(50_000, random_state=42)
     fig, ax = plt.subplots(figsize=(9, 4.2))
-    n, bins, patches = ax.hist(
+    # Os stubs de `hist` incluem `Polygon` na uniao, que so ocorre com
+    # histtype='step'. Com o histograma de barras padrao o retorno e
+    # sempre um BarContainer iteravel.
+    hist_counts, _, hist_patches = ax.hist(
         sample, bins=60, edgecolor=PALETTE["border"], linewidth=0.4, zorder=3
     )
-    norm = plt.Normalize(n.min(), n.max())
-    for patch, count in zip(patches, n, strict=False):
+    counts_array = np.asarray(hist_counts)
+    norm = plt.Normalize(counts_array.min(), counts_array.max())
+    for patch, count in zip(cast(Iterable[Any], hist_patches), counts_array, strict=False):
         patch.set_facecolor(CMAP_BLUE(norm(count)))
     p50 = sample.median()
     p95 = sample.quantile(0.95)
@@ -351,7 +356,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
     bar_colors = [CMAP_HEAT(norm(v)) for v in top_classes.values]
     ax.barh(
         top_classes.index.astype(str),
-        top_classes.values,
+        top_classes.to_numpy(),
         color=bar_colors,
         edgecolor=PALETTE["border"],
         linewidth=0.5,
@@ -405,7 +410,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
     for spine in ax2.spines.values():
         spine.set_edgecolor(PALETTE["border"])
     lines = ax.get_lines() + ax2.get_lines()
-    labels = [line.get_label() for line in lines]
+    labels = [str(line.get_label()) for line in lines]
     ax.legend(
         lines,
         labels,
@@ -448,7 +453,9 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
     ax.set_title("Taxa de target_4h por hora e dia da semana", **FONT_TITLE)
     ax.set_xlabel("Hora", **FONT_LABEL)
     ax.set_ylabel("")
+    # os stubs tipam `colorbar` como Optional; o mapa de calor sempre a cria
     cbar = ax.collections[0].colorbar
+    assert cbar is not None
     cbar.ax.yaxis.set_tick_params(color=PALETTE["muted"], labelsize=8)
     cbar.ax.set_facecolor(PALETTE["surface"])
     cbar.outline.set_edgecolor(PALETTE["border"])
@@ -485,7 +492,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
         bar_colors = [CMAP_HEAT(norm(v)) for v in positive_tags.values]
         ax.barh(
             positive_tags.index,
-            positive_tags.values,
+            positive_tags.to_numpy(),
             color=bar_colors,
             edgecolor=PALETTE["border"],
             linewidth=0.5,
@@ -658,11 +665,15 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
         ax.axis("off")
     else:
         clipped = tte_positive.clip(lower=0, upper=4)
-        n, bins, patches = ax.hist(
+        # Os stubs de `hist` incluem `Polygon` na uniao, que so ocorre com
+        # histtype='step'. Com o histograma de barras padrao o retorno e
+        # sempre um BarContainer iteravel.
+        hist_counts, _, hist_patches = ax.hist(
             clipped, bins=24, edgecolor=PALETTE["border"], linewidth=0.4, zorder=3
         )
-        norm = plt.Normalize(n.min(), n.max())
-        for patch, count in zip(patches, n, strict=False):
+        counts_array = np.asarray(hist_counts)
+        norm = plt.Normalize(counts_array.min(), counts_array.max())
+        for patch, count in zip(cast(Iterable[Any], hist_patches), counts_array, strict=False):
             patch.set_facecolor(CMAP_HEAT(norm(count)))
         ax.set_xlabel("Horas até evento crítico", **FONT_LABEL)
         ax.set_ylabel("Frequência", **FONT_LABEL)
@@ -679,7 +690,7 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
     bar_colors = [CMAP_HEAT(norm(v)) for v in missing.values]
     ax.barh(
         missing.index.astype(str),
-        missing.values,
+        missing.to_numpy(),
         color=bar_colors,
         edgecolor=PALETTE["border"],
         linewidth=0.5,
@@ -726,7 +737,9 @@ def generate_eda_figures(df: pd.DataFrame, figures_dir: Path = FIGURES_DIR) -> l
             square=True,
         )
         ax.set_title("Heatmap de Correlação Spearman — variáveis numéricas", **FONT_TITLE)
+        # os stubs tipam `colorbar` como Optional; o mapa de calor sempre a cria
         cbar = ax.collections[0].colorbar
+        assert cbar is not None
         cbar.ax.yaxis.set_tick_params(color=PALETTE["muted"], labelsize=8)
         cbar.outline.set_edgecolor(PALETTE["border"])
         cbar.set_label("Spearman ρ", color=PALETTE["muted"], fontsize=9)
@@ -798,8 +811,8 @@ def _plot_threshold_diagnostic(
         linewidth=1.6,
         label=f"Threshold = {threshold:.4f}",
     )
-    R = float(sel_row["recall"])
-    P = float(sel_row["precision"])
+    R = float(np.asarray(sel_row["recall"]).item())
+    P = float(np.asarray(sel_row["precision"]).item())
     ax0.scatter([threshold], [R], color=PALETTE["teal"], s=70, zorder=5)
     ax0.scatter([threshold], [P], color=PALETTE["orange"], s=70, zorder=5)
     ax0.annotate(

@@ -36,14 +36,6 @@ warn_unused_ignores = true
 warn_redundant_casts = true
 files = ["src"]
 
-# src/eda/run_eda.py concentrava 284 dos 313 erros iniciais, praticamente todos
-# vindos da tipagem frouxa do matplotlib em codigo de plotagem. Verificar esse
-# modulo geraria ruido sem revelar defeito. O restante do projeto e verificado,
-# e essa fronteira nao deve crescer: ao adicionar codigo novo, faca-o passar.
-[[tool.mypy.overrides]]
-module = "src.eda.run_eda"
-ignore_errors = true
-
 [tool.pytest.ini_options]
 addopts = "-q"
 testpaths = ["tests"]

@@ -6,10 +6,10 @@ omit =
     src/ui/__main__.py
 
 [report]
-# Trava a cobertura de ramos no patamar atual (77,4%). Com branch=True a medida
+# Trava a cobertura de ramos no patamar atual (79,2%). Com branch=True a medida
 # e mais rigorosa que a de linhas (que marcava 80,5%). Elevar conforme as fases
 # do plano de robustez adicionarem testes; nunca reduzir sem justificativa.
-fail_under = 77
+fail_under = 79
 precision = 1
 show_missing = True
 skip_covered = False
