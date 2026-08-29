@@ -23,8 +23,11 @@ from src.models.model_selection import SELECTED_MODEL_PATH
 from src.models.train_model import load_splits, predict_scores, prepare_model_matrix
 from src.models.validation import TARGET_COL
 from src.utils.config import REPORTS_OPERATIONAL_DIR, SPLIT_DIR
+from src.utils.logging_config import get_logger, setup_logging
 from src.utils.metadata import to_repo_relative_path
 from src.utils.timeutils import hours_to_ns, to_epoch_ns
+
+logger = get_logger(__name__)
 
 OPERATIONAL_REPORT_JSON = REPORTS_OPERATIONAL_DIR / "operational_metrics_report.json"
 BUDGET_METRICS_CSV = REPORTS_OPERATIONAL_DIR / "operational_budget_metrics.csv"
@@ -293,23 +296,24 @@ def run_operational_evaluation(
 
 
 def main() -> None:
+    setup_logging()
     result = run_operational_evaluation()
     report = result["report"]
     test_threshold = next(item for item in report["threshold_metrics"] if item["split"] == "test")
     best_topk = report["test_daily_topk_metrics"][0]
-    print(f"[OK] Relatorio operacional: {result['json_path']}")
-    print(f"[OK] Modelo avaliado: {report['model_name']}")
-    print(f"[OK] Threshold: {report['threshold']:.6f}")
-    print(f"[OK] Test lift no threshold: {test_threshold['lift_vs_random']:.3f}")
-    print(
-        "[OK] Top "
+    logger.info(f"Relatorio operacional: {result['json_path']}")
+    logger.info(f"Modelo avaliado: {report['model_name']}")
+    logger.info(f"Threshold: {report['threshold']:.6f}")
+    logger.info(f"Test lift no threshold: {test_threshold['lift_vs_random']:.3f}")
+    logger.info(
+        "Top "
         f"{best_topk['top_k_tags_per_day']} Tags/dia: "
         f"precision={best_topk['precision_at_k']:.3f}, "
         f"recall={best_topk['recall_at_k']:.3f}, "
         f"lift={best_topk['lift_vs_random']:.3f}"
     )
-    print(f"[OK] Budget metrics: {result['budget_metrics_csv']}")
-    print(f"[OK] Daily top-k metrics: {result['daily_topk_metrics_csv']}")
+    logger.info(f"Budget metrics: {result['budget_metrics_csv']}")
+    logger.info(f"Daily top-k metrics: {result['daily_topk_metrics_csv']}")
 
 
 if __name__ == "__main__":

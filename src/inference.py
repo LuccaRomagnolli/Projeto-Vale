@@ -15,6 +15,9 @@ from src.models.model_selection import SELECTED_MODEL_PATH
 from src.models.train_baseline import ENCODER_FILENAME
 from src.models.train_model import predict_scores, prepare_model_matrix
 from src.utils.config import REPORTS_DIR, REPORTS_INFERENCE_DIR, SPLIT_DIR
+from src.utils.logging_config import get_logger, setup_logging
+
+logger = get_logger(__name__)
 
 DEFAULT_MODEL_PATH = SELECTED_MODEL_PATH
 DEFAULT_ENCODER_PATH = SPLIT_DIR / ENCODER_FILENAME
@@ -301,21 +304,22 @@ def run_inference(
 
 
 def main() -> None:
+    setup_logging()
     result = run_inference(input_path=DEFAULT_INPUT_PATH)
-    print(f"[OK] Input inferencia: {result['input_path']}")
-    print(f"[OK] Artefato: {result['model_path']}")
-    print(f"[OK] Saida: {result['output_path']}")
-    print(f"[OK] Ranking operacional: {result['priority_output_path']}")
-    print(f"[OK] Linhas processadas: {result['rows']}")
-    print(
-        "[OK] TopK Tag-dia: "
+    logger.info(f"Input inferencia: {result['input_path']}")
+    logger.info(f"Artefato: {result['model_path']}")
+    logger.info(f"Saida: {result['output_path']}")
+    logger.info(f"Ranking operacional: {result['priority_output_path']}")
+    logger.info(f"Linhas processadas: {result['rows']}")
+    logger.info(
+        "TopK Tag-dia: "
         f"top_k={result['priority_top_k']} "
         f"dias={result['priority_days']} "
         f"linhas={result['priority_rows']}"
     )
-    print(f"[OK] Threshold aplicado: {result['threshold']:.6f}")
-    print(f"[OK] Encoder categorico aplicado: {result['encoder_applied']}")
-    print(f"[OK] Features ausentes: {len(result['missing_feature_columns'])}")
+    logger.info(f"Threshold aplicado: {result['threshold']:.6f}")
+    logger.info(f"Encoder categorico aplicado: {result['encoder_applied']}")
+    logger.info(f"Features ausentes: {len(result['missing_feature_columns'])}")
 
 
 if __name__ == "__main__":

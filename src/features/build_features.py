@@ -15,7 +15,10 @@ from src.utils.config import (
     FEATURES_DIR,
     LABELED_DATASET_PATH,
 )
+from src.utils.logging_config import get_logger, setup_logging
 from src.utils.timeutils import NS_PER_DAY, NS_PER_HOUR, to_epoch_ns
+
+logger = get_logger(__name__)
 
 ROLLING_WINDOWS_HOURS = (4, 8, 24)
 REFERENCE_COL = "Fim"
@@ -330,12 +333,13 @@ def run_feature_pipeline(
 
 
 def main() -> None:
+    setup_logging()
     result = run_feature_pipeline()
-    print(f"[OK] Feature dataset: {result['dataset_path']}")
-    print(f"[OK] Feature report: {result['report_path']}")
-    print(f"[OK] Linhas: {result['rows']}")
-    print(f"[OK] Colunas: {result['columns']}")
-    print(f"[OK] Positivos target_4h: {result['target_4h_positives']}")
+    logger.info(f"Feature dataset: {result['dataset_path']}")
+    logger.info(f"Feature report: {result['report_path']}")
+    logger.info(f"Linhas: {result['rows']}")
+    logger.info(f"Colunas: {result['columns']}")
+    logger.info(f"Positivos target_4h: {result['target_4h_positives']}")
 
 
 if __name__ == "__main__":

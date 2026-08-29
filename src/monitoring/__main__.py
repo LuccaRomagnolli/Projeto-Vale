@@ -26,7 +26,10 @@ from src.monitoring.drift import (
     should_retrain,
 )
 from src.utils.config import REPORTS_INFERENCE_DIR, SPLIT_DIR
+from src.utils.logging_config import get_logger, setup_logging
 from src.utils.metadata import to_repo_relative_path
+
+logger = get_logger(__name__)
 
 DEFAULT_SCORES_PATH = REPORTS_INFERENCE_DIR / "inference_scores.parquet"
 
@@ -109,35 +112,36 @@ def run_check(
 
 
 def main(argv: list[str] | None = None) -> None:
+    setup_logging()
     parser = argparse.ArgumentParser(description="Monitoramento operacional de drift.")
     parser.add_argument("acao", choices=["baseline", "check"])
     args = parser.parse_args(argv)
 
     if args.acao == "baseline":
         result = run_baseline()
-        print(f"[OK] Linhas de referencia: {result['rows']}")
-        print(f"[OK] Features perfiladas: {result['features_perfiladas']}")
-        print(f"[OK] Taxa de alerta esperada: {result['alert_rate']:.6f}")
-        print(f"[OK] Perfil salvo em: {to_repo_relative_path(Path(result['profile_path']))}")
+        logger.info(f"Linhas de referencia: {result['rows']}")
+        logger.info(f"Features perfiladas: {result['features_perfiladas']}")
+        logger.info(f"Taxa de alerta esperada: {result['alert_rate']:.6f}")
+        logger.info(f"Perfil salvo em: {to_repo_relative_path(Path(result['profile_path']))}")
         return
 
     drift = run_check()
-    print(f"[OK] Linhas avaliadas: {drift['rows']}")
-    print(f"[OK] PSI do score: {drift['score_psi']:.6f} ({drift['score_faixa']})")
+    logger.info(f"Linhas avaliadas: {drift['rows']}")
+    logger.info(f"PSI do score: {drift['score_psi']:.6f} ({drift['score_faixa']})")
     volume = drift["volume_de_alertas"]
     if volume.get("observado") is not None:
-        print(
-            f"[OK] Volume de alertas: esperado {volume['esperado']:.4f}, "
+        logger.info(
+            f"Volume de alertas: esperado {volume['esperado']:.4f}, "
             f"observado {volume['observado']:.4f}"
         )
     significativos = drift["features_com_drift_significativo"]
-    print(f"[OK] Features com drift significativo: {len(significativos)}")
+    logger.info(f"Features com drift significativo: {len(significativos)}")
     for feature in significativos[:5]:
-        print(f"[OK]   - {feature}")
-    print(f"[OK] Relatorio: {to_repo_relative_path(Path(drift['report_path']))}")
+        logger.info(f"- {feature}")
+    logger.info(f"Relatorio: {to_repo_relative_path(Path(drift['report_path']))}")
     if drift["retreinar"]:
         for reason in drift["motivos"]:
-            print(f"[ERROR] {reason}")
+            logger.error(f"{reason}")
         raise SystemExit("[ERROR] Gatilho de retreino acionado.")
 
 

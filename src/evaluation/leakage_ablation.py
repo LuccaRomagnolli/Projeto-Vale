@@ -51,7 +51,10 @@ from src.models.validation import (
     temporal_train_val_test_split,
 )
 from src.utils.config import FEATURES_DATASET_PATH, REPORTS_MODEL_SELECTION_DIR
+from src.utils.logging_config import get_logger, setup_logging
 from src.utils.metadata import to_repo_relative_path
+
+logger = get_logger(__name__)
 
 ABLATION_REPORT_PATH = REPORTS_MODEL_SELECTION_DIR / "leakage_ablation_report.json"
 
@@ -180,20 +183,19 @@ def run_leakage_ablation(
 
 
 def main() -> None:
+    setup_logging()
     result = run_leakage_ablation()
     precision_key = f"test_top{PRIMARY_TOP_K}_precision_at_k"
-    print(f"[OK] Modelo fixado: {result['model_name']}")
-    print(f"[OK] Conjunto de teste identico entre bracos: {result['same_test_set']}")
-    print(
-        f"[OK] Precision@{PRIMARY_TOP_K} com vazamento: "
-        f"{result['com_vazamento'][precision_key]:.6f}"
+    logger.info(f"Modelo fixado: {result['model_name']}")
+    logger.info(f"Conjunto de teste identico entre bracos: {result['same_test_set']}")
+    logger.info(
+        f"Precision@{PRIMARY_TOP_K} com vazamento: " f"{result['com_vazamento'][precision_key]:.6f}"
     )
-    print(
-        f"[OK] Precision@{PRIMARY_TOP_K} sem vazamento: "
-        f"{result['sem_vazamento'][precision_key]:.6f}"
+    logger.info(
+        f"Precision@{PRIMARY_TOP_K} sem vazamento: " f"{result['sem_vazamento'][precision_key]:.6f}"
     )
-    print(f"[OK] Custo do fix: {result['custo_do_fix'][precision_key]:+.6f}")
-    print(f"[OK] Relatorio: {to_repo_relative_path(Path(result['report_path']))}")
+    logger.info(f"Custo do fix: {result['custo_do_fix'][precision_key]:+.6f}")
+    logger.info(f"Relatorio: {to_repo_relative_path(Path(result['report_path']))}")
 
 
 if __name__ == "__main__":

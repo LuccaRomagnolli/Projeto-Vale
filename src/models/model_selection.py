@@ -46,6 +46,7 @@ from src.utils.config import (
     REPORTS_MODEL_SELECTION_DIR,
     SPLIT_DIR,
 )
+from src.utils.logging_config import get_logger, setup_logging
 from src.utils.metadata import (
     build_artifact_provenance,
     build_execution_metadata,
@@ -53,6 +54,8 @@ from src.utils.metadata import (
     to_repo_relative_path,
 )
 from src.utils.tracking import track_run
+
+logger = get_logger(__name__)
 
 OFFICIAL_CANDIDATE_NAMES = (
     "lightgbm_optuna",
@@ -914,26 +917,27 @@ def run_model_selection_pipeline(
 
 
 def main() -> None:
+    setup_logging()
     result = run_model_selection_pipeline()
     selected = result["selected_model"]
-    print(f"[OK] Candidatos oficiais: {len(result['official_candidates'])}")
-    print(f"[OK] Trials por candidato: {result['trials_per_candidate']}")
-    print(f"[OK] Baseline diagnostico: {result['diagnostic_baseline']}")
-    print(f"[OK] Features usadas: {result['feature_count']}")
-    print(f"[OK] Modelo selecionado: {result['selected_model_name']}")
+    logger.info(f"Candidatos oficiais: {len(result['official_candidates'])}")
+    logger.info(f"Trials por candidato: {result['trials_per_candidate']}")
+    logger.info(f"Baseline diagnostico: {result['diagnostic_baseline']}")
+    logger.info(f"Features usadas: {result['feature_count']}")
+    logger.info(f"Modelo selecionado: {result['selected_model_name']}")
     val_precision_key = f"val_top{PRIMARY_TOP_K}_precision_at_k"
     val_recall_key = f"val_top{PRIMARY_TOP_K}_recall_at_k"
     val_lift_key = f"val_top{PRIMARY_TOP_K}_lift_vs_random"
     if {val_precision_key, val_recall_key, val_lift_key}.issubset(selected):
-        print(
-            f"[OK] Top{PRIMARY_TOP_K} Tag-dia validacao: "
+        logger.info(
+            f"Top{PRIMARY_TOP_K} Tag-dia validacao: "
             f"precision={selected[val_precision_key]:.6f}, "
             f"recall={selected[val_recall_key]:.6f}, "
             f"lift={selected[val_lift_key]:.6f}"
         )
-    print(f"[OK] Backtesting folds: {result['backtest_folds']}")
-    print(f"[OK] Artefato selecionado: {result['artifact_path']}")
-    print(f"[OK] Relatorio JSON: {result['json_path']}")
+    logger.info(f"Backtesting folds: {result['backtest_folds']}")
+    logger.info(f"Artefato selecionado: {result['artifact_path']}")
+    logger.info(f"Relatorio JSON: {result['json_path']}")
 
 
 if __name__ == "__main__":

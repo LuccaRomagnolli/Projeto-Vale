@@ -41,25 +41,33 @@ def test_make_dataset_main_runs(capsys, monkeypatch) -> None:
     assert "[OK]" in captured.out
 
 
-def test_evaluate_model_main_runs(capsys) -> None:
-    evaluate_model.run_operational_evaluation = lambda: {
-        "json_path": "/tmp/operational_metrics_report.json",
-        "budget_metrics_csv": "/tmp/budget.csv",
-        "daily_topk_metrics_csv": "/tmp/topk.csv",
-        "report": {
-            "model_name": "test_model",
-            "threshold": 0.2,
-            "threshold_metrics": [{"split": "test", "lift_vs_random": 1.5}],
-            "test_daily_topk_metrics": [
-                {
-                    "top_k_tags_per_day": 3,
-                    "precision_at_k": 0.5,
-                    "recall_at_k": 0.4,
-                    "lift_vs_random": 2.0,
-                }
-            ],
+def test_evaluate_model_main_runs(capsys, monkeypatch) -> None:
+    # Atribuicao direta de atributo de modulo nao e desfeita ao fim do teste:
+    # o stub ficava valendo para o resto da sessao, e qualquer teste posterior
+    # que importasse `run_operational_evaluation` receberia o falso. Era o unico
+    # caso assim no projeto -- todos os outros usam monkeypatch.
+    monkeypatch.setattr(
+        evaluate_model,
+        "run_operational_evaluation",
+        lambda: {
+            "json_path": "/tmp/operational_metrics_report.json",
+            "budget_metrics_csv": "/tmp/budget.csv",
+            "daily_topk_metrics_csv": "/tmp/topk.csv",
+            "report": {
+                "model_name": "test_model",
+                "threshold": 0.2,
+                "threshold_metrics": [{"split": "test", "lift_vs_random": 1.5}],
+                "test_daily_topk_metrics": [
+                    {
+                        "top_k_tags_per_day": 3,
+                        "precision_at_k": 0.5,
+                        "recall_at_k": 0.4,
+                        "lift_vs_random": 2.0,
+                    }
+                ],
+            },
         },
-    }
+    )
     evaluate_model.main()
     captured = capsys.readouterr()
     assert "[OK]" in captured.out

@@ -28,7 +28,10 @@ from src.utils.config import (
     REPORTS_LEGACY_MODEL_DIR,
     SPLIT_DIR,
 )
+from src.utils.logging_config import get_logger, setup_logging
 from src.utils.metadata import build_execution_metadata, to_repo_relative_path
+
+logger = get_logger(__name__)
 
 MODEL_ARTIFACT_PATH = MODELS_DIR / "legacy_supervised_model.joblib"
 MODEL_REPORT_PATH = REPORTS_LEGACY_MODEL_DIR / "legacy_supervised_model_report.json"
@@ -316,21 +319,22 @@ def run_model_pipeline(split_dir: Path = SPLIT_DIR) -> dict[str, Any]:
 
 
 def main() -> None:
+    setup_logging()
     result = run_model_pipeline()
-    print(f"[OK] Modelo supervisionado legado: {result['model_library']}")
-    print(f"[OK] Features usadas: {result['feature_count']}")
-    print(f"[OK] Artefato: {result['artifact_path']}")
-    print(f"[OK] Relatorio: {result['report_path']}")
-    print(f"[OK] Threshold validacao: {result['metrics']['threshold']:.6f}")
-    print(f"[OK] Recall teste: {result['metrics']['test']['recall']:.6f}")
-    print(f"[OK] AUC-PR teste: {result['metrics']['test']['auc_pr']:.6f}")
+    logger.info(f"Modelo supervisionado legado: {result['model_library']}")
+    logger.info(f"Features usadas: {result['feature_count']}")
+    logger.info(f"Artefato: {result['artifact_path']}")
+    logger.info(f"Relatorio: {result['report_path']}")
+    logger.info(f"Threshold validacao: {result['metrics']['threshold']:.6f}")
+    logger.info(f"Recall teste: {result['metrics']['test']['recall']:.6f}")
+    logger.info(f"AUC-PR teste: {result['metrics']['test']['auc_pr']:.6f}")
     test_metrics = result["metrics"]["test"]
     precision_key = f"top{PRIMARY_TOP_K}_precision_at_k"
     recall_key = f"top{PRIMARY_TOP_K}_recall_at_k"
     lift_key = f"top{PRIMARY_TOP_K}_lift_vs_random"
     if {precision_key, recall_key, lift_key}.issubset(test_metrics):
-        print(
-            f"[OK] Top{PRIMARY_TOP_K} Tag-dia teste: "
+        logger.info(
+            f"Top{PRIMARY_TOP_K} Tag-dia teste: "
             f"precision={test_metrics[precision_key]:.6f}, "
             f"recall={test_metrics[recall_key]:.6f}, "
             f"lift={test_metrics[lift_key]:.6f}"

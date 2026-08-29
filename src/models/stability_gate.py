@@ -8,6 +8,9 @@ import pandas as pd
 
 from src.evaluation.operational_scorecard import PRIMARY_TOP_K
 from src.utils.config import REPORTS_MODEL_SELECTION_DIR
+from src.utils.logging_config import get_logger, setup_logging
+
+logger = get_logger(__name__)
 
 BACKTEST_REPORT_CSV = REPORTS_MODEL_SELECTION_DIR / "model_selection_backtest_report.csv"
 DEFAULT_MAX_RECALL_STD = 0.03
@@ -56,9 +59,10 @@ def run_stability_gate(
 
 
 def main() -> None:
+    setup_logging()
     result = run_stability_gate()
-    print(
-        "[OK] Stability gate: "
+    logger.info(
+        "Stability gate: "
         f"folds={result['folds']} "
         f"metric={result['metric_family']} "
         f"recall_std={result['recall_std']:.4f}/{result['max_recall_std']:.4f} "

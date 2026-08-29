@@ -352,6 +352,18 @@ python -m pip install -r requirements.txt -c constraints.txt --prefer-binary
 > **Windows (PowerShell):** execute `conda init powershell` e reinicie o terminal antes de `conda activate`.  
 > **macOS / Linux:** use o hook adequado ao seu shell, por exemplo `eval "$(conda shell.bash hook)"`.
 
+### Variáveis de Ambiente de Execução
+
+| Variável | Efeito |
+|---|---|
+| `LOG_LEVEL` | Nível mínimo de log (`INFO` por padrão) |
+| `LOG_FILE` | Caminho para também gravar o log em arquivo, com carimbo de tempo |
+| `RANDOM_STATE` | Semente do projeto (`42` por padrão) |
+| `MLFLOW_TRACKING` | `0` desliga o rastreamento de experimentos |
+
+O terminal continua exibindo `[OK]` e `[ERROR]` como antes; o arquivo recebe
+formato com carimbo de tempo, nível e módulo, adequado ao job de lote diário.
+
 ### Com venv
 
 **macOS / Linux:**

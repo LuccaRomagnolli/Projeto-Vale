@@ -23,7 +23,10 @@ from src.models.model_selection import SELECTED_MODEL_PATH
 from src.models.train_model import load_splits
 from src.models.validation import TARGET_COL
 from src.utils.config import REPORTS_SEGMENT_DIR, SPLIT_DIR
+from src.utils.logging_config import get_logger, setup_logging
 from src.utils.metadata import to_repo_relative_path
+
+logger = get_logger(__name__)
 
 SEGMENT_REPORT_JSON = REPORTS_SEGMENT_DIR / "segment_operational_report.json"
 SEGMENT_THRESHOLD_CSV = REPORTS_SEGMENT_DIR / "segment_threshold_metrics.csv"
@@ -240,24 +243,25 @@ def run_segment_analysis(
 
 
 def main() -> None:
+    setup_logging()
     result = run_segment_analysis()
     report = result["report"]
     weakest = report["weakest_top15_segments"][0] if report["weakest_top15_segments"] else {}
     strongest = report["strongest_top15_segments"][0] if report["strongest_top15_segments"] else {}
-    print(f"[OK] Relatorio segmentado: {result['json_path']}")
-    print(f"[OK] Threshold por segmento: {result['threshold_metrics_csv']}")
-    print(f"[OK] TopK por segmento: {result['topk_metrics_csv']}")
-    print(f"[OK] Hotspots por Tag: {result['tag_hotspots_csv']}")
+    logger.info(f"Relatorio segmentado: {result['json_path']}")
+    logger.info(f"Threshold por segmento: {result['threshold_metrics_csv']}")
+    logger.info(f"TopK por segmento: {result['topk_metrics_csv']}")
+    logger.info(f"Hotspots por Tag: {result['tag_hotspots_csv']}")
     if strongest:
-        print(
-            "[OK] Melhor segmento Top15: "
+        logger.info(
+            "Melhor segmento Top15: "
             f"{strongest['segment_col']}={strongest['segment_value']} "
             f"precision={strongest['precision_at_k']:.3f} "
             f"recall={strongest['recall_at_k']:.3f}"
         )
     if weakest:
-        print(
-            "[OK] Segmento mais fragil Top15: "
+        logger.info(
+            "Segmento mais fragil Top15: "
             f"{weakest['segment_col']}={weakest['segment_value']} "
             f"precision={weakest['precision_at_k']:.3f} "
             f"recall={weakest['recall_at_k']:.3f}"

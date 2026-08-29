@@ -25,6 +25,9 @@ from src.evaluation.operational_scorecard import PRIMARY_TOP_K
 from src.models.stability_gate import BACKTEST_REPORT_CSV, run_stability_gate
 from src.models.validation import DEGENERATE_ALERT_RATE
 from src.utils.config import REPORTS_MODEL_SELECTION_DIR
+from src.utils.logging_config import get_logger, setup_logging
+
+logger = get_logger(__name__)
 
 SELECTION_REPORT_JSON = REPORTS_MODEL_SELECTION_DIR / "model_selection_report.json"
 PROMOTION_REPORT_JSON = REPORTS_MODEL_SELECTION_DIR / "promotion_gate_report.json"
@@ -149,6 +152,7 @@ def run_promotion_gate(
 
 
 def main() -> None:
+    setup_logging()
     # Caminhos resolvidos aqui, e nao via default da assinatura: defaults sao
     # avaliados na definicao da funcao, entao um teste que redireciona os
     # caminhos do modulo continuaria escrevendo nos artefatos de producao.
@@ -157,15 +161,17 @@ def main() -> None:
         backtest_path=BACKTEST_REPORT_CSV,
         output_path=PROMOTION_REPORT_JSON,
     )
-    print(f"[OK] Politica de promocao: {verdict['politica']}")
-    print(f"[OK] Modelo avaliado: {verdict['model_name']}")
+    logger.info(f"Politica de promocao: {verdict['politica']}")
+    logger.info(f"Modelo avaliado: {verdict['model_name']}")
     for criterion in verdict["criterios"]:
-        mark = "OK" if criterion["aprovado"] else "ERROR"
-        print(
-            f"[{mark}] {criterion['criterio']}: "
+        # Criterio reprovado sai como ERROR: o nivel comunica a condicao sem
+        # depender de quem le montar o prefixo.
+        emit = logger.info if criterion["aprovado"] else logger.error
+        emit(
+            f"{criterion['criterio']}: "
             f"{criterion['observado']:.4f} {criterion['comparacao']} {criterion['limite']:.4f}"
         )
-    print(f"[OK] Veredito registrado em: {verdict['report_path']}")
+    logger.info(f"Veredito registrado em: {verdict['report_path']}")
     if not verdict["aprovado"]:
         raise SystemExit(
             f"[ERROR] Promocao bloqueada. Criterios reprovados: {verdict['criterios_reprovados']}"

@@ -26,6 +26,9 @@ from src.inference import (
 )
 from src.inference_contract import InferenceContractError
 from src.utils.config import INTERIM_DIR, REPORTS_INFERENCE_DIR
+from src.utils.logging_config import get_logger, setup_logging
+
+logger = get_logger(__name__)
 
 BATCH_INPUT_DIR = INTERIM_DIR / "lotes" / "entrada"
 BATCH_PROCESSED_DIR = INTERIM_DIR / "lotes" / "processados"
@@ -146,15 +149,16 @@ def run_daily_batch(
 
 
 def main() -> None:
+    setup_logging()
     summary = run_daily_batch()
-    print(f"[OK] Diretorio de entrada: {summary['input_dir']}")
-    print(f"[OK] Lotes encontrados: {summary['batches_found']}")
-    print(f"[OK] Lotes processados: {summary['batches_processed']}")
-    print(f"[OK] Lotes rejeitados: {summary['batches_rejected']}")
+    logger.info(f"Diretorio de entrada: {summary['input_dir']}")
+    logger.info(f"Lotes encontrados: {summary['batches_found']}")
+    logger.info(f"Lotes processados: {summary['batches_processed']}")
+    logger.info(f"Lotes rejeitados: {summary['batches_rejected']}")
     for result in summary["results"]:
         if result["status"] == "rejeitado":
-            print(f"[ERROR] {result['batch']}: {result['motivo'][:160]}")
-    print(f"[OK] Log do lote: {summary['log_path']}")
+            logger.error(f"{result['batch']}: {result['motivo'][:160]}")
+    logger.info(f"Log do lote: {summary['log_path']}")
 
 
 if __name__ == "__main__":

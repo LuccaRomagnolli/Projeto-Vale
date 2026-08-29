@@ -18,6 +18,9 @@ from src.models.validation import (
     temporal_train_val_test_split,
 )
 from src.utils.config import FEATURES_DATASET_PATH, MODELS_DIR, REPORTS_BASELINE_DIR, SPLIT_DIR
+from src.utils.logging_config import get_logger, setup_logging
+
+logger = get_logger(__name__)
 
 ENCODER_FILENAME = "categorical_encoder.joblib"
 BASELINE_ARTIFACT_PATH = MODELS_DIR / "baseline_heuristico.joblib"
@@ -138,14 +141,15 @@ def run_baseline_pipeline(
 
 
 def main() -> None:
+    setup_logging()
     result = run_baseline_pipeline()
-    print(f"[OK] Split train/val/test: {result['split_paths']}")
-    print(f"[OK] Baseline artifact: {result['artifact_path']}")
-    print(f"[OK] Baseline report: {result['report_path']}")
-    print(f"[OK] Baseline scores: {result['scores_path']}")
-    print(f"[OK] Threshold validacao: {result['metrics']['threshold']:.6f}")
-    print(f"[OK] Recall teste: {result['metrics']['test']['recall']:.6f}")
-    print(f"[OK] AUC-PR teste: {result['metrics']['test']['auc_pr']:.6f}")
+    logger.info(f"Split train/val/test: {result['split_paths']}")
+    logger.info(f"Baseline artifact: {result['artifact_path']}")
+    logger.info(f"Baseline report: {result['report_path']}")
+    logger.info(f"Baseline scores: {result['scores_path']}")
+    logger.info(f"Threshold validacao: {result['metrics']['threshold']:.6f}")
+    logger.info(f"Recall teste: {result['metrics']['test']['recall']:.6f}")
+    logger.info(f"AUC-PR teste: {result['metrics']['test']['auc_pr']:.6f}")
 
 
 if __name__ == "__main__":

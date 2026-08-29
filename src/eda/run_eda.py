@@ -23,6 +23,9 @@ from src.utils.config import (
     REPORTS_OPERATIONAL_DIR,
     REPORTS_SEGMENT_DIR,
 )
+from src.utils.logging_config import get_logger, setup_logging
+
+logger = get_logger(__name__)
 
 matplotlib.use("Agg")
 
@@ -1486,12 +1489,13 @@ def run_eda_pipeline(
 
 
 def main() -> None:
+    setup_logging()
     result = run_eda_pipeline()
-    print(f"[OK] EDA dataset: {result['dataset_path']}")
-    print(f"[OK] EDA report:  {result['report_path']}")
-    print(f"[OK] EDA figures: {len(result['figures'])}")
-    print(f"[OK] Registros:   {result['total_rows']}")
-    print(f"[OK] Positivos:   {result['target_4h_positives']}")
+    logger.info(f"EDA dataset: {result['dataset_path']}")
+    logger.info(f"EDA report:  {result['report_path']}")
+    logger.info(f"EDA figures: {len(result['figures'])}")
+    logger.info(f"Registros:   {result['total_rows']}")
+    logger.info(f"Positivos:   {result['target_4h_positives']}")
 
 
 if __name__ == "__main__":
