@@ -41,16 +41,20 @@ segmentada, promocao e inferencia.
 | Positivos `target_4h` | `70811` (`18.737679%`) |
 | Features totais | `57` colunas |
 | Features modelaveis | `48` |
-| Split temporal | `70/15/15` |
+| Split temporal | `70/15/15` com embargo de `4h` |
 | Seleção oficial | `lightgbm_optuna`, `xgboost_optuna`, `hist_gbdt_optuna` |
 | Baseline diagnóstico | `logistic_regression_baseline` |
-| Modelo selecionado | `lightgbm_optuna` |
+| Modelo selecionado | `hist_gbdt_optuna` |
 | Artefato promovido | `models/model_selected.joblib` |
 | Relatorio de seleção | `reports/model_selection/model_selection_report.json` |
 | Ranking operacional | `reports/daily_priority_top15.csv` |
-| Test `Precision@Top15 Tag-dia` | `0.6756` |
-| Test `Recall@Top15 Tag-dia` | `0.7361` |
-| Test `Lift@Top15 Tag-dia` | `2.0774` |
+| Test `Precision@Top15 Tag-dia` | `0.8178` |
+| Test `Recall@Top15 Tag-dia` | `0.8910` |
+| Test `Lift@Top15 Tag-dia` | `2.5147` |
+
+> Metricas atualizadas em 29/08/2026. Ver `docs/controle_alteracoes.md`,
+> alteracao 04, para a decomposicao entre o reparo das features de alerta e a
+> correcao de vazamento.
 
 ## Indice por etapa
 

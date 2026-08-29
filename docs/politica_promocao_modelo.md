@@ -63,12 +63,16 @@ make infer
 
 | Campo | Valor |
 |---|---|
-| Modelo | definido em `reports/model_selection/model_selection_report.json` |
+| Modelo | `hist_gbdt_optuna`, definido em `reports/model_selection/model_selection_report.json` |
 | Artefato | `models/model_selected.joblib` |
 | Threshold | calibrado na validacao e persistido no artefato |
-| Test Precision@15 | `0.6756` |
-| Test Recall@15 | `0.7361` |
-| Test Lift@15 | `2.0774` |
+| Test Precision@15 | `0.8178` |
+| Test Recall@15 | `0.8910` |
+| Test Lift@15 | `2.5147` |
+
+> Valores atualizados em 29/08/2026 apos a correcao de vazamento temporal e o
+> reparo das features de historico de alertas. Ver `docs/controle_alteracoes.md`,
+> alteracao 04, para a decomposicao medida do impacto.
 
 ## Evidencias minimas
 
@@ -78,6 +82,7 @@ make infer
 - `reports/model_selection/model_selected_threshold_curve.csv`
 - `reports/operational/operational_metrics_report.json`
 - `reports/segments/segment_operational_report.json`
+- `reports/model_selection/leakage_ablation_report.json`
 
 ## Decisao
 

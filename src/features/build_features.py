@@ -205,7 +205,18 @@ def add_degradation_features(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def add_categorical_encodings(df: pd.DataFrame, target_col: str = TARGET_COL) -> pd.DataFrame:
-    """Adiciona encodings simples e persistiveis para variaveis categoricas."""
+    """Encoding categorico global -- LEGADO, fora do pipeline oficial.
+
+    Calcula as estatisticas sobre todo o dataframe recebido. Quando aplicado
+    antes do split temporal, como era feito ate a Fase 2, vaza a distribuicao
+    futura para o treino e codifica validacao e teste com a propria massa de
+    frequencia deles.
+
+    Mantido exclusivamente como braco de controle em
+    `src/evaluation/leakage_ablation.py`, que mede o custo da correcao. Para o
+    pipeline use `src.features.encoders.CategoricalEncoder`, que segue o
+    contrato fit/transform.
+    """
     out = df.copy()
     total_rows = len(out)
 

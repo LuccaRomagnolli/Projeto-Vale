@@ -65,11 +65,15 @@ metricas ciclo-a-ciclo.
 
 | TopK Tags/dia | Alertas selecionados | Precision@K | Recall@K | Lift |
 |---:|---:|---:|---:|---:|
-| 3 | `90` | `0.6889` | `0.1501` | `2.1184` |
-| 5 | `150` | `0.6400` | `0.2324` | `1.9680` |
-| 10 | `300` | `0.6767` | `0.4915` | `2.0808` |
-| 15 | `450` | `0.6756` | `0.7361` | `2.0774` |
-| 20 | `600` | `0.6233` | `0.9056` | `1.9168` |
+| 3 | `90` | `1.0000` | `0.2179` | `3.0751` |
+| 5 | `150` | `0.9867` | `0.3584` | `3.0341` |
+| 10 | `300` | `0.9700` | `0.7046` | `2.9828` |
+| 15 | `450` | `0.8178` | `0.8910` | `2.5147` |
+| 20 | `600` | `0.6750` | `0.9806` | `2.0757` |
+
+> Valores de 29/08/2026, apos o reparo das features de historico de alertas e a
+> correcao de vazamento nos encodings. Ver `docs/controle_alteracoes.md`,
+> alteracao 04.
 
 ## Deduplicacao operacional
 

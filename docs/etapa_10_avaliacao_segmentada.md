@@ -52,14 +52,17 @@ Tags devem receber trilha dedicada antes de ampliacao operacional.
 
 | Segmento | Valor | Precision@15 | Recall@15 | Lift | Status |
 |---|---|---:|---:|---:|---|
-| `turno` | `manha` | `0.4690` | `0.8312` | `2.3452` | `ok` |
-| `turno` | `tarde` | `0.4368` | `0.7755` | `2.1875` | `ok` |
-| `turno` | `noite` | `0.5200` | `0.7290` | `2.0525` | `ok` |
-| `Tipo` | `Caminhao` | `0.6756` | `0.7397` | `1.6420` | `ok` |
-| `Classe` | `Parado` | `0.6511` | `0.7834` | `1.3649` | `ok` |
+| `turno` | `manha` | `0.5381` | `0.9536` | `2.6905` | `ok` |
+| `turno` | `tarde` | `0.5103` | `0.9061` | `2.5559` | `ok` |
+| `turno` | `noite` | `0.6311` | `0.8847` | `2.4910` | `ok` |
+| `Tipo` | `Caminhao` | `0.8156` | `0.8929` | `1.9823` | `ok` |
+| `Classe` | `Parado` | `0.7467` | `0.8984` | `1.5652` | `ok` |
 | `Classe` | `Hibernando` | `0.0000` | `0.0000` | `0.0000` | `inconclusivo_baixa_prevalencia` |
 | `Tipo` | `Escavadeira` | `0.0074` | `1.0000` | `1.0000` | `inconclusivo_baixa_prevalencia` |
 | `Frota` | `LeTourneau L 1850` | `0.0074` | `1.0000` | `1.0000` | `inconclusivo_baixa_prevalencia` |
+
+> Valores de 29/08/2026. Os segmentos raros (`Escavadeira`, `LeTourneau L 1850`,
+> `Hibernando`) permanecem inconclusivos por baixa prevalencia, como antes.
 
 ## Hotspots de atencao
 

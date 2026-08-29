@@ -51,6 +51,7 @@ COMMANDS: dict[str, list[list[str]]] = {
     "gate-stability": [[PYTHON, "-m", "src.models.stability_gate"]],
     "evaluate": [[PYTHON, "-m", "src.evaluation.evaluate_model"]],
     "evaluate-segments": [[PYTHON, "-m", "src.evaluation.segment_analysis"]],
+    "leakage-ablation": [[PYTHON, "-m", "src.evaluation.leakage_ablation"]],
     "infer": [[PYTHON, "-m", "src.inference"]],
     "notebook": [
         [
@@ -101,6 +102,7 @@ DESCRIPTIONS = {
     "gate-stability": "valida estabilidade temporal",
     "evaluate": "avalia metricas operacionais",
     "evaluate-segments": "avalia segmentos operacionais",
+    "leakage-ablation": "mede o custo da correcao de vazamento temporal",
     "infer": "gera inferencia com artefato promovido",
     "notebook": "executa notebooks/main.ipynb",
     "smoke": "executa validacao rapida",

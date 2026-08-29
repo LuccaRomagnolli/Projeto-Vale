@@ -192,22 +192,33 @@ A promoção depende de evidências versionadas em `reports/`, política explíc
 | Parâmetro | Valor |
 |---|---|
 | Janela do alvo | `target_4h` |
-| Divisão temporal | `70 / 15 / 15` |
+| Divisão temporal | `70 / 15 / 15` com embargo de `4h` nas fronteiras |
 | Pool oficial vigente | `lightgbm_optuna`, `xgboost_optuna`, `hist_gbdt_optuna` |
-| Modelo selecionado nesta rodada | `lightgbm_optuna` |
+| Modelo selecionado nesta rodada | `hist_gbdt_optuna` |
 | Artefato operacional | `models/model_selected.joblib` |
 | Relatório de seleção | `reports/model_selection/model_selection_report.json` |
-| `threshold` promovido | `0.139074` |
+| `threshold` promovido | `0.378744` |
 
 ### Métricas Operacionais no Teste — Top15 Tag-dia
 
 | Métrica | Valor |
 |---|---:|
-| `precision@15` | **0.6756** |
-| `recall@15` | **0.7361** |
-| `lift@15` | **2.0774** |
+| `precision@15` | **0.8178** |
+| `recall@15` | **0.8910** |
+| `lift@15` | **2.5147** |
 
-No teste temporal, a lista diária de 15 equipamentos atingiu precisão de ~67,6%, recuperou ~73,6% dos casos críticos cobertos pelo critério operacional e foi ~2,08× melhor que uma priorização aleatória.
+No teste temporal, a lista diária de 15 equipamentos atingiu precisão de ~81,8%, recuperou ~89,1% dos casos críticos cobertos pelo critério operacional e foi ~2,51× melhor que uma priorização aleatória.
+
+> **Revisão de 29/08/2026.** Estes números substituem os anteriores
+> (`precision@15 = 0.6756`), que foram produzidos sobre um dataset de features
+> defeituoso: as duas fontes de dados tinham resoluções de datetime distintas
+> (`ns` e `us`), o que zerava `n_alertas_4h/8h/24h` e corrompia
+> `dias_desde_ultimo_alerta`. A maior parte do ganho vem desse reparo. Na mesma
+> revisão os encodings categóricos passaram a ser ajustados apenas no treino e o
+> split ganhou embargo — correção que **custou** cerca de `1` ponto percentual de
+> precisão, medido por ablação controlada. A decomposição está em
+> `docs/controle_alteracoes.md` (alteração 04) e é reproduzível por
+> `make leakage-ablation`.
 
 ---
 
@@ -381,6 +392,7 @@ instalado, os comandos `make ...` são atalhos equivalentes.
 | Validar estabilidade | `python tasks.py gate-stability` | `make gate-stability` |
 | Avaliar operação | `python tasks.py evaluate` | `make evaluate` |
 | Avaliar segmentos | `python tasks.py evaluate-segments` | `make evaluate-segments` |
+| Medir custo do fix de vazamento | `python tasks.py leakage-ablation` | `make leakage-ablation` |
 | Gerar inferência | `python tasks.py infer` | `make infer` |
 | Validação rápida | `python tasks.py smoke` | `make smoke` |
 | Fluxo completo | `python tasks.py run-all` | `make run-all` |

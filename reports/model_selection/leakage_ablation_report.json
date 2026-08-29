@@ -1,0 +1,43 @@
+{
+  "objetivo": "Medir quanto do desempenho vinha de vazamento nos encodings categoricos, com estimador e hiperparametros fixos e o mesmo conjunto de teste.",
+  "model_name": "hist_gbdt_optuna",
+  "params": {
+    "class_weight": "balanced",
+    "l2_regularization": 1.0883720830731243,
+    "learning_rate": 0.015363954252933477,
+    "max_iter": 224,
+    "max_leaf_nodes": 19,
+    "min_samples_leaf": 151
+  },
+  "embargo_hours": 4.0,
+  "same_test_set": true,
+  "com_vazamento": {
+    "rows_train": 264525,
+    "rows_val": 56693,
+    "rows_test": 56689,
+    "feature_count": 48,
+    "threshold": 0.3822862822069703,
+    "test_top15_precision_at_k": 0.8266666666666667,
+    "test_top15_recall_at_k": 0.9007263922518159,
+    "test_top15_lift_vs_random": 2.542050040355125,
+    "test_auc_pr": 0.5718254560240514
+  },
+  "sem_vazamento": {
+    "rows_train": 264188,
+    "rows_val": 56331,
+    "rows_test": 56689,
+    "feature_count": 48,
+    "threshold": 0.3787437224633621,
+    "test_top15_precision_at_k": 0.8177777777777778,
+    "test_top15_recall_at_k": 0.8910411622276029,
+    "test_top15_lift_vs_random": 2.5147161689534574,
+    "test_auc_pr": 0.5755285674868587
+  },
+  "custo_do_fix": {
+    "test_top15_precision_at_k": -0.008888888888888835,
+    "test_top15_recall_at_k": -0.009685230024213065,
+    "test_top15_lift_vs_random": -0.027333871401667764,
+    "test_auc_pr": 0.003703111462807218
+  },
+  "limitacao": "Os hiperparametros foram selecionados sobre os dados sem vazamento, o que desfavorece levemente o braco com vazamento. O otimismo real pode ser um pouco maior que o medido."
+}
